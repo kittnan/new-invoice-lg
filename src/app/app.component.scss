@@ -1,0 +1,41 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+// .example-container {
+//   width: 100vh;
+//   height: 70vh;
+//   // border: 1px solid rgba(0, 0, 0, 0.5);
+// }
+
+// .example-sidenav-content {
+//   display: flex;
+//   height: 100%;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// .example-sidenav {
+//   padding: 20px;
+// }
+
+.example-container {
+  height: 100%;
+  margin: 10px;
+}
+
+li {
+  list-style-type: "↪ ";
+  margin-left: 30px;
+  cursor: pointer;
+}
+.active {
+  background-color: rgb(84, 84, 216);
+}
+li:hover {
+  opacity: 80%;
+}
+
+ul {
+  border-left: 5px solid #3333337c;
+  border-radius: 4px;
+}

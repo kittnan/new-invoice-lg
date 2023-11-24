@@ -1,0 +1,36 @@
+<div fxLayout="row wrap" fxLayoutAlign="start start">
+  <app-sub-head [name]="'KTC Address'"></app-sub-head>
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+    fxLayoutGap="5"
+    class="layput-input"
+  >
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>KTC Address Line 1</mat-label>
+      <input matInput [(ngModel)]="ktcAddress.line1" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>KTC Address Line 2</mat-label>
+      <input matInput [(ngModel)]="ktcAddress.line2" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>KTC Address Line 3</mat-label>
+      <input matInput [(ngModel)]="ktcAddress.line3" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>KTC Address Line 4</mat-label>
+      <input matInput [(ngModel)]="ktcAddress.line4" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>KTC Address Line 5</mat-label>
+      <input matInput [(ngModel)]="ktcAddress.line5" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start">
+    <button mat-raised-button color="primary" (click)="handleSubmit()">
+      Save
+    </button>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div fxLayout="row wrap" fxLayoutAlign="start start">
+  <app-sub-head [name]="'Consignee'"></app-sub-head>
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+    fxLayoutGap="5"
+    class="layput-input"
+  >
+    <mat-form-field fxFlex="90" appearance="fill">
+      <mat-label>Consignee Code</mat-label>
+      <mat-select [(ngModel)]="consignee.code">
+        <mat-option *ngFor="let code of codes" [value]="code">
+          {{ code }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>Consignee Line 1</mat-label>
+      <input matInput [(ngModel)]="consignee.line1" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>Consignee Line 2</mat-label>
+      <input matInput [(ngModel)]="consignee.line2" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>Consignee Line 3</mat-label>
+      <input matInput [(ngModel)]="consignee.line3" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>Consignee Line 4</mat-label>
+      <input matInput [(ngModel)]="consignee.line4" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>Consignee Line 5</mat-label>
+      <input matInput [(ngModel)]="consignee.line5" />
+    </mat-form-field>
+    <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
+      <mat-label>Consignee Line 6</mat-label>
+      <input matInput [(ngModel)]="consignee.line6" />
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start">
+    <button mat-raised-button color="primary" (click)="handleSubmit()">
+      Save
+    </button>
+  </div>
+</div>
