@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SubHeadComponent } from './sub-head/sub-head.component';
 import { MaterialModule } from 'src/material/material.module';
+import { Currency2Pipe } from '../pipes/currency2.pipe';
 
 @NgModule({
-  declarations: [SubHeadComponent],
+  declarations: [SubHeadComponent, Currency2Pipe],
   imports: [CommonModule, MaterialModule, FlexLayoutModule],
-  exports: [SubHeadComponent],
+  exports: [SubHeadComponent, Currency2Pipe],
 })
 export class ShareComponentsModule {}

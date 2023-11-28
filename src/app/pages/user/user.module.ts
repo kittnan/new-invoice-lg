@@ -11,10 +11,7 @@ import { GenerateInvoiceComponent } from './generate-invoice/generate-invoice.co
 import { ViewInvoiceComponent } from './view-invoice/view-invoice.component';
 
 @NgModule({
-  declarations: [
-    GenerateInvoiceComponent,
-    ViewInvoiceComponent
-  ],
+  declarations: [GenerateInvoiceComponent, ViewInvoiceComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

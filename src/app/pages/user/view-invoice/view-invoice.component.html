@@ -1,15 +1,423 @@
-<!-- <div fxLayout="row wrap" fxLayoutAlign="start stretch">
-  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="center start">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque corporis
-      ipsa nihil quia magnam atque cum accusamus sequi nemo animi! Doloribus
-      expedita beatae inventore explicabo. Dolorem, odio quidem. A, sed.
-    </div>
-  </div>
-</div> -->
+<div
+  fxLayout="row wrap"
+  fxLayoutAlign="start start"
+  style="width: 1600px"
+  *ngFor="let p of pageArr; let p_i = index"
+  id="print"
+  class="mb-9"
+>
+  <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 15px">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span
+              style="font-size: 35px; letter-spacing: 6px; line-height: 30px"
+              fxLayoutAlign="start start"
+            >
+              INVOICE
+            </span>
+          </div>
+        </div>
+        <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 30px">
+          <img
+            src="/assets/Kyocera_logo2.png"
+            style="width: 200px; height: 50px"
+          />
+        </div>
+      </div>
 
-<table>
-  <tr>
-    <td></td>
-  </tr>
-</table>
+      <div
+        *ngIf="accountee"
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="start start"
+        style="margin-top: 30px"
+      >
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span fxFlex="20"> Invoice No. </span>
+            <span fxFlex="80"> {{ invoice }} </span>
+          </div>
+          <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span fxFlex="20"> Accountee: </span>
+            <span fxFlex="80">
+              {{ accountee.line1 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ accountee.line2 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ accountee.line3 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ accountee.line4 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ accountee.line5 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ accountee.line6 }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="consignee"
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="start start"
+      >
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span fxFlex="20"> Consignee: </span>
+            <span fxFlex="80">
+              {{ consignee.line1 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ consignee.line2 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ consignee.line3 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ consignee.line4 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ consignee.line5 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ consignee.line6 }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div
+          *ngIf="ktcAddress"
+          fxFlex="45"
+          fxLayout="row wrap"
+          fxLayoutAlign="start start"
+          style="font-size: 14px; padding-top: 20px"
+        >
+          <span fxFlex="100">
+            {{ ktcAddress.line1 }}
+          </span>
+          <span fxFlex="100">
+            {{ ktcAddress.line2 }}
+          </span>
+          <span fxFlex="100">
+            {{ ktcAddress.line3 }}
+          </span>
+          <span fxFlex="100">
+            {{ ktcAddress.line4 }}
+          </span>
+          <span fxFlex="100">
+            {{ ktcAddress.line5 }}
+          </span>
+          <span fxFlex="100">
+            {{ ktcAddress.line6 }}
+          </span>
+        </div>
+        <div
+          fxFlex="45"
+          fxLayout="row wrap"
+          fxLayoutAlign="start start"
+          class="font-bold"
+          style="font-size: 14px; padding-top: 20px"
+        >
+          <span fxFlex="100" class="ms-48"> Page. {{ p_i + 1 }} </span>
+          <span fxFlex="100" class="ms-48">
+            Date: {{ htmlDate(pkta[0]["Achiev DT"]) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="accountee"
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+    >
+      <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+          <div fxFlex="30">Shipped from {{ accountee.shippedFrom }}</div>
+          <div fxFlex="30">To {{ accountee.to }}</div>
+          <div fxFlex="30">Per {{ accountee.per }}</div>
+        </div>
+      </div>
+      <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="center start">
+        <span> On or about {{ htmlDate(pkta[0]["Sales DT"]) }} </span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="accountee"
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+    >
+      <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+          <div fxFlex="100">
+            L/C No.& Issusing date {{ accountee.paymentItem }}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="end start">
+        <span>(A:1 H:100 K:1000)</span>
+      </div>
+    </div>
+    <div fxFlex="100" style="margin-bottom: 10px"></div>
+  </div>
+
+  <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <table fxFlex="100" class="mt-4">
+      <tr class="table-head">
+        <th width="20%">Marks & No. s</th>
+        <th width="40%">Description</th>
+        <th width="16%">Quantity</th>
+        <th width="16%">Unit Price</th>
+        <th width="16%">Amount</th>
+      </tr>
+      <ng-container *ngFor="let item of getData(p_i); let i = index">
+        <tr>
+          <td>
+            {{ item["Cust Desc"] }}
+          </td>
+          <td>
+            {{ item["Customer Part#"] }}
+          </td>
+          <td></td>
+          <td>DDU CHACHOENGSAO</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            {{ item["Cust Desc"] }}
+          </td>
+          <td>PIECE</td>
+          <td>THB</td>
+          <td>
+            {{ item["Cust Currency"] }}
+          </td>
+        </tr>
+        <tr>
+          <td>CARTON NO.1 - 11</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="15"> SO# </span>
+              <span fxFlex="85">
+                {{ item["SO#"] }}
+              </span>
+            </div>
+          </td>
+          <td class="text-end">
+            {{ item["Sales QTY"] | currency : "" : "" }}
+          </td>
+          <td class="text-end">
+            {{ item["U/P"] | currency : "" : "" }}
+          </td>
+          <td class="text-end">
+            {{ item["Sales AMT"] | currency : "" : "" }}
+          </td>
+        </tr>
+        <tr>
+          <td>( 15,600 PCS/BOX )</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="15"> PO# </span>
+              <span fxFlex="85">
+                {{ item["Customer PO#"] }}
+              </span>
+            </div>
+          </td>
+          <td></td>
+          <td class="text-end">/ A</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>CARTON NO.12</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="15"> CUST SO # </span>
+              <span fxFlex="85">
+                {{ item["Customer SO#"] }}
+              </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>( 13,000 PCS/BOX )</td>
+          <td>
+            {{ item["Lot#"] }}
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>MADE IN MALAYSIA</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            {{ item["Prod Part#"] }}
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="p_i + 1 === page">
+        <tr style="border-top: 1px solid">
+          <td></td>
+          <td></td>
+          <td>PIECE</td>
+          <td></td>
+          <td>THB</td>
+        </tr>
+        <tr>
+          <td class="text-end">TOTAL:</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="10"> (39) </span>
+              <span fxFlex="90"> CARTONS </span>
+            </div>
+          </td>
+          <td class="text-end">627800</td>
+          <td></td>
+          <td class="text-end">123692870</td>
+        </tr>
+        <tr>
+          <td class="text-end">NET WEIGHT :</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="10"> 72.07 </span>
+              <span fxFlex="90"> KGS </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text-end">GROSS WEIGHT :</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="10"> 668.4 </span>
+              <span fxFlex="90"> KGS </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>FREIGHT : PREPAID</td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="60" fxLayoutAlign="end start">
+                Shipping Marks :
+              </span>
+              <span fxFlex="40"> KYOCERA </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="60"> </span>
+              <span fxFlex="40"> INVOICE NO. {{ invoice }} </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="60"> </span>
+              <span fxFlex="40"> CARTON NO. 1 - 39 </span>
+            </div>
+          </td>
+
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>TEL : 02-663-0510</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>ATTN : MR. NAKANISHI</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="p_i + 1 !== pageArr.length">
+        <tr>
+          <td></td>
+          <td></td>
+          <td>TO BE CONTINUED PAGE {{ p_i + 2 }}</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>
+
+<button mat-raised-button (click)="generarPDF()">text</button>

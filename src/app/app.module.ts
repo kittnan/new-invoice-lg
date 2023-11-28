@@ -62,5 +62,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}

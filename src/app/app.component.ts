@@ -39,4 +39,8 @@ export class AppComponent {
       this.pageActive = sub.name;
     });
   }
+  handleView() {
+    if (localStorage.getItem('new-invoice-lg-view') == 'true') return true;
+    return false;
+  }
 }

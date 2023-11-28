@@ -81,4 +81,23 @@ export class GenerateInvoiceComponent implements OnInit {
       console.log('🚀 ~ error:', error);
     }
   }
+
+  // foo() {
+  //   localStorage.setItem('new-invoice-lg-view', 'true');
+  //   const width = 1200;
+  //   const height = 800;
+  //   const left = (window.innerWidth - width) / 2;
+  //   const top = (window.innerHeight - height) / 2;
+
+  //   const newWindow = window.open(
+  //     'http://localhost:4200/user/view-invoice?key=C23L1301A',
+  //     '_blank',
+  //     `width=${width},height=${height},left=${left},top=${top}`
+  //   );
+
+  //   // Optional: You can focus on the new window if needed
+  //   if (newWindow) {
+  //     newWindow.focus();
+  //   }
+  // }
 }
