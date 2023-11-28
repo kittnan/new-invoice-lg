@@ -1,13 +1,8 @@
-<div
-  fxFlex="100"
-  fxLayout="row wrap"
-  fxLayoutAlign="start start"
-  class="bg-blue-400"
->
+<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <mat-toolbar>
       <mat-toolbar-row class="bg-rose-300">
-        <span>My App</span>
+        <span> INVOICE LG </span>
         <span class="example-spacer"></span>
         <button
           mat-icon-button
@@ -47,7 +42,7 @@
     <mat-drawer-container fxFlex="100" class="example-container m-2" autosize>
       <mat-drawer
         #drawer
-        class="example-sidenav bg-purple-300 w-full"
+        class="example-sidenav w-full"
         opened="true"
         mode="side"
         style="width: 300px"
@@ -66,14 +61,14 @@
           </ul>
         </ng-container>
       </mat-drawer>
-      <mat-drawer-content class="p-3 ps-4 bg-gray-300" style="min-height: 78vh">
+      <mat-drawer-content class="p-3 ps-4" style="min-height: 78vh">
         <router-outlet></router-outlet>
       </mat-drawer-content>
     </mat-drawer-container>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <mat-toolbar>
-      <mat-toolbar-row class="bg-rose-300">
+      <mat-toolbar-row class="">
         <span>Footer</span>
         <span class="example-spacer"></span>
         <button

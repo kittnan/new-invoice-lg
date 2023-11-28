@@ -1,27 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpKtcAddressService } from 'src/app/https/http-ktc-address.service';
+import { AlertService } from 'src/app/services/alert/alert.service';
 
-interface ktcAddress {
-  line1: string | null;
-  line2: string | null;
-  line3: string | null;
-  line4: string | null;
-  line5: string | null;
-}
 @Component({
   selector: 'app-ktc-address',
   templateUrl: './ktc-address.component.html',
   styleUrls: ['./ktc-address.component.scss'],
 })
 export class KtcAddressComponent implements OnInit {
-  ktcAddress: ktcAddress = {
+  ktcAddress: any = {
     line1: 'KYOCERA  (Thailand) Co.,Ltd.',
     line2: '86/1 Moo 4, Tambol Banklang,  Amphur Muang, Lamphun 51000 Thailand',
     line3: 'TAX ID : 0105534100493     (Head Office) ',
     line4: 'Tel. 053-581-530-2  ',
     line5: 'Fax. 053-581-529 , 053-581-252',
   };
-  constructor() {}
+  constructor(
+    private $ktcAddress: HttpKtcAddressService,
+    private $alert: AlertService
+  ) {}
 
-  ngOnInit(): void {}
-  handleSubmit() {}
+  async ngOnInit(): Promise<void> {
+    try {
+      const res = await this.$ktcAddress.get().toPromise();
+      if (res && res.length > 0) {
+        this.ktcAddress = {
+          ...res[0],
+        };
+      }
+    } catch (error) {
+      console.log('🚀 ~ error:', error);
+    }
+  }
+  async handleSubmit() {
+    try {
+      const foo = await this.$ktcAddress.update(this.ktcAddress).toPromise();
+      console.log('🚀 ~ foo:', foo);
+      this.$alert.success(2000, 'success', false);
+    } catch (error) {
+      console.log('🚀 ~ error:', error);
+    }
+  }
 }

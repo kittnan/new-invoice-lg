@@ -1,0 +1,71 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <app-sub-head [name]="'Consignee Code'"></app-sub-head>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start start">
+      <table class="table table-striped">
+        <tr>
+          <th>No.</th>
+          <th>
+            <div
+              fxLayout="row wrap"
+              fxLayoutAlign="center center"
+              class="bg-inherit"
+            >
+              <span class="me-2"> Code </span>
+              <button mat-raised-button (click)="upload.click()">Upload</button>
+              <button mat-raised-button (click)="handleDownload()">
+                Download
+              </button>
+              <input
+                hidden
+                type="file"
+                #upload
+                (change)="handleFileInput($event)"
+              />
+            </div>
+          </th>
+          <!-- <th>
+            <div fxLayout="row wrap" fxLayoutAlign="center center">
+              <button
+                mat-raised-button
+                class="bg-green-300"
+                (click)="handleNewConsigneeCode()"
+              >
+                <mat-icon class="mat-18"> add </mat-icon>
+                <span> New Consignee Code </span>
+              </button>
+            </div>
+          </th> -->
+        </tr>
+        <tr *ngFor="let code of codes; let i = index">
+          <td>
+            {{ i + 1 }}
+          </td>
+          <td class="text-center">
+            {{ code["CONSIGNEE-CODE"] }}
+          </td>
+          <!-- <td>
+            <div
+              fxLayout="row wrap"
+              fxLayoutAlign="center center"
+              fxLayoutGap="10"
+            >
+              <button
+                mat-raised-button
+                class="bg-yellow-200"
+                (click)="handleEdit(code)"
+              >
+                <mat-icon class="mat-18"> edit_square </mat-icon>
+                <span> Edit </span>
+              </button>
+              <button mat-raised-button class="bg-red-200">
+                <mat-icon class="mat-18"> delete </mat-icon>
+                <span> Delete </span>
+              </button>
+            </div>
+          </td> -->
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

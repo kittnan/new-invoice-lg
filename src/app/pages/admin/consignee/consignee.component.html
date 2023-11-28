@@ -9,7 +9,7 @@
   >
     <mat-form-field fxFlex="90" appearance="fill">
       <mat-label>Consignee Code</mat-label>
-      <mat-select [(ngModel)]="consignee.code">
+      <mat-select [(ngModel)]="code" (selectionChange)="handleChange()">
         <mat-option *ngFor="let code of codes" [value]="code">
           {{ code }}
         </mat-option>
@@ -17,27 +17,27 @@
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Consignee Line 1</mat-label>
-      <input matInput [(ngModel)]="consignee.line1" />
+      <input matInput [(ngModel)]="consigneeForm.line1" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Consignee Line 2</mat-label>
-      <input matInput [(ngModel)]="consignee.line2" />
+      <input matInput [(ngModel)]="consigneeForm.line2" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Consignee Line 3</mat-label>
-      <input matInput [(ngModel)]="consignee.line3" />
+      <input matInput [(ngModel)]="consigneeForm.line3" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Consignee Line 4</mat-label>
-      <input matInput [(ngModel)]="consignee.line4" />
+      <input matInput [(ngModel)]="consigneeForm.line4" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Consignee Line 5</mat-label>
-      <input matInput [(ngModel)]="consignee.line5" />
+      <input matInput [(ngModel)]="consigneeForm.line5" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Consignee Line 6</mat-label>
-      <input matInput [(ngModel)]="consignee.line6" />
+      <input matInput [(ngModel)]="consigneeForm.line6" />
     </mat-form-field>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start">

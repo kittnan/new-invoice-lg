@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { KtcAddressComponent } from './ktc-address/ktc-address.component';
 import { ConsigneeComponent } from './consignee/consignee.component';
 import { AccounteeComponent } from './accountee/accountee.component';
+import { ConsigneeCodeComponent } from './consignee-code/consignee-code.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'consignee',
     component: ConsigneeComponent,
+  },
+  {
+    path: 'consignee-code',
+    component: ConsigneeCodeComponent,
   },
   {
     path: 'accountee',

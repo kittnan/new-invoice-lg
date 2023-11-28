@@ -8,8 +8,8 @@
     class="layput-input"
   >
     <mat-form-field fxFlex="90" appearance="fill">
-      <mat-label>Accountee Code</mat-label>
-      <mat-select [(ngModel)]="accountee.code">
+      <mat-label>Consignee Code</mat-label>
+      <mat-select [(ngModel)]="code" (selectionChange)="handleChange()">
         <mat-option *ngFor="let code of codes" [value]="code">
           {{ code }}
         </mat-option>
@@ -17,51 +17,51 @@
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Accountee Line 1</mat-label>
-      <input matInput [(ngModel)]="accountee.line1" />
+      <input matInput [(ngModel)]="accounteeForm.line1" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Accountee Line 2</mat-label>
-      <input matInput [(ngModel)]="accountee.line2" />
+      <input matInput [(ngModel)]="accounteeForm.line2" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Accountee Line 3</mat-label>
-      <input matInput [(ngModel)]="accountee.line3" />
+      <input matInput [(ngModel)]="accounteeForm.line3" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Accountee Line 4</mat-label>
-      <input matInput [(ngModel)]="accountee.line4" />
+      <input matInput [(ngModel)]="accounteeForm.line4" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Accountee Line 5</mat-label>
-      <input matInput [(ngModel)]="accountee.line5" />
+      <input matInput [(ngModel)]="accounteeForm.line5" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Accountee Line 6</mat-label>
-      <input matInput [(ngModel)]="accountee.line6" />
+      <input matInput [(ngModel)]="accounteeForm.line6" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Shipped From</mat-label>
-      <input matInput [(ngModel)]="accountee.shippedFrom" />
+      <input matInput [(ngModel)]="accounteeForm.shippedFrom" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>To</mat-label>
-      <input matInput [(ngModel)]="accountee.to" />
+      <input matInput [(ngModel)]="accounteeForm.to" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Per</mat-label>
-      <input matInput [(ngModel)]="accountee.per" />
+      <input matInput [(ngModel)]="accounteeForm.per" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Payment Item</mat-label>
-      <input matInput [(ngModel)]="accountee.paymentItem" />
+      <input matInput [(ngModel)]="accounteeForm.paymentItem" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Freight</mat-label>
-      <input matInput [(ngModel)]="accountee.freight" />
+      <input matInput [(ngModel)]="accounteeForm.freight" />
     </mat-form-field>
     <mat-form-field fxFlex="90" class="example-full-width" appearance="fill">
       <mat-label>Contract Term</mat-label>
-      <input matInput [(ngModel)]="accountee.contractTerm" />
+      <input matInput [(ngModel)]="accounteeForm.contractTerm" />
     </mat-form-field>
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start">

@@ -1,34 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-interface accountee {
-  code: string | null;
-  line1: string | null;
-  line2: string | null;
-  line3: string | null;
-  line4: string | null;
-  line5: string | null;
-  line6: string | null;
-  shippedFrom: string | null;
-  to: string | null;
-  per: string | null;
-  paymentItem: string | null;
-  freight: string | null;
-  contractTerm: string | null;
-}
+import { HttpAccounteeService } from 'src/app/https/http-accountee.service';
+import { HttpConsigneeCodeService } from 'src/app/https/http-consignee-code.service';
+import { AlertService } from 'src/app/services/alert/alert.service';
+
 @Component({
   selector: 'app-accountee',
   templateUrl: './accountee.component.html',
   styleUrls: ['./accountee.component.scss'],
 })
 export class AccounteeComponent implements OnInit {
-  accountee: accountee = {
-    code: 'TZ0001',
-    line1: 'ARTRON ( THAILAND ) CO., LTD.',
-    line2: '1 Empire Tower , Unit No. 1906,   1907/1,  19th Floor,',
-    line3:
-      'South Sathorn Road,  Yannawa,  Sathorn,   Bangkok,  10120  Thailand',
-    line4: 'TAX ID :  0-1055-44071-00-3  ( HEAD OFFICE )',
-    line5: 'TEL.  02-6595670-4  EXT. 145',
-    line6: 'ATTN  :  MS.  BANDHITA  YINGCHANG',
+  accounteeForm: any = {
+    line1: '',
+    line2: '',
+    line3: '',
+    line4: '',
+    line5: '',
+    line6: '',
     shippedFrom: '',
     to: '',
     per: '',
@@ -36,9 +23,61 @@ export class AccounteeComponent implements OnInit {
     freight: '',
     contractTerm: '',
   };
-  codes: any[] = ['TZ0001', 'DT0003', 'TZ0002'];
-  constructor() {}
+  accountee: any[] = [];
+  codes: any[] = [];
+  code: any = null;
+  constructor(
+    private $consigneeCode: HttpConsigneeCodeService,
+    private $accountee: HttpAccounteeService,
+    private $alert: AlertService
+  ) {}
 
-  ngOnInit(): void {}
-  handleSubmit() {}
+  async ngOnInit(): Promise<void> {
+    try {
+      this.codes = await this.$consigneeCode.get().toPromise();
+      this.codes = this.codes.map((a: any) => a['CONSIGNEE-CODE']);
+      this.accountee = await this.$accountee.get().toPromise();
+      const firstCode = this.codes[0];
+      this.code = firstCode;
+      const item = this.accountee.find((a: any) => a.code == firstCode);
+      if (item) {
+        this.accounteeForm = { ...item, temp: '' };
+      }
+    } catch (error) {
+      console.log('🚀 ~ error:', error);
+    }
+  }
+  async handleSubmit() {
+    if (this.accounteeForm._id) {
+      await this.$accountee
+        .update({ ...this.accounteeForm, code: this.code })
+        .toPromise();
+    } else {
+      await this.$accountee
+        .create({ ...this.accounteeForm, code: this.code })
+        .toPromise();
+    }
+    this.$alert.success(2000, 'SUCCESS', true);
+  }
+  handleChange() {
+    const item = this.accountee.find((a: any) => a.code == this.code);
+    if (item) {
+      this.accounteeForm = item;
+    } else {
+      this.accounteeForm = {
+        line1: '',
+        line2: '',
+        line3: '',
+        line4: '',
+        line5: '',
+        line6: '',
+        shippedFrom: '',
+        to: '',
+        per: '',
+        paymentItem: '',
+        freight: '',
+        contractTerm: '',
+      };
+    }
+  }
 }

@@ -23,6 +23,11 @@ export class AuthAdminService {
             active: false,
           },
           {
+            name: 'consignee code',
+            path: 'admin/consignee-code',
+            active: false,
+          },
+          {
             name: 'consignee',
             path: 'admin/consignee',
             active: false,

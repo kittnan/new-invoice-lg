@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthAdminService } from './services/sidebars/auth-admin.service';
 import { Router } from '@angular/router';
+import { AuthUserService } from './services/sidebars/auth-user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
 export class AppComponent {
   sideBarsItems: any[] = [];
   pageActive: string = '';
-  constructor(private $sidebar: AuthAdminService, private router: Router) {}
+  constructor(
+    private $admin: AuthAdminService,
+    private $user: AuthUserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     try {
@@ -21,7 +26,13 @@ export class AppComponent {
   }
 
   handleSideBar(auth: string) {
-    this.sideBarsItems = this.$sidebar.handleSideBarAuth(auth);
+    if (auth == 'admin') {
+      const admin = this.$admin.handleSideBarAuth(auth);
+      const user = this.$user.handleSideBarAuth('user');
+      this.sideBarsItems = [...admin, ...user];
+    } else {
+      this.sideBarsItems = this.$user.handleSideBarAuth('user');
+    }
   }
   link(sub: any) {
     this.router.navigate([sub.path]).then(() => {

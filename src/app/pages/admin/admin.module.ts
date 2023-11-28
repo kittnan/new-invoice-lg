@@ -10,9 +10,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ShareComponentsModule } from 'src/app/share-components/share-components.module';
+import { ConsigneeCodeComponent } from './consignee-code/consignee-code.component';
 
 @NgModule({
-  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent],
+  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent, ConsigneeCodeComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
