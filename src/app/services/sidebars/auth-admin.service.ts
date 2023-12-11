@@ -37,6 +37,21 @@ export class AuthAdminService {
             path: 'admin/accountee',
             active: false,
           },
+          {
+            name: 'item-code',
+            path: 'admin/item-code',
+            active: false,
+          },
+          {
+            name: 'country',
+            path: 'admin/country',
+            active: false,
+          },
+          {
+            name: 'model',
+            path: 'admin/model',
+            active: false,
+          },
         ],
       },
     ];

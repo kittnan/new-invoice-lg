@@ -1,0 +1,90 @@
+<div fxLayout="row wrap" fxLayoutAlign="start start">
+  <app-sub-head [name]="'Item Code'"></app-sub-head>
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+    fxLayoutGap="5"
+    class="layput-input"
+  >
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+      class="mt-2 mb-2"
+    >
+      <button mat-raised-button (click)="handleAddNew()">New</button>
+    </div>
+    <ng-container *ngIf="newItems.length > 0">
+      <div
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutAlign="start center"
+        *ngFor="let item of newItems; let i = index"
+      >
+        <mat-form-field appearance="fill">
+          <mat-label>Item Code</mat-label>
+          <input matInput [(ngModel)]="item.itemCode" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Item Name</mat-label>
+          <input matInput [(ngModel)]="item.itemName" />
+        </mat-form-field>
+        <button mat-icon-button (click)="handleDelete(i)">
+          <mat-icon>
+            <mat-icon class="mat-18">delete</mat-icon>
+          </mat-icon>
+        </button>
+      </div>
+    </ng-container>
+
+    <div
+      *ngIf="newItems.length > 0"
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+    >
+      <button
+        mat-raised-button
+        color="primary"
+        class="mt-2 mb-2"
+        (click)="handleSubmit()"
+      >
+        Submit
+      </button>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <table
+        fxFlex="50"
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="itemCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Code</th>
+          <td mat-cell *matCellDef="let element">{{ element.itemCode }}</td>
+        </ng-container>
+        <ng-container matColumnDef="itemName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.itemName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <button mat-icon-button (click)="handleDeleteTable(element)">
+              <mat-icon>
+                <mat-icon class="mat-18">delete</mat-icon>
+              </mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</div>

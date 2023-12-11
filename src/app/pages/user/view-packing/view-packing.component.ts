@@ -14,11 +14,11 @@ import { HttpItemCodeService } from 'src/app/https/http-item-code.service';
 import { HttpCountryService } from 'src/app/https/http-country.service';
 import { HttpModelService } from 'src/app/https/http-model.service';
 @Component({
-  selector: 'app-view-invoice',
-  templateUrl: './view-invoice.component.html',
-  styleUrls: ['./view-invoice.component.scss'],
+  selector: 'app-view-packing',
+  templateUrl: './view-packing.component.html',
+  styleUrls: ['./view-packing.component.scss']
 })
-export class ViewInvoiceComponent implements OnInit {
+export class ViewPackingComponent implements OnInit {
   invoice: any;
   pkta: any;
   packing: any;
@@ -67,8 +67,7 @@ export class ViewInvoiceComponent implements OnInit {
             return {
               ...a,
               packing: item,
-              printDate: a.printDate? a.printDate: new Date(),
-              typing1:a.typing1?a.typing1:null
+              printDate: a.printDate ? a.printDate : new Date()
             };
           });
           console.log('🚀 ~ this.pkta:', this.pkta);
@@ -162,16 +161,8 @@ export class ViewInvoiceComponent implements OnInit {
       }
     }, 300);
   }
-
-  handleAddTyping(value:any){
-    this.pkta = this.pkta.map((a:any)=>{
-      a['typing1'] = value
-      return a
-    })
-  }
-
   handleUpdatePkta(items: any) {
-    const itemsMap = items.map((a:any)=>{
+    const itemsMap = items.map((a: any) => {
       a.printStatus = true
       return a
     })
@@ -215,27 +206,45 @@ export class ViewInvoiceComponent implements OnInit {
     }
     return ''
   }
-  htmlNetWeight() {
-    if (this.pkta && this.pkta.length > 0) {
-      return this.pkta.reduce((p: any, n: any) => {
-        const sum = n.packing.reduce((p2: any, n2: any) => {
-          return p2 += (n2['NET WEIGHT'] * n2['Case Quantity'])
-        }, 0)
-        return p += sum
+  htmlNetWeight(item: any) {
+    if (item.packing && item.packing.length > 0) {
+      return item.packing.reduce((p: any, n: any) => {
+        return p += (n['NET WEIGHT'] * n['Case Quantity'])
       }, 0)
     }
     return ''
   }
-  htmlGrossWeight() {
-    if (this.pkta && this.pkta.length > 0) {
-      return this.pkta.reduce((p: any, n: any) => {
-        const sum = n.packing.reduce((p2: any, n2: any) => {
-          return p2 += (n2['GROSS WEIGHT'] * n2['Case Quantity'])
-        }, 0)
-        return p += sum
+  htmlGrossWeight(item: any) {
+    if (item.packing && item.packing.length > 0) {
+      return item.packing.reduce((p: any, n: any) => {
+        return p += (n['GROSS WEIGHT'] * n['Case Quantity'])
       }, 0)
     }
     return ''
   }
+
+  // htmlNetWeight() {
+  //   if (this.pkta && this.pkta.length > 0) {
+  //     return this.pkta.reduce((p: any, n: any) => {
+  //       const sum = n.packing.reduce((p2: any, n2: any) => {
+  //         return p2 += (n2['NET WEIGHT'] * n2['Case Quantity'])
+  //       }, 0)
+  //       return p += sum
+  //     }, 0)
+  //   }
+  //   return ''
+  // }
+  // htmlGrossWeight() {
+  //   if (this.pkta && this.pkta.length > 0) {
+  //     return this.pkta.reduce((p: any, n: any) => {
+  //       const sum = n.packing.reduce((p2: any, n2: any) => {
+  //         return p2 += (n2['GROSS WEIGHT'] * n2['Case Quantity'])
+  //       }, 0)
+  //       return p += sum
+  //     }, 0)
+  //   }
+  //   return ''
+  // }
+
 
 }

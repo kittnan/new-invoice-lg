@@ -22,6 +22,11 @@ export class AuthUserService {
             path: 'user/generate-invoice',
             active: false,
           },
+          {
+            name: 'print',
+            path: 'user/print',
+            active: false,
+          },
         ],
       },
     ];

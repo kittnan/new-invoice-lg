@@ -11,9 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ShareComponentsModule } from 'src/app/share-components/share-components.module';
 import { ConsigneeCodeComponent } from './consignee-code/consignee-code.component';
+import { ItemCodeComponent } from './item-code/item-code.component';
+import { CountryComponent } from './country/country.component';
+import { ModelComponent } from './model/model.component';
 
 @NgModule({
-  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent, ConsigneeCodeComponent],
+  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent, ConsigneeCodeComponent, ItemCodeComponent, CountryComponent, ModelComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

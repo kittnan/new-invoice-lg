@@ -1,0 +1,43 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <app-sub-head [name]="'Country'"></app-sub-head>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start start">
+      <table class="table table-striped">
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>
+            <div
+              fxLayout="row wrap"
+              fxLayoutAlign="center center"
+              class="bg-inherit"
+            >
+              <span class="me-2"> Key </span>
+              <button mat-raised-button (click)="upload.click()">Upload</button>
+              <button mat-raised-button (click)="handleDownload()">
+                Download
+              </button>
+              <input
+                hidden
+                type="file"
+                #upload
+                (change)="handleFileInput($event)"
+              />
+            </div>
+          </th>
+        </tr>
+        <tr *ngFor="let item of country; let i = index">
+          <td class="text-center">
+            {{ item.code }}
+          </td>
+          <td class="text-center">
+            {{ item.name }}
+          </td>
+          <td class="text-center">
+            {{ item.key }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

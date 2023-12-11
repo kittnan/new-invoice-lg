@@ -4,6 +4,9 @@ import { KtcAddressComponent } from './ktc-address/ktc-address.component';
 import { ConsigneeComponent } from './consignee/consignee.component';
 import { AccounteeComponent } from './accountee/accountee.component';
 import { ConsigneeCodeComponent } from './consignee-code/consignee-code.component';
+import { ItemCodeComponent } from './item-code/item-code.component';
+import { CountryComponent } from './country/country.component';
+import { ModelComponent } from './model/model.component';
 
 const routes: Routes = [
   {
@@ -26,6 +29,18 @@ const routes: Routes = [
   {
     path: 'accountee',
     component: AccounteeComponent,
+  },
+  {
+    path: 'item-code',
+    component: ItemCodeComponent,
+  },
+  {
+    path: 'country',
+    component: CountryComponent,
+  },
+  {
+    path: 'model',
+    component: ModelComponent,
   },
   // {
   //   path: 'ktc-address',

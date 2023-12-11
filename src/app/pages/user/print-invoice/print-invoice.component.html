@@ -1,0 +1,67 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start start">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <table *ngIf="pkta && pkta.length>0">
+        <tr>
+          <th>
+            No.
+          </th>
+          <th>
+            Invoice
+          </th>
+          <th>
+            import Date
+          </th>
+          <th>
+            Print Date
+          </th>
+          <th>
+            Invoice
+          </th>
+          <th>
+            Packing
+          </th>
+        </tr>
+        <tr *ngFor="let item of pkta; let i=index">
+          <td>
+            {{i+1}}
+          </td>
+          <td>
+            {{item['Delivery Note#']}}
+          </td>
+          <td>
+            {{item.createdAt |date:'dd-MMM-YYYY, HH:mm'}}
+          </td>
+          <td>
+            <span *ngIf="item.printStatus">
+              {{item.printDate |date:'dd-MMM-YYYY, HH:mm'}}
+            </span>
+          </td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayoutGap="10">
+              <button [disabled]="item.printStatus" mat-raised-button class="bg-blue-600 text-white font-bold" (click)="handleInvoicePrint(item)">
+                Print
+              </button>
+              <button mat-raised-button class="bg-orange-600 text-white font-bold" (click)="handleInvoicePrint(item)" >
+                Re-Print
+              </button>
+            </div>
+          </td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="space-around center" fxLayoutGap="10">
+              <button [disabled]="item.printStatus" mat-raised-button class="bg-blue-600 text-white font-bold" (click)="handlePackingPrint(item)">
+                Print
+              </button>
+              <button mat-raised-button class="bg-orange-600 text-white font-bold" (click)="handlePackingPrint(item)" >
+                Re-Print
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <p *ngIf="!pkta || pkta.length===0 ">
+        No DATA PKTA
+      </p>
+      </div>
+  </div>
+    </div>

@@ -1,0 +1,29 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <app-sub-head [name]="'Model'"></app-sub-head>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <button mat-raised-button (click)="upload.click()">Upload</button>
+    <button mat-raised-button (click)="handleDownload()">Download</button>
+    <input hidden type="file" #upload (change)="handleFileInput($event)" />
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+      class="overflow-auto"
+    >
+      <table class="table table-striped">
+        <tr>
+          <th *ngFor="let col of displayColumn; let i = index">
+            {{ col }}
+          </th>
+        </tr>
+        <tr *ngFor="let item of model; let i = index">
+          <td *ngFor="let col of displayColumn; let i = index">
+            {{ item[col] }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

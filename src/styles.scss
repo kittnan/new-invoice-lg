@@ -1,4 +1,5 @@
 @import url("./import.scss");
+
 @import "material-icons/iconfont/material-icons.scss";
 
 html,
@@ -8,4 +9,14 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+ .mat-form-field-wrapper{
+  padding-bottom: 10px  !important;
+}
+ .mat-form-field-appearance-fill .mat-form-field-flex{
+  padding: 0 !important;
+}
+.mat-form-field{
+  font-size: 14px;
 }

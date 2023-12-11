@@ -20,6 +20,9 @@ export class HttpPktaService {
   create(data: any): Observable<any> {
     return this.http.post(`${this.URL}/pkta/create`, data);
   }
+  createOrUpdate(data: any): Observable<any> {
+    return this.http.post(`${this.URL}/pkta/createOrUpdate`, data);
+  }
   update(data: any): Observable<any> {
     return this.http.put(`${this.URL}/pkta/update`, data);
   }

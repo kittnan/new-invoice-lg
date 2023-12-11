@@ -1,15 +1,6 @@
 <ng-container *ngIf="pkta">
   <button mat-raised-button (click)="generatePDF()" class="bg-blue-500 text-white">PDF</button>
 </ng-container>
-<ng-container *ngIf="pkta && !pkta[0].printStatus">
-  <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4 mb-4" *ngFor="let item of pkta; let i=index">
-    <label for="" class="me-2">
-     SO#  {{ item["SO#"] }} Typing:
-    </label>
-    <input type="text"  class="bg-green-500 me-2" [(ngModel)]="item.typing1" >
-  </div>
-</ng-container>
-
 
 
 <div
@@ -29,7 +20,7 @@
               style="font-size: 35px; letter-spacing: 6px; line-height: 30px"
               fxLayoutAlign="start start"
             >
-              INVOICE
+              PACKING LIST
             </span>
           </div>
         </div>
@@ -185,8 +176,8 @@
           <div fxFlex="30">Per {{ accountee.per }}</div>
         </div>
       </div>
-      <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="center start">
-        <span> On or about {{ htmlDate(pkta[0]["Sales DT"]) }} </span>
+      <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start start">
+        <span> No. {{invoice}} </span>
       </div>
     </div>
 
@@ -195,31 +186,41 @@
       fxFlex="100"
       fxLayout="row wrap"
       fxLayoutAlign="start start"
+      class="mb-4"
     >
-      <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
         <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
           <div fxFlex="100">
             L/C No.& Issusing date {{ accountee.paymentItem }}
           </div>
         </div>
       </div>
-      <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="end start">
-        <span>( A:1 H:100 K:1000 )</span>
+      <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start start">
+        <span> On or about {{ htmlDate(pkta[0]["Sales DT"]) }} </span>
       </div>
     </div>
-    <div fxFlex="100" style="margin-bottom: 10px"></div>
+    <!-- <div fxFlex="100"  style="padding-right: 20rem;" fxLayoutAlign="end center">
+      SEQ No: 1
+    </div> -->
   </div>
 
   <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-    <table fxFlex="100" class="mt-4">
+    <table fxFlex="100" class="mt-3">
       <tr class="table-head">
-        <th width="20%">Marks & No. s</th>
-        <th width="40%">Description</th>
+        <th width="15%">Marks & No. s</th>
+        <th width="35%">Description</th>
         <th width="16%">Quantity</th>
-        <th width="16%">Unit Price</th>
-        <th width="16%">Amount</th>
+        <th width="16%">NET Weight</th>
+        <th width="25%">Gross Weight/M'ment</th>
       </tr>
       <ng-container *ngFor="let item of getData(p_i); let i = index">
+        <tr>
+          <td></td>
+          <td></td>
+          <td>PIECE</td>
+          <td></td>
+          <td></td>
+        </tr>
         <tr>
           <td>
             {{ htmlItemCode(item["Customer Part#"]) }}
@@ -227,22 +228,28 @@
           <td>
             {{ item["Customer Part#"] }}
           </td>
-          <td></td>
-          <td *ngIf="accountee">
-            {{ accountee["contractTerm"] }}
+          <td class="text-end">
+           {{ item["Sales QTY"] | number : "1.0-0" }}
           </td>
-          <td></td>
+          <td class="text-end" >
+            <span class="me-1">
+              {{htmlNetWeight(item)  | number : "1.2"}} KGS
+            </span>
+          </td>
+          <td class="text-center">
+            {{htmlGrossWeight(item)  | number : "1.2"}} KGS
+          </td>
         </tr>
         <tr>
           <td></td>
           <td>
             {{ item["Cust Desc"] }}
           </td>
-          <td>PIECE</td>
-          <td>THB</td>
-          <td>
-            {{ item["Cust Currency"] }}
+          <td></td>
+          <td class="text-end">
+
           </td>
+          <td></td>
         </tr>
         <tr>
           <td>
@@ -256,14 +263,10 @@
               </span>
             </div>
           </td>
-          <td class="text-end">
-            {{ item["Sales QTY"] | number : "1.0-0" }}
-          </td>
-          <td class="text-end">
-            {{ item["U/P"] | number : "1.5" }} /{{ item["UPM"] }}
-          </td>
-          <td class="text-end">
-            {{ item["Sales AMT"] | number : "1.2" }}
+          <td></td>
+          <td></td>
+          <td class="text-start">
+            {{item.packing[0]['Measurement (vertical)']}} X {{item.packing[0]['Measurement (horizontal)']}} X {{item.packing[0]['Measurement (High)']}} CM
           </td>
         </tr>
         <tr>
@@ -337,7 +340,7 @@
         <tr>
           <td></td>
           <td>
-              {{item['typing1']}}
+            {{item['typing1']}}
           </td>
           <td></td>
           <td></td>
@@ -357,7 +360,7 @@
           <td></td>
           <td>PIECE</td>
           <td></td>
-          <td>THB</td>
+          <td></td>
         </tr>
         <tr>
           <td class="text-end">TOTAL:</td>
@@ -370,31 +373,23 @@
           <td class="text-end">
             {{ htmlQuantity() | number : "1.0-0" }}
           </td>
-          <td></td>
           <td class="text-end">
-            {{ htmlAmount() | number : "1.2" }}
+            72.07 KGS
+          </td>
+          <td class="text-end">
+           668.40 KGS
           </td>
         </tr>
         <tr>
-          <td class="text-end">NET WEIGHT :</td>
-          <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-              <span fxFlex="20" fxLayoutAlign="end center"> {{htmlNetWeight()}} </span>
-              <span fxFlex="80" style="padding-left: 10px;">  KGS </span>
-            </div>
-          </td>
+          <td></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
         <tr>
-          <td class="text-end">GROSS WEIGHT :</td>
-          <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-              <span fxFlex="20" fxLayoutAlign="end center"> {{htmlGrossWeight()}} </span>
-              <span fxFlex="80" style="padding-left: 10px;">  KGS </span>
-            </div>
-          </td>
+          <td></td>
+          <td></td>
           <td></td>
           <td></td>
           <td></td>

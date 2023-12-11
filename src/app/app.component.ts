@@ -20,6 +20,7 @@ export class AppComponent {
   ngOnInit(): void {
     try {
       this.handleSideBar('admin');
+
     } catch (error) {
       console.log('🚀 ~ error:', error);
     }
@@ -36,11 +37,15 @@ export class AppComponent {
   }
   link(sub: any) {
     this.router.navigate([sub.path]).then(() => {
-      this.pageActive = sub.name;
+      // this.pageActive = sub.name;
     });
   }
   handleView() {
     if (localStorage.getItem('new-invoice-lg-view') == 'true') return true;
     return false;
+  }
+  ngAfterContentChecked(): void {
+    this.pageActive = this.router.url
+    console.log("🚀 ~ this.pageActive:", this.pageActive)
   }
 }
