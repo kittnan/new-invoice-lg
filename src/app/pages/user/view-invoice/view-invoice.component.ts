@@ -153,7 +153,7 @@ export class ViewInvoiceComponent implements OnInit {
           .then(async (doc) => {
             console.log(`${index + 1}`, doc);
             if (index + 1 === div.length) {
-              doc.save('postres.pdf');
+              doc.save(`invoice_${this.pkta[0]['Delivery Note#']}.pdf`);
               console.log(this.pkta);
               await this.handleUpdatePkta(this.pkta)
               this.$loader.stop();

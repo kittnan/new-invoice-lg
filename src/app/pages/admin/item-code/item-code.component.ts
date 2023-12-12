@@ -16,7 +16,7 @@ export class ItemCodeComponent implements OnInit {
   constructor(
     private $itemCode: HttpItemCodeService,
     private $alert: AlertService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -39,12 +39,22 @@ export class ItemCodeComponent implements OnInit {
   }
   async handleSubmit() {
     try {
-      console.log(this.newItems);
-      const dataCreate = this.newItems.filter(
-        (a: any) => a.itemCode && a.itemName
-      );
-      await this.$itemCode.create(dataCreate).toPromise();
-      this.$alert.success(1000, 'SUCCESS', true);
+      Swal.fire({
+        title: "Do you want to save?",
+        icon: 'question',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+
+          console.log(this.newItems);
+          const dataCreate = this.newItems.filter(
+            (a: any) => a.itemCode && a.itemName
+          );
+          await this.$itemCode.create(dataCreate).toPromise();
+          this.$alert.success(1000, 'SUCCESS', true);
+
+        }
+      })
     } catch (error) {
       console.log('🚀 ~ error:', error);
     }

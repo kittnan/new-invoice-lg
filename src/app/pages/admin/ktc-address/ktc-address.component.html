@@ -1,37 +1,43 @@
-<div fxLayout="row wrap" fxLayoutAlign="start start">
+<div fxLayout="row wrap" fxLayoutAlign="start start" class="p-3 rounded-lg bg-slate-300">
   <app-sub-head [name]="'KTC Address'"></app-sub-head>
   <div
     fxFlex="100"
     fxLayout="row wrap"
-    fxLayoutAlign="start start"
-    fxLayoutGap="10"
-    class="layput-input"
+    fxLayoutAlign="space-around start"
+    class="layput-input mt-3"
   >
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40"  appearance="legacy">
       <mat-label>KTC Address Line 1</mat-label>
       <input matInput [(ngModel)]="ktcAddress.line1" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40"  appearance="legacy">
       <mat-label>KTC Address Line 2</mat-label>
       <input matInput [(ngModel)]="ktcAddress.line2" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40"  appearance="legacy">
       <mat-label>KTC Address Line 3</mat-label>
       <input matInput [(ngModel)]="ktcAddress.line3" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40"  appearance="legacy">
       <mat-label>KTC Address Line 4</mat-label>
       <input matInput [(ngModel)]="ktcAddress.line4" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40"  appearance="legacy">
       <mat-label>KTC Address Line 5</mat-label>
       <input matInput [(ngModel)]="ktcAddress.line5" />
     </mat-form-field>
+    <div fxFlex="40">
+
+    </div>
   </div>
-  <mat-divider fxFlex="90" class="mt-4 mb-4"></mat-divider>
-  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start start">
-    <button mat-raised-button color="primary" (click)="handleSubmit()">
-      Save
+  <mat-divider fxFlex="100" class="mt-4 mb-4"></mat-divider>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-3">
+    <button mat-raised-button class="bg-green-300 text-indigo-600" style="width: 300px;" (click)="handleSubmit()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18">
+          save
+        </mat-icon>
+        Save
+      </div>
     </button>
-  </div>
-</div>
+  </div></div>

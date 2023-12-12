@@ -4,6 +4,7 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 import { ConvertXLSXService } from 'src/app/services/convertXLSX/convert-xlsx.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import * as XLSX from 'xlsx';
+import * as fs from 'file-saver'
 interface consigneeCode {
   'CONSIGNEE-CODE': string;
 }
@@ -49,18 +50,27 @@ export class ConsigneeCodeComponent implements OnInit {
   handleDownload() {
     try {
       if (this.codes) {
-        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.codes);
+        const dataExport = this.codes.map((a:any)=>{
+          delete a._id
+          delete a.active
+          delete a.createdAt
+          delete a.updatedAt
+          return a
+        })
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataExport);
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
         // Generate blob from workbook
-        const blob = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+        const wb_out = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+        const blob = new Blob([wb_out], { type: 'application/vnd.ms-excel' });
+        fs.saveAs(blob,'consignee_code.xlsx')
 
-        // Create download link and trigger click
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'data.xlsx';
-        link.click();
+        // // Create download link and trigger click
+        // const link = document.createElement('a');
+        // link.href = window.URL.createObjectURL(blob);
+        // link.download = 'consignee_code.xlsx';
+        // link.click();
       }
     } catch (error) {
       console.log('🚀 ~ error:', error);

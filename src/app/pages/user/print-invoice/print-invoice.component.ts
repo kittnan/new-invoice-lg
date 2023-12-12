@@ -10,6 +10,10 @@ import { HttpPktaService } from 'src/app/https/http-pkta.service';
 export class PrintInvoiceComponent implements OnInit {
 
   pkta: any = null
+  date: any = {
+    start: new Date(),
+    end:null
+  }
   constructor(
     private $pkta: HttpPktaService,
     private router: Router
@@ -26,7 +30,7 @@ export class PrintInvoiceComponent implements OnInit {
   }
 
   handleInvoicePrint(item: any) {
-    const name ='user/view-invoice'
+    const name = 'user/view-invoice'
     const url = this.router
       .createUrlTree([name], {
         queryParams: {
@@ -43,7 +47,7 @@ export class PrintInvoiceComponent implements OnInit {
     // })
   }
   handlePackingPrint(item: any) {
-    const name ='user/view-packing'
+    const name = 'user/view-packing'
     const url = this.router
       .createUrlTree([name], {
         queryParams: {

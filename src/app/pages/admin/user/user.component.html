@@ -1,18 +1,16 @@
 <div fxLayout="row wrap" fxLayoutAlign="start stretch" >
-  <app-sub-head [name]="'Consignee Code'"></app-sub-head>
+  <app-sub-head [name]="'User'"></app-sub-head>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" >
     <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start" class="p-3 rounded-lg bg-slate-300">
       <table class="table table-striped" >
         <tr>
-          <th>No.</th>
-          <th>
+          <th colspan="5">
             <div
               fxLayout="row wrap"
-              fxLayoutAlign="center center"
+              fxLayoutAlign="start center"
               class="bg-inherit"
               style="background-color: inherit !important;"
             >
-              <span class="me-2"> Code </span>
               <button mat-raised-button class="bg-green-300 text-indigo-600 me-2" (click)="upload.click()">
                 <div fxLayout="row wrap" fxLayoutAlign="center center">
                   <mat-icon class="mat-18">
@@ -39,14 +37,36 @@
               />
             </div>
           </th>
+        </tr>
+        <tr>
+          <th>No.</th>
+          <th>Employee Code</th>
+          <th>
+            Name
+          </th>
+          <th>
+            Auth Admin
+          </th>
+          <th>
+            Auth User
+          </th>
 
         </tr>
-        <tr *ngFor="let code of codes; let i = index">
+        <tr *ngFor="let user of users; let i = index">
           <td>
             {{ i + 1 }}
           </td>
           <td class="text-center">
-            {{ code["CONSIGNEE-CODE"] }}
+            {{ user.employee_code }}
+          </td>
+          <td class="text-center">
+            {{ user.name }}
+          </td>
+          <td class="text-center">
+            {{ user.auth_admin }}
+          </td>
+          <td class="text-center">
+            {{ user.auth_user }}
           </td>
         </tr>
       </table>

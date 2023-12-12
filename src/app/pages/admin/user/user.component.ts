@@ -1,26 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpCountryService } from 'src/app/https/http-country.service';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { ConvertXLSXService } from 'src/app/services/convertXLSX/convert-xlsx.service';
 import * as XLSX from 'xlsx';
 import * as fs from 'file-saver'
-
+import { HttpUsersService } from 'src/app/https/http-users.service';
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.scss'],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss']
 })
-export class CountryComponent implements OnInit {
-  country: any[] | null = null;
+export class UserComponent implements OnInit {
+
+  users:any = null
   constructor(
     private $alert: AlertService,
     private $convertXLSX: ConvertXLSXService,
-    private $country: HttpCountryService
-  ) {}
+    private $user:HttpUsersService
+  ) { }
+
 
   async ngOnInit(): Promise<void> {
     try {
-      this.country = await this.$country.get().toPromise();
+      this.users = await this.$user.get().toPromise();
     } catch (error) {
       console.log('🚀 ~ error:', error);
       this.$alert.error(2000, JSON.stringify(error), false);
@@ -37,8 +38,8 @@ export class CountryComponent implements OnInit {
 
   async createDataImport(data: any) {
     try {
-      console.log('🚀 ~ data:', data);
-      const stat = await this.$country.import(data).toPromise();
+      console.log("🚀 ~ data:", data)
+      const stat = await this.$user.import(data).toPromise();
       console.log('🚀 ~ stat:', stat);
       this.$alert.success(2000, 'Data created!!', true);
     } catch (error) {
@@ -47,30 +48,28 @@ export class CountryComponent implements OnInit {
   }
   handleDownload() {
     try {
-      if (this.country) {
-        const dataExport = this.country.map((a:any)=>{
-          return{
-            code: a.code,
-            name:a.name,
-            key:a.key
+      if (this.users) {
+        const dataExport = this.users.map((a:any)=>{
+          return {
+            employee_code: a.employee_code,
+            name: a.name,
+            auth_admin: a.auth_admin,
+            auth_user: a.auth_user,
           }
         })
         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataExport);
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-        // Generate blob from workbook
         const wb_out = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
         const blob = new Blob([wb_out], { type: 'application/vnd.ms-excel' });
-        fs.saveAs(blob,'country.xlsx')
-        // // Create download link and trigger click
-        // const link = document.createElement('a');
-        // link.href = window.URL.createObjectURL(blob);
-        // link.download = 'data.xlsx';
-        // link.click();
+        fs.saveAs(blob,'users.xlsx')
+
       }
     } catch (error) {
       console.log('🚀 ~ error:', error);
     }
   }
+
+
 }

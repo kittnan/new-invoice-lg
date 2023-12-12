@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthAdminService } from './services/sidebars/auth-admin.service';
 import { Router } from '@angular/router';
 import { AuthUserService } from './services/sidebars/auth-user.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
+import { LoginService } from './services/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +16,21 @@ export class AppComponent {
   constructor(
     private $admin: AuthAdminService,
     private $user: AuthUserService,
-    private router: Router
+    private router: Router,
+    private $login: LoginService
   ) {}
 
   ngOnInit(): void {
     try {
-      this.handleSideBar('admin');
+      if(this.$login.get()){
+        if(this.$login.get().auth_admin=='y'){
+          this.handleSideBar('admin');
+        }else{
+
+          this.handleSideBar('user');
+        }
+      }
+
 
     } catch (error) {
       console.log('🚀 ~ error:', error);
@@ -46,6 +57,38 @@ export class AppComponent {
   }
   ngAfterContentChecked(): void {
     this.pageActive = this.router.url
-    console.log("🚀 ~ this.pageActive:", this.pageActive)
+  }
+
+  handleLogout(){
+    Swal.fire({
+      title:"Sign out?",
+      icon:'question',
+      showCancelButton:true
+    }).then((v:SweetAlertResult)=>{
+      if(v.isConfirmed){
+        this.logout()
+      }
+    })
+  }
+  logout(){
+    try {
+      localStorage.removeItem('INVLG_user')
+        this.router.navigate(['login']).then(()=>location.reload())
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+  validateLogin(){
+    return this.$login.validate()
+  }
+  showUserLogin(){
+    if(this.$login.get()){
+      return this.$login.get().name
+    }
+    return ''
+  }
+  ngOnDestroy(): void {
+    localStorage.removeItem('INVLG_user')
+
   }
 }

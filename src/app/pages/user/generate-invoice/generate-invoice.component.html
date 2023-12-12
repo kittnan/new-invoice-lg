@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxLayoutAlign="start stretch">
-  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="center start">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="p-3 rounded-lg bg-slate-300">
     <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <label for="uploadPKTA" class="me-2"> PKTA (.txt) </label>
@@ -42,6 +42,7 @@
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <label for="uploadXLSX" class="me-2"> XLSX (.xlsx) </label>
         <input
+        [disabled]="!pkta || pkta.length===0"
           type="file"
           #uploadXLSX
           name="uploadXLSX"
@@ -60,7 +61,7 @@
           !(packing && pkta && packing.length !== 0 && pkta.length !== 0)
         "
         mat-raised-button
-        class="m-5 bg-green-400 w-1/4 uppercase"
+        class="m-5 bg-green-300 text-indigo-600 w-1/4 uppercase"
         (click)="handleSubmit()"
       >
         Submit

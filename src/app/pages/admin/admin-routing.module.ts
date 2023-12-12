@@ -7,6 +7,7 @@ import { ConsigneeCodeComponent } from './consignee-code/consignee-code.componen
 import { ItemCodeComponent } from './item-code/item-code.component';
 import { CountryComponent } from './country/country.component';
 import { ModelComponent } from './model/model.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {
@@ -26,10 +27,10 @@ const routes: Routes = [
     path: 'consignee-code',
     component: ConsigneeCodeComponent,
   },
-  {
-    path: 'accountee',
-    component: AccounteeComponent,
-  },
+  // {
+  //   path: 'accountee',
+  //   component: AccounteeComponent,
+  // },
   {
     path: 'item-code',
     component: ItemCodeComponent,
@@ -42,10 +43,10 @@ const routes: Routes = [
     path: 'model',
     component: ModelComponent,
   },
-  // {
-  //   path: 'ktc-address',
-  //   component: KtcAddressComponent,
-  // },
+  {
+    path: 'user',
+    component: UserComponent,
+  },
 ];
 
 @NgModule({

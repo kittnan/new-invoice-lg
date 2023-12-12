@@ -1,22 +1,28 @@
 @import url("./import.scss");
 
 @import "material-icons/iconfont/material-icons.scss";
-
+@import '@sweetalert2/theme-borderless/borderless.scss';
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
+}
+* {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
- .mat-form-field-wrapper{
-  padding-bottom: 10px  !important;
+.mat-form-field-wrapper {
+  padding-bottom: 10px !important;
 }
- .mat-form-field-appearance-fill .mat-form-field-flex{
+.mat-form-field-appearance-fill .mat-form-field-flex {
   padding: 0 !important;
 }
-.mat-form-field{
+.mat-form-field {
   font-size: 14px;
+}
+mat-label {
+  color: #4b72e6 ;
+  font-weight: 700;
 }

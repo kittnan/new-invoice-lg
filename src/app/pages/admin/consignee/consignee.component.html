@@ -1,50 +1,117 @@
-<div fxLayout="row wrap" fxLayoutAlign="start start">
-  <app-sub-head [name]="'Consignee'"></app-sub-head>
+<div fxLayout="row wrap" fxLayoutAlign="start start" class="p-3 rounded-lg bg-slate-300">
+  <app-sub-head [name]="'Consignee'" ></app-sub-head>
   <div
     fxFlex="100"
     fxLayout="row wrap"
-    fxLayoutAlign="start start"
-    fxLayoutGap="10"
-    class="layput-input"
+    fxLayoutAlign="space-around start"
+
+    class="layput-input mt-3"
   >
-    <mat-form-field fxFlex="40" appearance="fill">
-      <mat-label>Consignee Code</mat-label>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label class="text-rose-500">*Consignee Code</mat-label>
       <mat-select [(ngModel)]="code" (selectionChange)="handleChange()">
         <mat-option *ngFor="let code of codes" [value]="code">
           {{ code }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Consignee Line 1</mat-label>
       <input matInput [(ngModel)]="consigneeForm.line1" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Consignee Line 2</mat-label>
       <input matInput [(ngModel)]="consigneeForm.line2" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Consignee Line 3</mat-label>
       <input matInput [(ngModel)]="consigneeForm.line3" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Consignee Line 4</mat-label>
       <input matInput [(ngModel)]="consigneeForm.line4" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Consignee Line 5</mat-label>
       <input matInput [(ngModel)]="consigneeForm.line5" />
     </mat-form-field>
-    <mat-form-field fxFlex="40" class="example-full-width" appearance="fill">
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Consignee Line 6</mat-label>
       <input matInput [(ngModel)]="consigneeForm.line6" />
     </mat-form-field>
-  </div>
-  <mat-divider fxFlex="90" class="mt-4 mb-4"></mat-divider>
+    <div fxFlex="40" class="mb-1">
 
-  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start start">
-    <button mat-raised-button color="primary" (click)="handleSubmit()">
-      Save
+    </div>
+  </div>
+  <mat-divider fxFlex="100" class="mt-4 mb-4"></mat-divider>
+
+  <app-sub-head fxFlex="100" [name]="'Accountee'"></app-sub-head>
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="space-around start"
+
+    class="layput-input mt-3"
+  >
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Accountee Line 1</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.line1" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Accountee Line 2</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.line2" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Accountee Line 3</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.line3" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Accountee Line 4</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.line4" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Accountee Line 5</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.line5" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Accountee Line 6</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.line6" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Shipped From</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.shippedFrom" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>To</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.to" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Per</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.per" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Payment Item</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.paymentItem" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Freight</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.freight" />
+    </mat-form-field>
+    <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
+      <mat-label>Contract Term</mat-label>
+      <input matInput [(ngModel)]="accounteeForm.contractTerm" />
+    </mat-form-field>
+
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-3">
+    <button mat-raised-button class="bg-green-300 text-indigo-600" style="width: 300px;" (click)="handleSubmit()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18">
+          save
+        </mat-icon>
+        Save
+      </div>
     </button>
   </div>
 </div>

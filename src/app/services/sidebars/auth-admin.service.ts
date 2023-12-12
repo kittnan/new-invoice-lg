@@ -32,11 +32,11 @@ export class AuthAdminService {
             path: 'admin/consignee',
             active: false,
           },
-          {
-            name: 'accountee',
-            path: 'admin/accountee',
-            active: false,
-          },
+          // {
+          //   name: 'accountee',
+          //   path: 'admin/accountee',
+          //   active: false,
+          // },
           {
             name: 'item-code',
             path: 'admin/item-code',
@@ -50,6 +50,11 @@ export class AuthAdminService {
           {
             name: 'model',
             path: 'admin/model',
+            active: false,
+          },
+          {
+            name: 'user',
+            path: 'admin/user',
             active: false,
           },
         ],

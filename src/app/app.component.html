@@ -1,27 +1,33 @@
-<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="">
+<div *ngIf="validateLogin()" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" >
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <mat-toolbar>
-      <mat-toolbar-row class="bg-rose-300">
-        <span> INVOICE LG </span>
+      <mat-toolbar-row style="background-color: #9999ff;">
+        <span class="fs-3" style="color: #e6ecff;"> INVOICE LG </span>
         <span class="example-spacer"></span>
+        <span class="text-white fs-6">
+          {{showUserLogin()}}
+        </span>
         <button
           mat-icon-button
-          class="example-icon"
+          class="example-icon text-white"
           aria-label="Example icon-button with menu icon"
+          (click)="handleLogout()"
         >
-          <mat-icon>menu</mat-icon>
+          <mat-icon>
+            logout
+          </mat-icon>
         </button>
       </mat-toolbar-row>
 
       <mat-toolbar-row
-        class="bg-slate-400"
-        style="height: 30px; font-size: small"
+
+        style="height: 30px; font-size: small;background-color: #e6ecff;"
       >
         <span class="ps-4 uppercase">
           {{ pageActive }}
         </span>
         <span class="example-spacer"></span>
-        <button
+        <!-- <button
           mat-icon-button
           class="example-icon favorite-icon"
           aria-label="Example icon-button with heart icon"
@@ -34,11 +40,11 @@
           aria-label="Example icon-button with share icon"
         >
           <mat-icon>share</mat-icon>
-        </button>
+        </button> -->
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" style="height: 90vh;">
     <mat-drawer-container fxFlex="100" class="example-container m-2" autosize>
       <mat-drawer
         #drawer
@@ -49,11 +55,12 @@
       >
         <ng-container *ngFor="let side of sideBarsItems; let i = index">
           <ul class="m-1 p-3 font-bold uppercase">
-            <p class="bg-pink-300 p-2 rounded-md">{{ side.title }}</p>
+            <p class=" p-2 rounded-md" style="background-color: #ccd9ff;">{{ side.title }}</p>
             <li
               *ngFor="let sub of side.sub; let i = index"
               [ngClass]="{ active: sub.active }"
-              class="bg-pink-500 p-2 m-2 rounded-md uppercase"
+              class=" p-2 m-2 rounded-md uppercase"
+              style="background-color: #e6ecff;"
               (click)="link(sub)"
             >
               {{ sub.name }}
@@ -66,7 +73,7 @@
       </mat-drawer-content>
     </mat-drawer-container>
   </div>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <mat-toolbar>
       <mat-toolbar-row class="">
         <span>Footer</span>
@@ -80,7 +87,9 @@
         </button>
       </mat-toolbar-row>
     </mat-toolbar>
-  </div>
+  </div> -->
 </div>
+
+<app-login *ngIf="!validateLogin()"></app-login>
 
 <ngx-ui-loader></ngx-ui-loader>

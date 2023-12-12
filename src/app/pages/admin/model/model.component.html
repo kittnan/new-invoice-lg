@@ -1,8 +1,25 @@
-<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+<div fxLayout="row wrap" fxLayoutAlign="start stretch" class="p-3 rounded-lg bg-slate-300">
   <app-sub-head [name]="'Model'"></app-sub-head>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-    <button mat-raised-button (click)="upload.click()">Upload</button>
-    <button mat-raised-button (click)="handleDownload()">Download</button>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-2 mb-2">
+    <span class="me-2"> Key </span>
+              <button mat-raised-button class="bg-green-300 text-indigo-600 me-2" (click)="upload.click()">
+                <div fxLayout="row wrap" fxLayoutAlign="center center">
+                  <mat-icon class="mat-18">
+                    file_upload
+                  </mat-icon>
+
+                  Upload
+                </div>
+              </button>
+              <button mat-raised-button class="bg-sky-400 text-white" (click)="handleDownload()">
+                <div fxLayout="row wrap" fxLayoutAlign="center center">
+                  <mat-icon class="mat-18">
+                    file_download
+                  </mat-icon>
+
+                  Download
+                </div>
+              </button>
     <input hidden type="file" #upload (change)="handleFileInput($event)" />
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">

@@ -8,7 +8,7 @@ import { ViewPackingComponent } from './view-packing/view-packing.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'generate-invoice',
+    redirectTo: 'print',
     pathMatch: 'full',
   },
   {

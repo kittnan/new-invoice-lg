@@ -14,9 +14,10 @@ import { ConsigneeCodeComponent } from './consignee-code/consignee-code.componen
 import { ItemCodeComponent } from './item-code/item-code.component';
 import { CountryComponent } from './country/country.component';
 import { ModelComponent } from './model/model.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
-  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent, ConsigneeCodeComponent, ItemCodeComponent, CountryComponent, ModelComponent],
+  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent, ConsigneeCodeComponent, ItemCodeComponent, CountryComponent, ModelComponent, UserComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -28,4 +29,4 @@ import { ModelComponent } from './model/model.component';
     ShareComponentsModule,
   ],
 })
-export class AdminModule {}
+export class AdminModule { }

@@ -6,6 +6,7 @@
     fxLayoutAlign="start start"
     fxLayoutGap="5"
     class="layput-input"
+
   >
     <div
       fxFlex="100"
@@ -13,7 +14,14 @@
       fxLayoutAlign="start center"
       class="mt-2 mb-2"
     >
-      <button mat-raised-button (click)="handleAddNew()">New</button>
+      <button mat-raised-button (click)="handleAddNew()" class="bg-sky-400 text-white">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-icon class="mat-18">
+            note_add
+          </mat-icon>
+          New
+        </div>
+      </button>
     </div>
     <ng-container *ngIf="newItems.length > 0">
       <div
@@ -47,11 +55,13 @@
     >
       <button
         mat-raised-button
-        color="primary"
-        class="mt-2 mb-2"
+        class="mt-2 mb-2 bg-green-300 text-indigo-600"
         (click)="handleSubmit()"
       >
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18">save</mat-icon>
         Submit
+      </div>
       </button>
     </div>
 

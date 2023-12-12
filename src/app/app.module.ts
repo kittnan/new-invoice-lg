@@ -14,6 +14,7 @@ import {
   NgxUiLoaderRouterModule,
   NgxUiLoaderHttpModule,
 } from 'ngx-ui-loader';
+import { LoginComponent } from './pages/login/login.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#673ab7',
@@ -46,7 +47,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   minTime: 300,
 };
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
