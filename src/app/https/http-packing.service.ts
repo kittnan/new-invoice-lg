@@ -23,4 +23,7 @@ export class HttpPackingService {
   update(data: any): Observable<any> {
     return this.http.put(`${this.URL}/packing/update`, data);
   }
+  createOrUpdate(data: any): Observable<any> {
+    return this.http.post(`${this.URL}/packing/createOrUpdate`, data);
+  }
 }

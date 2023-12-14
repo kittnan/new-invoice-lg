@@ -12,6 +12,16 @@ export class HttpPktaService {
   get(): Observable<any> {
     return this.http.get(`${this.URL}/pkta`);
   }
+  checkDuplicate(param:HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/pkta/checkDuplicate`,{
+      params:param
+    });
+  }
+  search(param:HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/pkta/search`,{
+      params:param
+    });
+  }
   getKey(params: HttpParams): Observable<any> {
     return this.http.get(`${this.URL}/pkta`, {
       params: params,
@@ -26,4 +36,8 @@ export class HttpPktaService {
   update(data: any): Observable<any> {
     return this.http.put(`${this.URL}/pkta/update`, data);
   }
+  deleteByInvoice(data: any): Observable<any> {
+    return this.http.put(`${this.URL}/pkta/deleteByInvoice`, data);
+  }
+
 }

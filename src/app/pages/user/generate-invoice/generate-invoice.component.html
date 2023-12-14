@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxLayoutAlign="start stretch">
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="p-3 rounded-lg bg-slate-300">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" >
     <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <label for="uploadPKTA" class="me-2"> PKTA (.txt) </label>
@@ -57,15 +57,49 @@
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
       <button
-        [disabled]="
-          !(packing && pkta && packing.length !== 0 && pkta.length !== 0)
-        "
+        [disabled]="handleValidateSubmit()"
         mat-raised-button
         class="m-5 bg-green-300 text-indigo-600 w-1/4 uppercase"
         (click)="handleSubmit()"
       >
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18">save</mat-icon>
         Submit
-      </button>
+      </div>
+    </button>
     </div>
+    <div *ngIf="pkta.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <table>
+        <tr>
+          <th>
+           No
+          </th>
+          <th>
+            SO#
+          </th>
+          <th>
+            Invoice
+          </th>
+          <th>
+            Packing
+          </th>
+        </tr>
+        <tr *ngFor="let item of pkta; let i=index">
+          <td>
+            {{i+1}}
+          </td>
+          <td>
+            {{item['SO#']}}
+
+          </td>
+          <td>
+            {{item['Delivery Note#']}}
+          </td>
+          <td>
+            {{item.packing?.length}}
+          </td>
+        </tr>
+      </table>
+</div>
   </div>
 </div>

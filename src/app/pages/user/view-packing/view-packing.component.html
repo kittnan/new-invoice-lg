@@ -1,5 +1,9 @@
 <ng-container *ngIf="pkta">
-  <button mat-raised-button (click)="generatePDF()" class="bg-blue-500 text-white">PDF</button>
+  <button mat-raised-button (click)="generatePDF()" class="bg-blue-500 text-white">
+    <div fxLayout="row wrap" fxLayoutAlign="start center">
+      PDF
+    </div>
+  </button>
 </ng-container>
 
 
@@ -374,10 +378,10 @@
             {{ htmlQuantity() | number : "1.0-0" }}
           </td>
           <td class="text-end">
-            72.07 KGS
+          {{htmlNetWeightAll() | number : "1.2"}} KGS
           </td>
           <td class="text-end">
-           668.40 KGS
+           {{htmlGrossWeightAll() | number : "1.2"}} KGS
           </td>
         </tr>
         <tr>

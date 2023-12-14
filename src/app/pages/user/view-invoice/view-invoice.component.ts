@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpPackingService } from 'src/app/https/http-packing.service';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
 import html2canvas from 'html2canvas';
@@ -13,6 +13,9 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { HttpItemCodeService } from 'src/app/https/http-item-code.service';
 import { HttpCountryService } from 'src/app/https/http-country.service';
 import { HttpModelService } from 'src/app/https/http-model.service';
+import { HttpReprintService } from 'src/app/https/http-reprint.service';
+import { HttpConsigneeCodeService } from 'src/app/https/http-consignee-code.service';
+import { HttpFormService } from 'src/app/https/http-form.service';
 @Component({
   selector: 'app-view-invoice',
   templateUrl: './view-invoice.component.html',
@@ -20,11 +23,15 @@ import { HttpModelService } from 'src/app/https/http-model.service';
 })
 export class ViewInvoiceComponent implements OnInit {
   invoice: any;
-  pkta: any;
+  pkta: any = null
   packing: any;
   consignee: any;
+  consigneeOption: any;
+  consigneeCode: any;
+  consigneeCodeOption: any;
   ktcAddress: any;
   accountee: any;
+  accounteeOption: any;
   itemCodes: any;
   country: any;
   models: any;
@@ -32,6 +39,15 @@ export class ViewInvoiceComponent implements OnInit {
   page: number = 0;
   pageArr: any[] = [];
   pageCurrent: number = 1;
+
+  user: any
+
+  saleDate: any = new Date()
+  minSaleDate = new Date()
+  unitItem: any
+  model: any
+
+  form: any = null
 
   constructor(
     private route: ActivatedRoute,
@@ -43,66 +59,162 @@ export class ViewInvoiceComponent implements OnInit {
     private $loader: NgxUiLoaderService,
     private $itemCode: HttpItemCodeService,
     private $country: HttpCountryService,
-    private $model: HttpModelService
+    private $model: HttpModelService,
+    private $reprint: HttpReprintService,
+    private router: Router,
+    private $consigneeCode: HttpConsigneeCodeService,
+    private $form: HttpFormService
   ) { }
 
   async ngOnInit(): Promise<void> {
     try {
+      this.user = localStorage.getItem('INVLG_user')
+      this.user = JSON.parse(this.user)
       this.route.queryParams.subscribe(async (res) => {
         console.log(res);
         if (res['key']) {
           this.itemCodes = await this.$itemCode.get().toPromise();
           this.packing = await this.$packing
-            .getKey(new HttpParams().set('key', JSON.stringify(res['key'])))
+            .getKey(new HttpParams().set('key', JSON.stringify(res['key'])).set('status', JSON.stringify(['available'])))
             .toPromise();
           this.invoice = res['key'];
-          const resPkta = await this.$pkta
-            .getKey(new HttpParams().set('key', JSON.stringify(res['key'])))
+          let resPkta = await this.$pkta
+            .getKey(new HttpParams().set('key', JSON.stringify(res['key'])).set('status', JSON.stringify(['available'])))
             .toPromise();
-          this.pkta = resPkta.sort((a: any, b: any) => a['S0#'] - b['SO#']);
-          this.pkta = this.pkta.map((a: any) => {
+          resPkta = resPkta.sort((a: any, b: any) => a['S0#'] - b['SO#']);
+          this.pkta = resPkta.map((a: any) => {
             const item = this.packing.filter(
               (b: any) => b['(KGSS) Customer PO'] == a['SO#']
             );
             return {
               ...a,
               packing: item,
-              printDate: a.printDate? a.printDate: new Date(),
-              typing1:a.typing1?a.typing1:null
+              printDate: a.printDate ? a.printDate : new Date(),
+              typing1: a.typing1 ? a.typing1 : null,
             };
           });
-          console.log('🚀 ~ this.pkta:', this.pkta);
-          this.page = this.calculatorPageBreak(this.pkta.length);
+          console.log("🚀 ~ this.pkta:", this.pkta)
+          this.page = this.calculatorPageBreak(this.pkta.length + 1);
           this.pageArr = Array.from(
             { length: this.page },
             (_, index) => index + 1
           );
           console.log('🚀 ~ this.pageArr:', this.pageArr);
+
+
+
         }
       });
 
+      const resConsigneeCode: any = await this.$consigneeCode.get().toPromise();
+      this.consigneeCodeOption = resConsigneeCode
       const resConsignee: any = await this.$consignee.get().toPromise();
-      this.consignee = resConsignee[0];
+      this.consigneeOption = resConsignee
       const resAddress: any = await this.$address.get().toPromise();
       this.ktcAddress = resAddress[0];
       const resAccountee: any = await this.$accountee.get().toPromise();
-      this.accountee = resAccountee[0];
+      this.accounteeOption = resAccountee
       const resCountry: any = await this.$country.get().toPromise();
       this.country = resCountry
       const resModel: any = await this.$model.get().toPromise();
       this.models = resModel
+      console.log("🚀 ~ this.models:", this.models)
+
+      const prod = this.pkta.find((a: any) => a['Customer Part#'])
+      console.log("🚀 ~ prod:", prod)
+      this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
+      console.log("🚀 ~ model:", this.model)
+      if(this.model){
+
+      }else{
+
+      }
+      if (this.model['Packing content category (W)'] == 'O') {
+        this.unitItem = 'PALLET'
+      }
+      if (this.model['Packing content category (W)'] == '3') {
+        this.unitItem = 'CARTON'
+      }
+      this.initialConsignee()
+
+      const invoiceForm = {
+        invoice: this.invoice,
+        consignee: this.consignee,
+        accountee: this.accountee,
+        ktcAddress: this.ktcAddress,
+        printDate: this.htmlDate(this.pkta[0]["printDate"]),
+        "Sales DT": this.htmlDate(this.pkta[0]["Sales DT"]),
+        data: this.pkta.map((a: any, i: number) => {
+          console.log(a.packing);
+
+          return {
+            'itemCode': this.htmlItemCode(a["Customer Part#"]),
+            'Customer Part#': a['Customer Part#'],
+            'Cust Desc': a['Cust Desc'],
+            'Cust Currency': a['Cust Currency'],
+            'Case Mark Information 1': a.packing[0]["Case Mark Information 1"],
+            'Case Mark Information 2': a.packing[0]["Case Mark Information 2"],
+            'Case Mark Information 3': a.packing[0]["Case Mark Information 3"],
+            'Case Mark Information 4': a.packing[0]["Case Mark Information 4"],
+            'Case Mark Information 5': a.packing[0]["Case Mark Information 5"],
+            'SO#': a['SO#'],
+            'Sales QTY': a['Sales QTY'],
+            'U/P': a['U/P'],
+            'UPM': a['UPM'],
+            'Sales AMT': a['Sales AMT'],
+            'Customer PO#': a['Customer PO#'],
+            'Customer SO#': a['Customer SO#'],
+            'Lot#': a['Lot#'],
+            'CntOf Origin': this.htmlCountry(a["CntOf Origin"]),
+            'Prod Part#': a['Prod Part#'],
+            'typing1': a['typing1'],
+
+          }
+        }),
+        footer: {
+          'totalQty': this.htmlCaseQuantity(),
+          qty: this.htmlQuantity(),
+          amount: this.htmlAmount(),
+          netWeight: this.htmlNetWeight(),
+          grossWeight: this.htmlGrossWeight(),
+          caseQty: this.htmlCaseQuantity(),
+        },
+        page: this.calculatorPageBreak(this.pkta.length + 1)
+      }
+      // console.clear()
+      this.form = {
+        invoice: this.invoice,
+        invoiceForm: invoiceForm,
+      }
+      console.log("🚀 ~ this.form:", this.form)
     } catch (error) {
       console.log('🚀 ~ error:', error);
     }
   }
 
+  initialConsignee() {
+    // const filed = this.pkta[0]['Cust NA']
+    // console.log("🚀 ~ filed:", filed)
+    // this.accountee = this.accounteeOption.find((a:any)=>a.line1==filed)
+    // this.consigneeCode = this.accountee.code
+    // this.consignee = this.consigneeOption.find((a:any)=>a.code==this.consigneeCode)
+
+
+  }
+
+  handleChangeConsigneeCodeSelected() {
+    this.accountee = this.accounteeOption.find((a: any) => a.code == this.consigneeCode)
+    this.consignee = this.consigneeOption.find((a: any) => a.code == this.consigneeCode)
+
+  }
+
   calculatorPageBreak(pktaLen: number) {
-    return Math.ceil(pktaLen / 2);
+    return Math.ceil(pktaLen / 2)
   }
 
   getData(page: number) {
     if (page !== 0) {
-      return this.pkta.slice(page + 1, page + 2);
+      return this.pkta.slice(page * 2, (page * 2) + 2);
     }
     return this.pkta.slice(page, 2);
   }
@@ -111,7 +223,6 @@ export class ViewInvoiceComponent implements OnInit {
     this.$loader.start();
     setTimeout(() => {
       const div: any = document.querySelectorAll('#print');
-      console.log('🚀 ~ div:', div);
       const options = {
         background: 'white',
         scale: 3,
@@ -122,18 +233,11 @@ export class ViewInvoiceComponent implements OnInit {
         html2canvas(d, options)
           .then((canvas) => {
             var img = canvas.toDataURL('image/PNG');
-
-            // let width = doc.internal.pageSize.getWidth();
-            // let height = doc.internal.pageSize.getHeight();
-
-            // Add image Canvas to PDF
             const bufferX = 5;
             const bufferY = 2;
             const imgProps = (<any>doc).getImageProperties(img);
             const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-            // doc.addImage(img, 'JPEG', 10, 10, width, height);
             if (index > 0) {
               doc.addPage('a4', 'l');
             }
@@ -151,11 +255,14 @@ export class ViewInvoiceComponent implements OnInit {
             return doc;
           })
           .then(async (doc) => {
-            console.log(`${index + 1}`, doc);
             if (index + 1 === div.length) {
-              doc.save(`invoice_${this.pkta[0]['Delivery Note#']}.pdf`);
-              console.log(this.pkta);
+              doc.save(`invoice_${this.invoice}.pdf`);
+              this.handleCreateForm()
               await this.handleUpdatePkta(this.pkta)
+              setTimeout(() => {
+                // window.close()
+                this.router.navigate(['user/print'])
+              }, 1000);
               this.$loader.stop();
             }
           });
@@ -163,20 +270,95 @@ export class ViewInvoiceComponent implements OnInit {
     }, 300);
   }
 
-  handleAddTyping(value:any){
-    this.pkta = this.pkta.map((a:any)=>{
+  handleAddTyping(value: any) {
+    this.pkta = this.pkta.map((a: any) => {
       a['typing1'] = value
       return a
     })
   }
 
   handleUpdatePkta(items: any) {
-    const itemsMap = items.map((a:any)=>{
-      a.printStatus = true
+    const itemsMap = items.map((a: any) => {
+      // a.printStatus = !a.printStatus ? true : a.printStatus
+      // a.printerUser = a.printerUser ? a.printerUser : this.user.name
+
+      if (!a.printInvoice) {
+        a.printInvoice = {
+          date: new Date(),
+          status: true
+        }
+      }
+
+      // a.reprint = !a.reprint ? [] : a.reprint
+      // const itemReprint = {
+      //   date: new Date(),
+      //   user: this.user.name
+      // }
+      // a.reprint = [...a.reprint,itemReprint]
       return a
     })
     return this.$pkta.createOrUpdate(itemsMap).toPromise()
   }
+  handleUpdateReprint(invoice: string) {
+    return this.$reprint.create({
+      invoice: invoice,
+      name: this.user.name,
+      date: new Date(),
+      mode: 'invoice'
+    }).toPromise()
+  }
+
+  async handleCreateForm() {
+    const invoiceForm = {
+      invoice: this.invoice,
+      consignee: this.consignee,
+      accountee: this.accountee,
+      ktcAddress: this.ktcAddress,
+      printDate: this.htmlDate(this.pkta[0]["printDate"]),
+      "Sales DT": this.htmlDate(this.pkta[0]["Sales DT"]),
+      data: this.pkta.map((a: any, i: number) => {
+        return {
+          'itemCode': this.htmlItemCode(a["Customer Part#"]),
+          'Customer Part#': a['Customer Part#'],
+          'Cust Desc': a['Cust Desc'],
+          'Cust Currency': a['Cust Currency'],
+          'Case Mark Information 3': a.packing[0]["Case Mark Information 3"],
+          'SO#': a['SO#'],
+          'Sales QTY': a['Sales QTY'],
+          'U/P': a['U/P'],
+          'UPM': a['UPM'],
+          'Sales AMT': a['Sales AMT'],
+          'Case Mark Information 4': a.packing[0]["Case Mark Information 4"],
+          'Customer PO#': a['Customer PO#'],
+          'Case Mark Information 5': a.packing[0]["Case Mark Information 5"],
+          'Customer SO#': a['Customer SO#'],
+          'Lot#': a['Lot#'],
+          'CntOf Origin': this.htmlCountry(a["CntOf Origin"]),
+          'Prod Part#': a['Prod Part#'],
+          'typing1': a['typing1'],
+
+        }
+      }),
+      footer: {
+        'totalQty': this.htmlCaseQuantity(),
+        qty: this.htmlQuantity(),
+        amount: this.htmlAmount(),
+        netWeight: this.htmlNetWeight(),
+        grossWeight: this.htmlGrossWeight(),
+        caseQty: this.htmlCaseQuantity(),
+      },
+      page: this.calculatorPageBreak(this.pkta.length + 1)
+    }
+    console.log("🚀 ~ invoiceForm:", invoiceForm)
+
+    await this.$form.create({
+      invoice: this.invoice,
+      invoiceForm: invoiceForm,
+      status: 'available'
+    }).toPromise()
+
+  }
+
   htmlDate(d: any) {
     // return moment().format('MMM . , DD,YYYY');
     return moment(d).format('MMM . , DD,YYYY');

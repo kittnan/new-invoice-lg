@@ -2,14 +2,15 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <mat-toolbar>
       <mat-toolbar-row style="background-color: #9999ff;">
-        <span class="fs-3" style="color: #e6ecff;"> INVOICE LG </span>
+        <img src="./assets/new invoiceLOGO W.png" alt="" class="logo">
+        <!-- <span class="fs-3 text-gray-900"> INVOICE LG </span> -->
         <span class="example-spacer"></span>
-        <span class="text-white fs-6">
+        <span class="text-gray-900 fs-6 font-bold">
           {{showUserLogin()}}
         </span>
         <button
           mat-icon-button
-          class="example-icon text-white"
+          class="example-icon text-gray-900"
           aria-label="Example icon-button with menu icon"
           (click)="handleLogout()"
         >
@@ -55,7 +56,15 @@
       >
         <ng-container *ngFor="let side of sideBarsItems; let i = index">
           <ul class="m-1 p-3 font-bold uppercase">
-            <p class=" p-2 rounded-md" style="background-color: #ccd9ff;">{{ side.title }}</p>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" class=" p-2 rounded-md" style="background-color: #ccd9ff;">
+              <mat-icon class="mat-18 me-2">
+                {{side.icon}}
+                </mat-icon>
+              {{ side.title }}
+            </div>
+            <!-- <p class=" p-2 rounded-md" style="background-color: #ccd9ff;">
+
+              {{ side.title }}</p> -->
             <li
               *ngFor="let sub of side.sub; let i = index"
               [ngClass]="{ active: sub.active }"
@@ -63,7 +72,12 @@
               style="background-color: #e6ecff;"
               (click)="link(sub)"
             >
+            <div fxLayout="row wrap" fxLayoutAlign="start center">
+              <mat-icon class="mat-18 me-2">
+                {{sub.icon}}
+              </mat-icon>
               {{ sub.name }}
+            </div>
             </li>
           </ul>
         </ng-container>

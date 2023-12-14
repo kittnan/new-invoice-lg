@@ -16,16 +16,19 @@ export class AuthUserService {
       {
         title: 'user',
         visible: false,
+        icon:'person',
         sub: [
           {
             name: 'generate invoice',
             path: 'user/generate-invoice',
             active: false,
+            icon:'post_add'
           },
           {
             name: 'print',
             path: 'user/print',
             active: false,
+            icon:'print'
           },
         ],
       },

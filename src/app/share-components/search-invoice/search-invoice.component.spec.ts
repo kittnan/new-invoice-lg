@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccounteeComponent } from './accountee.component';
+import { SearchInvoiceComponent } from './search-invoice.component';
 
-describe('AccounteeComponent', () => {
-  let component: AccounteeComponent;
-  let fixture: ComponentFixture<AccounteeComponent>;
+describe('SearchInvoiceComponent', () => {
+  let component: SearchInvoiceComponent;
+  let fixture: ComponentFixture<SearchInvoiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccounteeComponent ]
+      declarations: [ SearchInvoiceComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AccounteeComponent);
+    fixture = TestBed.createComponent(SearchInvoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

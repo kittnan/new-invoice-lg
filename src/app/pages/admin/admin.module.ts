@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ConsigneeComponent } from './consignee/consignee.component';
 import { KtcAddressComponent } from './ktc-address/ktc-address.component';
-import { AccounteeComponent } from './accountee/accountee.component';
 import { MaterialModule } from 'src/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,9 +14,10 @@ import { ItemCodeComponent } from './item-code/item-code.component';
 import { CountryComponent } from './country/country.component';
 import { ModelComponent } from './model/model.component';
 import { UserComponent } from './user/user.component';
+import { ManageInvoiceComponent } from './manage-invoice/manage-invoice.component';
 
 @NgModule({
-  declarations: [ConsigneeComponent, KtcAddressComponent, AccounteeComponent, ConsigneeCodeComponent, ItemCodeComponent, CountryComponent, ModelComponent, UserComponent],
+  declarations: [ConsigneeComponent, KtcAddressComponent, ConsigneeCodeComponent, ItemCodeComponent, CountryComponent, ModelComponent, UserComponent, ManageInvoiceComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

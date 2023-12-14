@@ -1,13 +1,42 @@
 <ng-container *ngIf="pkta">
-  <button mat-raised-button (click)="generatePDF()" class="bg-blue-500 text-white">PDF</button>
+  <button [disabled]="!accountee" mat-raised-button class="me-3">
+    <mat-icon class="mat-18">
+      save
+    </mat-icon>
+    Save
+  </button>
+  <button [disabled]="!accountee" mat-raised-button (click)="generatePDF()" class="bg-blue-500 text-white">
+    <mat-icon class="mat-18">
+      print
+    </mat-icon>
+    PDF</button>
 </ng-container>
-<ng-container *ngIf="pkta && !pkta[0].printStatus">
-  <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4 mb-4" *ngFor="let item of pkta; let i=index">
+<ng-container *ngIf="pkta && !pkta[0].printInvoice?.status">
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4 mb-4 " >
+    <label for="" class="me-2">
+      Consignee Code
+     </label>
+     <select [(ngModel)]="consigneeCode" (change)="handleChangeConsigneeCodeSelected()" class="bg-green-500">
+      <option *ngFor="let item of consigneeCodeOption; let i=index" [value]="item['CONSIGNEE-CODE']">
+      {{item['CONSIGNEE-CODE']}}
+    </option>
+     </select>
+
+     <mat-form-field appearance="legacy" class="ms-5 ">
+      <mat-label>Sale Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="saleDate" [min]="minSaleDate" style="background: rgb(34 197 94)">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+</div>
+  <!-- <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4 mb-4" *ngFor="let item of pkta; let i=index">
     <label for="" class="me-2">
      SO#  {{ item["SO#"] }} Typing:
     </label>
     <input type="text"  class="bg-green-500 me-2" [(ngModel)]="item.typing1" >
-  </div>
+  </div> -->
 </ng-container>
 
 
@@ -186,7 +215,7 @@
         </div>
       </div>
       <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="center start">
-        <span> On or about {{ htmlDate(pkta[0]["Sales DT"]) }} </span>
+        <span> On or about {{ htmlDate(saleDate) }} </span>
       </div>
     </div>
 
@@ -245,7 +274,7 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td *ngIf="item.packing && item.packing.length>0">
             {{ item.packing[0]["Case Mark Information 3"] }}
           </td>
           <td>
@@ -267,7 +296,7 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td *ngIf="item.packing && item.packing.length>0">
             {{ item.packing[0]["Case Mark Information 4"] }}
           </td>
           <td>
@@ -283,7 +312,7 @@
           <td></td>
         </tr>
         <tr>
-          <td>
+          <td *ngIf="item.packing && item.packing.length>0">
             {{ item.packing[0]["Case Mark Information 5"] }}
           </td>
           <td>
@@ -337,7 +366,18 @@
         <tr>
           <td></td>
           <td>
-              {{item['typing1']}}
+    <input type="text"  class="bg-green-500 me-2" [(ngModel)]="item.typing1" >
+
+              <!-- {{item['typing1']}} -->
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            {{item['Prod Desc']}}
           </td>
           <td></td>
           <td></td>
@@ -364,7 +404,7 @@
           <td>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
               <span fxFlex="10"> ( {{htmlCaseQuantity()}} ) </span>
-              <span fxFlex="90"> CARTONS </span>
+              <span fxFlex="90"> {{unitItem}} </span>
             </div>
           </td>
           <td class="text-end">
@@ -379,7 +419,7 @@
           <td class="text-end">NET WEIGHT :</td>
           <td>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-              <span fxFlex="20" fxLayoutAlign="end center"> {{htmlNetWeight()}} </span>
+              <span fxFlex="20" fxLayoutAlign="end center"> {{htmlNetWeight() | number : "1.2"}} </span>
               <span fxFlex="80" style="padding-left: 10px;">  KGS </span>
             </div>
           </td>
@@ -391,7 +431,7 @@
           <td class="text-end">GROSS WEIGHT :</td>
           <td>
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-              <span fxFlex="20" fxLayoutAlign="end center"> {{htmlGrossWeight()}} </span>
+              <span fxFlex="20" fxLayoutAlign="end center"> {{htmlGrossWeight() | number : "1.2"}} </span>
               <span fxFlex="80" style="padding-left: 10px;">  KGS </span>
             </div>
           </td>
@@ -438,7 +478,8 @@
             <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
               <span fxFlex="60"> </span>
               <span fxFlex="40">
-                CARTON NO. 1 - {{htmlCaseQuantity()}}
+                {{unitItem}} NO.     <input type="text"  class="bg-green-500 me-2" style="width: 50px;"  >
+
               </span>
             </div>
           </td>
