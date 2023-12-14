@@ -1,0 +1,35 @@
+th {
+  text-align: center;
+  padding: 7px 0;
+  border-left: 1px solid;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+th:last-child {
+  text-align: center;
+  padding: 7px 0;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+td {
+  padding: 4px;
+  border-left: 1px solid;
+}
+tr:last-child {
+  border-bottom: 1px solid;
+}
+td:last-child {
+  border-right: 1px solid;
+}
+
+* {
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+#head {
+  line-height: 18px;
+}

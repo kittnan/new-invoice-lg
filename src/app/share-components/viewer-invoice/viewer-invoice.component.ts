@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-viewer-invoice',
@@ -32,6 +30,7 @@ export class ViewerInvoiceComponent implements OnInit {
   htmlDate(d: any) {
     return moment(d).format('MMM . , DD,YYYY');
   }
+
 
 
 }

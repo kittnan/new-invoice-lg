@@ -123,8 +123,6 @@ export class ConfigInvoiceComponent implements OnInit {
             if (this.model['Packing content category (W)'] == '3') {
               this.unitItem = 'CARTON'
             }
-          } else {
-
           }
 
           const invoiceForm = {

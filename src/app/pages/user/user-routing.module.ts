@@ -7,6 +7,7 @@ import { ViewPackingComponent } from './view-packing/view-packing.component';
 import { ReprintInvoiceComponent } from './reprint-invoice/reprint-invoice.component';
 import { ReprintPackingComponent } from './reprint-packing/reprint-packing.component';
 import { ConfigInvoiceComponent } from './config-invoice/config-invoice.component';
+import { ConfigPackingComponent } from './config-packing/config-packing.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'config-invoice',
     component: ConfigInvoiceComponent,
+  },
+  {
+    path: 'config-packing',
+    component: ConfigPackingComponent,
   },
 ];
 

@@ -9,7 +9,7 @@ import { HttpPktaService } from 'src/app/https/http-pkta.service';
 })
 export class PrintInvoiceComponent implements OnInit {
 
-  pkta: any = null
+  forms: any = null
   date: any = {
     start: new Date(),
     end: null
@@ -33,7 +33,21 @@ export class PrintInvoiceComponent implements OnInit {
 
     const uniquePkta = [...new Map(e.map((item: any) =>
       [item['invoice'], item])).values()];
-    this.pkta = uniquePkta
+    this.forms = uniquePkta
+  }
+  handleInvoiceConfig(item:any){
+    this.router.navigate(['user/config-invoice'], {
+      queryParams: {
+        key: item['invoice']
+      }
+    })
+  }
+  handlePackingConfig(item:any){
+    this.router.navigate(['user/config-packing'], {
+      queryParams: {
+        key: item['invoice']
+      }
+    })
   }
 
   handleInvoicePrint(item: any, key: any) {
@@ -57,11 +71,11 @@ export class PrintInvoiceComponent implements OnInit {
     //     }
     //   })
     // }else{
-      this.router.navigate(['user/reprint-invoice'], {
-        queryParams: {
-          key: item['invoice']
-        }
-      })
+    this.router.navigate(['user/reprint-invoice'], {
+      queryParams: {
+        key: item['invoice']
+      }
+    })
     // }
 
 
@@ -78,21 +92,28 @@ export class PrintInvoiceComponent implements OnInit {
     //   .toString();
     // window.open(url, '_blank');
 
-    if(key=='reprint'){
-      this.router.navigate(['user/reprint-packing'], {
-        queryParams: {
-          key: item['invoice'],
-          mode: key
-        }
-      })
-    }else{
-      this.router.navigate(['user/view-packing'], {
-        queryParams: {
-          key: item['invoice'],
-          mode: key
-        }
-      })
-    }
+    // if (key == 'reprint') {
+    //   this.router.navigate(['user/reprint-packing'], {
+    //     queryParams: {
+    //       key: item['invoice'],
+    //       mode: key
+    //     }
+    //   })
+    // } else {
+    //   this.router.navigate(['user/view-packing'], {
+    //     queryParams: {
+    //       key: item['invoice'],
+    //       mode: key
+    //     }
+    //   })
+    // }
+
+    this.router.navigate(['user/reprint-packing'], {
+      queryParams: {
+        key: item['invoice'],
+        mode: key
+      }
+    })
 
     // this.router.navigate(['user/view-packing'], {
     //   queryParams: {
@@ -113,6 +134,10 @@ export class PrintInvoiceComponent implements OnInit {
     let len = data.reprint?.filter((a: any) => a.mode == mode).length
     if (len === 0) return ''
     return len
+  }
+  handleValidReprint(item: any, mode: string) {
+    if (item && item.reprint && item.reprint.some((a: any) => a.mode == mode)) return true
+    return false
   }
 
 }
