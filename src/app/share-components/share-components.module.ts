@@ -8,10 +8,11 @@ import { SearchInvoiceComponent } from './search-invoice/search-invoice.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewerInvoiceComponent } from './viewer-invoice/viewer-invoice.component';
 import { ViewerPackingComponent } from './viewer-packing/viewer-packing.component';
+import { ViewerPacking2Component } from './viewer-packing2/viewer-packing2.component';
 
 @NgModule({
-  declarations: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent],
+  declarations: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component],
   imports: [CommonModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule],
-  exports: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent,ViewerInvoiceComponent,ViewerPackingComponent],
+  exports: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent,ViewerInvoiceComponent,ViewerPackingComponent, ViewerPacking2Component],
 })
 export class ShareComponentsModule { }

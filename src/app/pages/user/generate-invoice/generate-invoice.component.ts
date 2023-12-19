@@ -162,22 +162,22 @@ export class GenerateInvoiceComponent implements OnInit {
       // })
       // console.log("🚀 ~ foo:", foo)
 
-      const newPacking= this.packing.map((a: any) => {
+      const newPacking = this.packing.map((a: any) => {
         const mainPacking = this.packing.find((b: any) => {
           if (b['invoice No'] === a['invoice No'] && b['Case Mark Information 1']) return true
           return false
         })
-        if(mainPacking){
+        if (mainPacking) {
           return {
-            ...mainPacking,
+            // ...mainPacking,
             ...a
           }
-        }{
+        } {
           return a
         }
       })
 
-      const newPkta = this.pkta.map((a:any)=>{
+      const newPkta = this.pkta.map((a: any) => {
         delete a['packing']
         return a
       })
