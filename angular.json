@@ -33,6 +33,17 @@
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "raf",
+              "rgbcolor",
+              "file-saver",
+              "sweetalert2",
+              "html2canvas",
+              "moment",
+              "core-js",
+              "@babel/runtime"
             ]
           },
           "configurations": {

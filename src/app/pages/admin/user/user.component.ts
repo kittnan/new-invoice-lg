@@ -4,6 +4,7 @@ import { ConvertXLSXService } from 'src/app/services/convertXLSX/convert-xlsx.se
 import * as XLSX from 'xlsx';
 import * as fs from 'file-saver'
 import { HttpUsersService } from 'src/app/https/http-users.service';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -12,6 +13,8 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 export class UserComponent implements OnInit {
 
   users:any = null
+  displayedColumns: string[] = ['no', 'employee_code','name','auth_admin','auth_user'];
+  dataSource = new MatTableDataSource();
   constructor(
     private $alert: AlertService,
     private $convertXLSX: ConvertXLSXService,
@@ -22,6 +25,8 @@ export class UserComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.users = await this.$user.get().toPromise();
+      this.dataSource = new MatTableDataSource(this.users);
+
     } catch (error) {
       console.log('🚀 ~ error:', error);
       this.$alert.error(2000, JSON.stringify(error), false);

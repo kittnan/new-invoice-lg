@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { HttpFormService } from 'src/app/https/http-form.service';
@@ -33,8 +34,7 @@ export class ManageInvoiceComponent implements OnInit {
       showCancelButton: true
     }).then(async (v: SweetAlertResult) => {
       if (v.isConfirmed) {
-        item['status'] = 'unavailable'
-        await this.$form.update(item).toPromise()
+        await this.$form.deleteAllByInvoice(new HttpParams().set('invoice',item.invoice)).toPromise()
         this.$alert.success(1500, 'Success', true)
       }
     })

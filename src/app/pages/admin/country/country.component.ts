@@ -4,6 +4,7 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 import { ConvertXLSXService } from 'src/app/services/convertXLSX/convert-xlsx.service';
 import * as XLSX from 'xlsx';
 import * as fs from 'file-saver'
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-country',
@@ -12,6 +13,8 @@ import * as fs from 'file-saver'
 })
 export class CountryComponent implements OnInit {
   country: any[] | null = null;
+  displayedColumns: string[] = ['code','name','key'];
+  dataSource = new MatTableDataSource();
   constructor(
     private $alert: AlertService,
     private $convertXLSX: ConvertXLSXService,
@@ -20,7 +23,11 @@ export class CountryComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.country = await this.$country.get().toPromise();
+      const resData: any =await this.$country.get().toPromise();
+      this.country = resData
+      console.log("🚀 ~ resData:", resData)
+
+      this.dataSource = new MatTableDataSource(resData);
     } catch (error) {
       console.log('🚀 ~ error:', error);
       this.$alert.error(2000, JSON.stringify(error), false);

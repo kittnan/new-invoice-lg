@@ -38,5 +38,10 @@ export class HttpFormService {
   updateByInvoice(data: any): Observable<any> {
     return this.http.put(`${this.URL}/form/updateByInvoice`, data);
   }
+  deleteAllByInvoice(p:HttpParams): Observable<any> {
+    return this.http.delete(`${this.URL}/form/deleteAllByInvoice`,{
+      params:p
+    });
+  }
 
 }

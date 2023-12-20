@@ -1,25 +1,34 @@
-<div fxLayout="row wrap" fxLayoutAlign="start stretch" >
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
   <app-sub-head [name]="'Model'"></app-sub-head>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-2 mb-2">
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="start center"
+    class="mt-2 mb-2"
+  >
     <span class="me-2"> Key </span>
-              <button mat-raised-button class="bg-green-300 text-indigo-600 me-2" (click)="upload.click()">
-                <div fxLayout="row wrap" fxLayoutAlign="center center">
-                  <mat-icon class="mat-18">
-                    file_upload
-                  </mat-icon>
+    <button
+      mat-raised-button
+      class="bg-green-300 text-indigo-600 me-2"
+      (click)="upload.click()"
+    >
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18"> file_upload </mat-icon>
 
-                  Upload
-                </div>
-              </button>
-              <button mat-raised-button class="bg-sky-400 text-white" (click)="handleDownload()">
-                <div fxLayout="row wrap" fxLayoutAlign="center center">
-                  <mat-icon class="mat-18">
-                    file_download
-                  </mat-icon>
+        Upload
+      </div>
+    </button>
+    <button
+      mat-raised-button
+      class="bg-sky-400 text-white"
+      (click)="handleDownload()"
+    >
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18"> file_download </mat-icon>
 
-                  Download
-                </div>
-              </button>
+        Download
+      </div>
+    </button>
     <input hidden type="file" #upload (change)="handleFileInput($event)" />
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
@@ -29,7 +38,20 @@
       fxLayoutAlign="start start"
       class="overflow-auto"
     >
-      <table class="table table-striped">
+      <table fxFlex="100" mat-table [dataSource]="dataSource" matSort class="">
+        <ng-container *ngFor="let col of displayColumn; let i=index" [matColumnDef]="col">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{col}}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayColumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayColumn"></tr>
+      </table>
+
+      <!-- <table class="table table-striped">
         <tr>
           <th *ngFor="let col of displayColumn; let i = index">
             {{ col }}
@@ -40,7 +62,7 @@
             {{ item[col] }}
           </td>
         </tr>
-      </table>
+      </table> -->
     </div>
   </div>
 </div>

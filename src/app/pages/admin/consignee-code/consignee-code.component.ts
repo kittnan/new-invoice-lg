@@ -5,25 +5,34 @@ import { ConvertXLSXService } from 'src/app/services/convertXLSX/convert-xlsx.se
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import * as fs from 'file-saver'
-interface consigneeCode {
-  'CONSIGNEE-CODE': string;
-}
+import { MatTableDataSource } from '@angular/material/table';
+
 @Component({
   selector: 'app-consignee-code',
   templateUrl: './consignee-code.component.html',
   styleUrls: ['./consignee-code.component.scss'],
 })
 export class ConsigneeCodeComponent implements OnInit {
-  codes: consigneeCode[] | null = null;
+  codes: any[] | null = null;
+  displayedColumns: string[] = ['no', 'code'];
+  dataSource = new MatTableDataSource();
   constructor(
     private $consigneeCode: HttpConsigneeCodeService,
     private $alert: AlertService,
     private $convertXLSX: ConvertXLSXService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      this.codes = await this.$consigneeCode.get().toPromise();
+      const resData: any = await this.$consigneeCode.get().toPromise();
+      this.codes = resData
+      const dataMat = resData.map((a: any, i: number) => {
+        return {
+          code: a['CONSIGNEE-CODE'],
+          no: i + 1
+        }
+      })
+      this.dataSource = new MatTableDataSource(dataMat);
     } catch (error) {
       console.log('🚀 ~ error:', error);
       this.$alert.error(2000, JSON.stringify(error), false);
@@ -50,7 +59,7 @@ export class ConsigneeCodeComponent implements OnInit {
   handleDownload() {
     try {
       if (this.codes) {
-        const dataExport = this.codes.map((a:any)=>{
+        const dataExport = this.codes.map((a: any) => {
           delete a._id
           delete a.active
           delete a.createdAt
@@ -64,7 +73,7 @@ export class ConsigneeCodeComponent implements OnInit {
         // Generate blob from workbook
         const wb_out = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
         const blob = new Blob([wb_out], { type: 'application/vnd.ms-excel' });
-        fs.saveAs(blob,'consignee_code.xlsx')
+        fs.saveAs(blob, 'consignee_code.xlsx')
 
         // // Create download link and trigger click
         // const link = document.createElement('a');

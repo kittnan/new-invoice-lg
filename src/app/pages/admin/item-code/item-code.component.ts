@@ -21,7 +21,6 @@ export class ItemCodeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       const resItemCode = await this.$itemCode.get().toPromise();
-      console.log('🚀 ~ resItemCode:', resItemCode);
       this.dataSource = new MatTableDataSource(resItemCode);
     } catch (error) {
       console.log('🚀 ~ error:', error);

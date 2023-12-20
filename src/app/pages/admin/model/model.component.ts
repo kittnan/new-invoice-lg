@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/services/alert/alert.service';
 import { ConvertXLSXService } from 'src/app/services/convertXLSX/convert-xlsx.service';
 import * as XLSX from 'xlsx';
 import * as fs from 'file-saver'
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-model',
   templateUrl: './model.component.html',
@@ -13,6 +14,7 @@ import * as fs from 'file-saver'
 export class ModelComponent implements OnInit {
   model: any[] = [];
   displayColumn: any[] = [];
+  dataSource = new MatTableDataSource();
   constructor(
     private $alert: AlertService,
     private $convertXLSX: ConvertXLSXService,
@@ -29,6 +31,9 @@ export class ModelComponent implements OnInit {
       for (const key in firstItem) {
         this.displayColumn.push(key);
       }
+      console.log(this.displayColumn);
+      this.dataSource = new MatTableDataSource(this.model);
+
     } catch (error) {
       console.log('🚀 ~ error:', error);
       this.$alert.error(2000, JSON.stringify(error), false);
