@@ -207,22 +207,23 @@
       <th width="16%">Lot. No</th>
       <th width="25%">Gross Weight/M'ment</th>
     </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="text-end">(NET WEIGHT)</td>
+      <td></td>
+    </tr>
     <ng-container *ngFor="let item of getData(p_i); let i = index">
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
+
       <tr>
         <td>
           <!-- {{ item['itemCode'] }} -->
           {{ item["Case Mark Information 1"] }}
         </td>
         <td class="text-end">
-          {{item['Start case#']}}
+          {{item['Case No']}}
         </td>
         <td>
           {{ item["Customer Part#"] }}
@@ -230,20 +231,21 @@
         <td class="text-end">
          {{ item["quantity shipped"][0] ? item["quantity shipped"][0] + ' PC' :'' | number : "1.0-0" }}
         </td>
-        <!-- <td class="text-end">
-         {{ item["Sales QTY"] | number : "1.0-0" }}
-        </td> -->
         <td class="text-end">
-          (NET WEIGHT)
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <span>
+              {{item['Lot#']}}
+            </span>
+            <span>
+         {{ item["NetWeight"][0] ? item["NetWeight"][0] + ' KGS' :'' | number : "1.2" }}
+
+              <!-- {{item['NetWeight']  | number : "1.2"}} KGS -->
+            </span>
+            </div>
         </td>
         <td class="text-end" >
-          <!-- <span class="me-1">
-            {{item['NetWeight']  | number : "1.2"}} KGS
-          </span> -->
+          {{item['GrossWeightCase']  }}
         </td>
-        <!-- <td class="text-center">
-          {{item['GrossWeight'] | number : "1.2"}} KGS
-        </td> -->
       </tr>
       <tr>
         <td>
@@ -254,20 +256,16 @@
           {{ item["Cust Desc"] }}
         </td>
         <td class="text-end">
-          {{ item["quantity shipped"][1] ? item["quantity shipped"][1]+ ' PC' :'' | number : "1.0-0" }}
+          {{ item["quantity shipped"][1] ? item["quantity shipped"][1]  :'' }}
          </td>
-        <td >
-          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-          <span>
-            {{item['Lot#']}}
-          </span>
-          <span>
-            {{item['NetWeight']}} KGS
-          </span>
-          </div>
+        <td class="text-end">
+          {{ item["NetWeight"][1] ? item["NetWeight"][1] + ' KGS' :'' | number : "1.2" }}
+
         </td>
         <td class="text-end">
-          {{item['GrossWeightCase']}}
+          <span>
+            {{item['GrossWeightCaseSub']}}
+          </span>
         </td>
       </tr>
       <tr>
@@ -286,9 +284,13 @@
         <td></td>
         <td></td>
         <td class="text-start">
-          <span *ngIf="item['GrossWeightCase']">
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+            <span *ngIf="item['GrossWeightCase']">
             {{item['Measurement (vertical)']}} X {{item['Measurement (horizontal)']}} X {{item['Measurement (High)']}} CM
           </span>
+
+          </div>
         </td>
       </tr>
       <tr>
@@ -409,10 +411,10 @@
           {{ packingForm.footer.qty | number : "1.0-0" }} PC
         </td>
         <td class="text-end">
-        {{ packingForm.footer.netWeightAll| number : "1.2"}} KGS
+        {{ packingForm.footer.netWeightAll}} KGS
         </td>
         <td class="text-end">
-         {{packingForm.footer.grossWeightAll | number : "1.2"}} KGS
+         {{packingForm.footer.grossWeightAll }} KGS
         </td>
       </tr>
       <tr>

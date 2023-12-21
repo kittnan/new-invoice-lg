@@ -63,7 +63,6 @@ export class GenerateInvoiceComponent implements OnInit {
 
   async handleUploadXLSX(e: any) {
     if (e.target.files && e.target.files.length !== 0) {
-      // if (e.target.files[0].name.includes(this.pkta[0]['Delivery Note#'])) {
       const data: any = await this.$convertXLSX.readExcel(e.target.files[0]);
       const dataFilter = data.filter((a: any) => a['Invoice No.']);
       const dataMap = dataFilter.map((a: any) => {
@@ -106,9 +105,10 @@ export class GenerateInvoiceComponent implements OnInit {
         [item['Delivery Note#'], item])).values()];
       no = no.map((a: any) => a['Delivery Note#'])
       let p: HttpParams = new HttpParams().set('key', JSON.stringify(no)).set('status', JSON.stringify(['available']))
-      const prevData = await this.$pkta.checkDuplicate(p).toPromise()
-      if (prevData && prevData.length > 0) {
-        let list = [...new Map(prevData.map((item: any) =>
+      const {pkta,form} = await this.$pkta.checkDuplicate(p).toPromise()
+      console.log("🚀 ~ pkta,form:", pkta,form)
+      if ((pkta && pkta.length > 0) || (form &&form.length>0) ) {
+        let list = [...new Map(pkta.map((item: any) =>
           [item['Delivery Note#'], item])).values()];
         list = list.map((a: any) => a['Delivery Note#'])
 
@@ -141,26 +141,6 @@ export class GenerateInvoiceComponent implements OnInit {
 
   async createData() {
     try {
-      // const arrayUniqueByKey = [...new Map(this.pkta.map(item =>
-      //   [item['Delivery Note#'], item['Delivery Note#']])).values()];
-
-      // const foo = arrayUniqueByKey.map((a: any) => {
-      //   const pk = this.pkta.find((b:any)=>b['Delivery Note#'] == a)
-      //   if(pk){
-      //     const pc = pk.packing.find((c: any) => c['Case Mark Information 1'])
-      //     if(pc){
-      //       pk.packing = pc
-      //     }
-      //   }
-
-      //   return this.pkta.find((b: any) => {
-      //     if (b['Delivery Note#'] == a) {
-      //       return b.packing.find((c: any) => c['Case Mark Information 1'])
-      //     }
-      //   })
-
-      // })
-      // console.log("🚀 ~ foo:", foo)
 
       const newPacking = this.packing.map((a: any) => {
         const mainPacking = this.packing.find((b: any) => {

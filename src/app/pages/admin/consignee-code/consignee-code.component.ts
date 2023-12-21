@@ -50,7 +50,6 @@ export class ConsigneeCodeComponent implements OnInit {
   async createDataImport(data: any) {
     try {
       const stat = await this.$consigneeCode.import(data).toPromise();
-      console.log('🚀 ~ stat:', stat);
       this.$alert.success(2000, 'Data created!!', true);
     } catch (error) {
       console.log('🚀 ~ error:', error);

@@ -9,10 +9,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewerInvoiceComponent } from './viewer-invoice/viewer-invoice.component';
 import { ViewerPackingComponent } from './viewer-packing/viewer-packing.component';
 import { ViewerPacking2Component } from './viewer-packing2/viewer-packing2.component';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MMM-YY',
+  },
+  display: {
+    dateInput: 'DD-MMM-YY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @NgModule({
   declarations: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component],
   imports: [CommonModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule],
-  exports: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent,ViewerInvoiceComponent,ViewerPackingComponent, ViewerPacking2Component],
+  exports: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component],
+  providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }]
 })
 export class ShareComponentsModule { }

@@ -42,7 +42,6 @@ export class KtcAddressComponent implements OnInit {
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
           const foo = await this.$ktcAddress.update(this.ktcAddress).toPromise();
-          console.log('🚀 ~ foo:', foo);
           this.$alert.success(2000, 'success', false);
         }
       })

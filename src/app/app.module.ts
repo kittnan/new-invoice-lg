@@ -21,21 +21,21 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsOpacity: 0.5,
   bgsPosition: 'bottom-right',
   bgsSize: 60,
-  bgsType: 'ball-spin',
+  bgsType: 'square-loader',
   blur: 15,
   delay: 0,
   fastFadeOut: true,
   fgsColor: '#673ab7',
   fgsPosition: 'center-center',
   fgsSize: 60,
-  fgsType: 'cube-grid',
-  gap: 24,
+  fgsType: 'ball-scale-multiple',
+  gap: 5,
   logoPosition: 'center-center',
-  logoSize: 120,
-  logoUrl: '',
+  logoSize: 200,
+  logoUrl: './assets/inv_car2.png',
   masterLoaderId: 'master',
   overlayBorderRadius: '0',
-  overlayColor: 'rgba(145,145,145,0.8)',
+  overlayColor: 'rgba(255,255,255,0.6)',
   pbColor: '#000000',
   pbDirection: 'ltr',
   pbThickness: 3,
@@ -44,8 +44,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   textColor: '#FFFFFF',
   textPosition: 'center-center',
   maxTime: -1,
-  minTime: 300,
+
 };
+
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
@@ -61,8 +63,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderRouterModule,
     NgxUiLoaderHttpModule,
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule {}
+export class AppModule { }

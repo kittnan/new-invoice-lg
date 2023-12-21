@@ -133,6 +133,7 @@ export class ConfigInvoiceComponent implements OnInit {
             printDate: new Date(),
             "Sales DT": new Date(),
             data: this.pkta.map((a: any, i: number) => {
+
               return {
                 'itemCode': this.htmlItemCode(a["Customer Part#"]),
                 'Customer Part#': a['Customer Part#'],
@@ -159,16 +160,19 @@ export class ConfigInvoiceComponent implements OnInit {
               }
             }),
             footer: {
-              'totalQty': this.htmlCaseQuantity(),
+              'totalQty': this.htmlTotalQty(),
               qty: this.htmlQuantity(),
               amount: this.htmlAmount(),
               netWeight: this.htmlNetWeight(),
               grossWeight: this.htmlGrossWeight(),
               caseQty: this.htmlCaseQuantity(),
+
+              netWeightAll: this.htmlNetWeightAll(),
+              grossWeightAll: this.htmlGrossWeightAll(),
             },
             page: this.calculatorPageBreak(this.pkta.length + 1),
             status: 'notReady',
-            unitItem:this.unitItem
+            unitItem: this.unitItem
           }
           this.form = {
             invoice: this.invoice,
@@ -210,6 +214,14 @@ export class ConfigInvoiceComponent implements OnInit {
     }
     return ''
   }
+  htmlTotalQty() {
+    const arrayUniqueByKey = [...new Map(this.packing.map((item: any) =>
+      [item['Start case#'], item])).values()];
+    const total = arrayUniqueByKey.reduce((p: any, n: any) => {
+      return p += n['Case Quantity']
+    }, 0)
+    return total
+  }
   htmlCaseQuantity() {
     if (this.pkta && this.pkta.length > 0) {
       return this.pkta.reduce((p: any, n: any) => {
@@ -232,6 +244,19 @@ export class ConfigInvoiceComponent implements OnInit {
     }
     return ''
   }
+  htmlNetWeightAll() {
+
+    return this.packing.reduce((p: any, n: any) => {
+      if (n['Case Quantity'] > 1) {
+        return p += Number((n['NET WEIGHT'] * n['Case Quantity']))
+      } else {
+        return p += Number(n['NET WEIGHT'])
+      }
+    }, 0)
+
+
+
+  }
   htmlGrossWeight() {
     if (this.pkta && this.pkta.length > 0) {
       return this.pkta.reduce((p: any, n: any) => {
@@ -243,11 +268,25 @@ export class ConfigInvoiceComponent implements OnInit {
     }
     return ''
   }
+  htmlGrossWeightAll() {
+    let markFirstCase = ''
+    return this.packing.reduce((p: any, n: any) => {
+      let grossWeightCase: any = ''
+      if (markFirstCase != n['Start case#']) {
+        if (n['Case Quantity'] > 1) {
+          grossWeightCase = Number(n['GROSS WEIGHT'] * n['Case Quantity'])
+        } else {
+          grossWeightCase = Number(n['GROSS WEIGHT'])
+        }
+        markFirstCase = n['Start case#']
+      }
+      return p += Number(grossWeightCase)
+    }, 0)
 
+  }
 
   // todo action
   handleChangeConsigneeCodeSelected() {
-    console.log(this.consigneeCode);
 
     this.accountee = this.accounteeOption.find((a: any) => a.code == this.consigneeCode)
     this.consignee = this.consigneeOption.find((a: any) => a.code == this.consigneeCode)
@@ -265,7 +304,6 @@ export class ConfigInvoiceComponent implements OnInit {
         showCancelButton: true
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
-          console.log(this.form);
           this.form.invoiceForm.status = 'ready'
           await this.$form.update({
             invoice: this.invoice,
@@ -273,12 +311,12 @@ export class ConfigInvoiceComponent implements OnInit {
             status: 'available'
           }).toPromise()
           Swal.fire({
-            title:"Success",
-            icon:'success',
-            showConfirmButton:false,
-            timer:1500
-          }).then(()=>{
-              this.router.navigate(['user/print'])
+            title: "Success",
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            this.router.navigate(['user/print'])
           })
         }
       })

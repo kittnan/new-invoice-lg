@@ -31,7 +31,6 @@ export class ModelComponent implements OnInit {
       for (const key in firstItem) {
         this.displayColumn.push(key);
       }
-      console.log(this.displayColumn);
       this.dataSource = new MatTableDataSource(this.model);
 
     } catch (error) {
@@ -50,7 +49,6 @@ export class ModelComponent implements OnInit {
 
   async createDataImport(data: any) {
     try {
-      console.log('🚀 ~ data:', data);
       const newData = data.map((a: any) => {
         const newItem: any = {};
         for (const key in a) {
@@ -60,9 +58,7 @@ export class ModelComponent implements OnInit {
         }
         return newItem;
       });
-      console.log('🚀 ~ newData:', newData);
       const stat = await this.$model.import(newData).toPromise();
-      console.log('🚀 ~ stat:', stat);
       this.$alert.success(2000, 'Data created!!', true);
     } catch (error) {
       console.log('🚀 ~ error:', error);

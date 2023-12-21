@@ -10,7 +10,56 @@
   <app-search-invoice (resultFilter)="handleSearch($event)"></app-search-invoice>
 </div>
 <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-3">
-  <table *ngIf="pkta && pkta.length>0">
+
+  <table fxFlex="50" mat-table [dataSource]="dataSource" matSort class="">
+    <ng-container matColumnDef="no">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+      <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="employee_code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.employee_code }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="invoice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Invoice</th>
+      <td mat-cell *matCellDef="let element">{{ element.invoice }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf=" element.status=='available' " class="text-green-600 capitalize">
+          {{element.status}}
+        </span>
+        <span *ngIf=" element.status=='unavailable' " class="text-gray-600 capitalize">
+          {{element.status}}
+        </span>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let element">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <button *ngIf="element.status=='available' " [disabled]="handleValidDelete(element)" mat-raised-button class="bg-rose-400" (click)="handleDelete(element)">
+            <mat-icon class="mat-18">
+              delete
+            </mat-icon>
+          </button>
+          <button *ngIf="element.status=='unavailable' "  mat-raised-button class="bg-green-400" (click)="handleDelete(element)">
+            <mat-icon class="mat-18">
+              done
+            </mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- <table *ngIf="pkta && pkta.length>0">
     <tr>
       <th>
         No.
@@ -57,7 +106,7 @@
       </td>
 
     </tr>
-  </table>
+  </table> -->
   <p *ngIf="!pkta || pkta.length===0 ">
     No DATA PKTA
   </p>

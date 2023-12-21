@@ -31,11 +31,9 @@ export class ReprintInvoiceComponent implements OnInit {
     try {
       this.user = localStorage.getItem('INVLG_user')
       this.user = JSON.parse(this.user)
-      console.log("🚀 ~ this.user:", this.user)
       this.route.queryParams.subscribe(async (res) => {
         const resForm = await this.$form.get(new HttpParams().set('key', JSON.stringify(res['key']))).toPromise()
         this.form = resForm[resForm.length-1]
-        console.log("🚀 ~ this.form:", this.form)
         for (let i = 0; i < this.form.invoiceForm.page; i++) {
           this.pageArr.push(i)
         }

@@ -13,64 +13,85 @@ export class GenerateInvoicePdfService {
 
   ) { }
   generatePDF(invoice: any, name: string) {
-    this.$loader.start();
-    const div: any = document.querySelectorAll('#print');
+    try {
+      console.log('ui');
 
-    setTimeout(async () => {
-      const div: any = document.querySelectorAll('#print');
-      const options = {
-        background: 'white',
-        scale: 3,
-      };
-      var doc: any = new jsPDF('l', 'mm', 'a4');
-      for (let index = 0; index < div.length; index++) {
-        const d = div[index];
-        const can = await html2canvas(d, options)
-        let img = can.toDataURL('image/PNG');
-        const bufferX = 5;
-        const bufferY = 2;
-        const imgProps = (<any>doc).getImageProperties(img);
-        const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      this.$loader.start();
+      setTimeout(async () => {
+        const div: any = document.querySelectorAll('#print');
+        const options = {
+          background: 'white',
+          scale: 3,
+        };
+        console.log(div.length);
 
-        if (index === 0) {
-          doc = await doc.addImage(
-            img,
-            'PNG',
-            bufferX,
-            bufferY,
-            pdfWidth,
-            pdfHeight,
-            undefined,
-            'FAST'
-          );
-        } else {
-          doc = await doc.addPage('a4', 'l');
-          doc = await doc.addImage(
-            img,
-            'PNG',
-            bufferX,
-            bufferY,
-            pdfWidth,
-            pdfHeight,
-            undefined,
-            'FAST'
-          );
+        var doc: any = new jsPDF('l', 'mm', 'a4');
+        for (let index = 0; index < div.length; index++) {
+          console.log("🚀 ~ index:", index)
+          const d = div[index];
+          const can = await html2canvas(d, options)
+          let img = can.toDataURL('image/PNG');
+          const bufferX = 5;
+          const bufferY = 2;
+          const imgProps = (<any>doc).getImageProperties(img);
+          const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+          const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-          if (index + 1 === div.length) {
-            await doc.save(`${name}_${invoice}.pdf`, {
-              autoPrint: {
-                variant: 'non-conform',
-                dialog: true,
-              },
-            });
+          if(div.length ===1){
+            doc = await doc.addImage(
+              img,
+              'PNG',
+              bufferX,
+              bufferY,
+              pdfWidth,
+              pdfHeight,
+              undefined,
+              'FAST'
+            );
+            await doc.save(`${name}_${invoice}.pdf`);
             this.router.navigate(['user/print'])
             this.$loader.stop()
+          }else{
+            if (index === 0) {
+              doc = await doc.addImage(
+                img,
+                'PNG',
+                bufferX,
+                bufferY,
+                pdfWidth,
+                pdfHeight,
+                undefined,
+                'FAST'
+              );
+            } else {
+              doc = await doc.addPage('a4', 'l');
+              doc = await doc.addImage(
+                img,
+                'PNG',
+                bufferX,
+                bufferY,
+                pdfWidth,
+                pdfHeight,
+                undefined,
+                'FAST'
+              );
+              if (index + 1 === div.length) {
+                await doc.save(`${name}_${invoice}.pdf`);
+                this.router.navigate(['user/print'])
+                this.$loader.stop()
+              }
+            }
           }
-        }
 
-      }
-    }, 100);
+
+
+        }
+      }, 100);
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+
+    }
+
   }
 
 }

@@ -71,7 +71,6 @@ export class ViewInvoiceComponent implements OnInit {
       this.user = localStorage.getItem('INVLG_user')
       this.user = JSON.parse(this.user)
       this.route.queryParams.subscribe(async (res) => {
-        console.log(res);
         if (res['key']) {
           this.itemCodes = await this.$itemCode.get().toPromise();
           this.packing = await this.$packing
@@ -93,13 +92,11 @@ export class ViewInvoiceComponent implements OnInit {
               typing1: a.typing1 ? a.typing1 : null,
             };
           });
-          console.log("🚀 ~ this.pkta:", this.pkta)
           this.page = this.calculatorPageBreak(this.pkta.length + 1);
           this.pageArr = Array.from(
             { length: this.page },
             (_, index) => index + 1
           );
-          console.log('🚀 ~ this.pageArr:', this.pageArr);
 
 
 
@@ -118,12 +115,9 @@ export class ViewInvoiceComponent implements OnInit {
       this.country = resCountry
       const resModel: any = await this.$model.get().toPromise();
       this.models = resModel
-      console.log("🚀 ~ this.models:", this.models)
 
       const prod = this.pkta.find((a: any) => a['Customer Part#'])
-      console.log("🚀 ~ prod:", prod)
       this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
-      console.log("🚀 ~ model:", this.model)
       if(this.model){
 
       }else{
@@ -145,7 +139,6 @@ export class ViewInvoiceComponent implements OnInit {
         printDate: this.htmlDate(this.pkta[0]["printDate"]),
         "Sales DT": this.htmlDate(this.pkta[0]["Sales DT"]),
         data: this.pkta.map((a: any, i: number) => {
-          console.log(a.packing);
 
           return {
             'itemCode': this.htmlItemCode(a["Customer Part#"]),
@@ -186,7 +179,6 @@ export class ViewInvoiceComponent implements OnInit {
         invoice: this.invoice,
         invoiceForm: invoiceForm,
       }
-      console.log("🚀 ~ this.form:", this.form)
     } catch (error) {
       console.log('🚀 ~ error:', error);
     }
@@ -194,7 +186,6 @@ export class ViewInvoiceComponent implements OnInit {
 
   initialConsignee() {
     // const filed = this.pkta[0]['Cust NA']
-    // console.log("🚀 ~ filed:", filed)
     // this.accountee = this.accounteeOption.find((a:any)=>a.line1==filed)
     // this.consigneeCode = this.accountee.code
     // this.consignee = this.consigneeOption.find((a:any)=>a.code==this.consigneeCode)
@@ -349,7 +340,6 @@ export class ViewInvoiceComponent implements OnInit {
       },
       page: this.calculatorPageBreak(this.pkta.length + 1)
     }
-    console.log("🚀 ~ invoiceForm:", invoiceForm)
 
     await this.$form.create({
       invoice: this.invoice,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
 
@@ -14,6 +15,9 @@ export class PrintInvoiceComponent implements OnInit {
     start: new Date(),
     end: null
   }
+
+  displayedColumns: string[] = ['no', 'invoice','createdAt','invoicePdf','packingPdf'];
+  dataSource = new MatTableDataSource();
   constructor(
     private $pkta: HttpPktaService,
     private router: Router
@@ -26,14 +30,13 @@ export class PrintInvoiceComponent implements OnInit {
     // const uniquePkta = [...new Map(foo.map((item: any) =>
     //   [item['Delivery Note#'], item])).values()];
     // this.pkta = uniquePkta
-    // console.log("🚀 ~ this.pkta:", this.pkta)
   }
   handleSearch(e: any) {
-    console.log(e);
-
     const uniquePkta = [...new Map(e.map((item: any) =>
       [item['invoice'], item])).values()];
     this.forms = uniquePkta
+    this.dataSource = new MatTableDataSource(this.forms);
+
   }
   handleInvoiceConfig(item:any){
     this.router.navigate(['user/config-invoice'], {
@@ -51,7 +54,6 @@ export class PrintInvoiceComponent implements OnInit {
   }
 
   handleInvoicePrint(item: any, key: any) {
-    // console.log("🚀 ~ item:", item)
     // const name = 'user/view-invoice'
     // const url = this.router
     //   .createUrlTree([name], {

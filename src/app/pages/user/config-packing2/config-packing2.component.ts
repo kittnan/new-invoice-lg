@@ -70,7 +70,6 @@ export class ConfigPacking2Component implements OnInit {
     this.user = localStorage.getItem('INVLG_user')
     this.user = JSON.parse(this.user)
     this.route.queryParams.subscribe(async (res) => {
-      console.log(res);
       if (res['key']) {
 
 
@@ -102,11 +101,7 @@ export class ConfigPacking2Component implements OnInit {
             printDate: a.printDate ? a.printDate : new Date()
           };
         });
-        this.page = this.calculatorPageBreak(this.pkta.length + 1);
-        this.pageArr = Array.from(
-          { length: this.page },
-          (_, index) => index + 1
-        );
+
         const prod = this.pkta.find((a: any) => a['Customer Part#'])
         this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
 
@@ -121,16 +116,16 @@ export class ConfigPacking2Component implements OnInit {
         let newPacking = this.packing.reduce((p: any, n: any) => {
           if (p.length === 0) {
             n['quantity shipped'] = [n['quantity shipped']]
-            n['NetWeight'] = n['NET WEIGHT']
+            n['NET WEIGHT2'] = [n['NET WEIGHT']]
             p = [n]
           } else {
             const i = p.findIndex((a: any) => (a['(KGSS) Customer PO'] == n['(KGSS) Customer PO']) && (a['Start case#'] == n['Start case#']))
             if (i !== -1) {
               p[i]['quantity shipped'].push(n['quantity shipped'])
-              n['NetWeight'] += n['NET WEIGHT']
+              p[i]['NET WEIGHT2'].push(n['NET WEIGHT'])
             } else {
-              n['NetWeight'] = n['NET WEIGHT']
               n['quantity shipped'] = [n['quantity shipped']]
+              n['NET WEIGHT2'] = [n['NET WEIGHT']]
               p = p.concat(n)
             }
           }
@@ -157,7 +152,12 @@ export class ConfigPacking2Component implements OnInit {
               'itemCode': this.htmlItemCode(pk["Customer Part#"]),
               'GrossWeight': this.htmlGrossWeight(pk),
               'GrossWeightCase': grossWeightCase,
+              'GrossWeightCaseSub': this.htmlGrossWeightSub(a),
+              // 'GrossWeightCase': a['GROSS WEIGHT'],
               'CntOf Origin2': this.htmlCountry(pk["CntOf Origin"]),
+              'Case No': this.htmlCaseNo(a),
+              'quantity shipped': this.htmlQuantityShip(a),
+              'NetWeight': this.htmlNetWeight(a)
             }
             return {
               ...pk,
@@ -165,17 +165,10 @@ export class ConfigPacking2Component implements OnInit {
               ...a
             }
           }),
-          footer: {
-            qty: this.htmlQuantity(),
-            'totalQty': this.htmlTotalQty(),
-            netWeightAll: this.htmlNetWeightAll(),
-            grossWeightAll: this.htmlGrossWeightAll(),
-            typing1: null
-          },
-          page: this.calculatorPageBreak(this.pkta.length + 1)
+
         }
 
-        const packingFormSlim = {
+        const packingFormSlim: any = {
           invoice: this.invoice,
           consignee: this.consignee,
           accountee: this.accountee,
@@ -184,43 +177,53 @@ export class ConfigPacking2Component implements OnInit {
           "Sales DT": this.htmlDate(this.pkta[0]["Sales DT"]),
           data: packingForm.data.map((obj: any, i: number) => {
             return {
-              'Case Mark Information 1':obj['Case Mark Information 1'],
-              'Start case#':obj['Start case#'],
-              'Customer Part#':obj['Customer Part#'],
-              'quantity shipped':obj['quantity shipped'],
-              'Case Mark Information 2':obj['Case Mark Information 2'],
-              'Cust Desc':obj['Cust Desc'],
-              'Lot#':obj['Lot#'],
-              'NetWeight':obj['NetWeight'],
-              'GrossWeightCase':obj['GrossWeightCase'],
-              'Case Mark Information 3':obj['Case Mark Information 3'],
-              'SO#':obj['SO#'],
-              'Measurement (vertical)':obj['Measurement (vertical)'],
-              'Measurement (horizontal)':obj['Measurement (horizontal)'],
-              'Measurement (High)':obj['Measurement (High)'],
-              'Case Mark Information 4':obj['Case Mark Information 4'],
-              'Customer PO#':obj['Customer PO#'],
-              'Case Mark Information 5':obj['Case Mark Information 5'],
-              'Customer SO#':obj['Customer SO#'],
-              'CntOf Origin2':obj['CntOf Origin2'],
-              'Prod Part#':obj['Prod Part#'],
-              'typing1':obj['typing1'],
+              'Case Mark Information 1': obj['Case Mark Information 1'],
+              'Case No': obj['Case No'],
+              'Customer Part#': obj['Customer Part#'],
+
+              'quantity shipped': obj['quantity shipped'],
+              // 'QuantityShip':obj['QuantityShip'],
+
+              'Case Mark Information 2': obj['Case Mark Information 2'],
+              'Cust Desc': obj['Cust Desc'],
+              'Lot#': obj['Lot#'],
+              'NetWeight': obj['NetWeight'],
+              'GrossWeightCase': obj['GrossWeightCase'],
+              'GrossWeightCaseSub': obj['GrossWeightCaseSub'],
+              'Case Mark Information 3': obj['Case Mark Information 3'],
+              'SO#': obj['SO#'],
+              'Measurement (vertical)': obj['Measurement (vertical)'],
+              'Measurement (horizontal)': obj['Measurement (horizontal)'],
+              'Measurement (High)': obj['Measurement (High)'],
+              'Case Mark Information 4': obj['Case Mark Information 4'],
+              'Customer PO#': obj['Customer PO#'],
+              'Case Mark Information 5': obj['Case Mark Information 5'],
+              'Customer SO#': obj['Customer SO#'],
+              'CntOf Origin2': obj['CntOf Origin2'],
+              'Prod Part#': obj['Prod Part#'],
+              'typing1': obj['typing1'],
             }
           }),
           footer: {
             qty: this.htmlQuantity(),
             'totalQty': this.htmlTotalQty(),
-            netWeightAll: this.htmlNetWeightAll(),
-            grossWeightAll: this.htmlGrossWeightAll(),
+            netWeightAll: this.htmlNetWeightAll(packingForm.data),
+            grossWeightAll: this.htmlGrossWeightAll(packingForm.data),
             typing1: null
           },
-          page: this.calculatorPageBreak(this.pkta.length + 1)
         }
 
+        packingFormSlim.page = this.calculatorPageBreak(packingFormSlim.data.length + 1)
+        this.page = packingFormSlim.page
+        this.pageArr = Array.from(
+          { length: this.page },
+          (_, index) => index + 1
+        );
         this.form = {
           invoice: this.invoice,
           packingForm: packingFormSlim,
         }
+        console.log("🚀 ~ this.form:", this.form)
       }
     });
 
@@ -234,7 +237,6 @@ export class ConfigPacking2Component implements OnInit {
         showCancelButton: true
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
-          // console.log(this.form);
           this.form.packingForm.status = 'ready'
           await this.$form.update({
             invoice: this.invoice,
@@ -273,6 +275,26 @@ export class ConfigPacking2Component implements OnInit {
     const newItem = this.itemCodes.find((a: any) => a.itemCode == value);
     return newItem ? newItem.itemName : '';
   }
+  htmlCaseNo(item: any) {
+    const lastCase = item['Start case#'] + item['Case Quantity'] - 1
+    if (item['Start case#'] == lastCase) {
+      return item['Start case#']
+    } else {
+      return `${item['Start case#']} - ${lastCase}`
+    }
+  }
+  htmlQuantityShip(item: any) {
+    if (item['Case Quantity'] > 1) {
+      item['quantity shipped'][1] = `(EA.${item['quantity shipped'][0]} PC)`
+      item['quantity shipped'][0] = item['quantity shipped'][0] * item['Case Quantity']
+      return item['quantity shipped']
+    } else {
+      if (item['quantity shipped'][1]) {
+        item['quantity shipped'][1] = item['quantity shipped'][1] + ' PC'
+      }
+      return item['quantity shipped']
+    }
+  }
   htmlQuantity() {
     return this.pkta.reduce((p: any, n: any) => {
       if (n['Sales QTY']) return p + Number(n['Sales QTY']);
@@ -280,14 +302,55 @@ export class ConfigPacking2Component implements OnInit {
     }, 0);
   }
   htmlTotalQty() {
-    const unique = [...new Set(this.packing.map((item: any) => item['Start case#']))];
-    return unique.length
+    const arrayUniqueByKey = [...new Map(this.packing.map((item: any) =>
+      [item['Start case#'], item])).values()];
+    const total = arrayUniqueByKey.reduce((p: any, n: any) => {
+      return p += n['Case Quantity']
+    }, 0)
+    return total
   }
-  htmlNetWeightAll() {
+  htmlNetWeight(item: any) {
+    if (item['Case Quantity'] > 1) {
+      item['NET WEIGHT2'][1] = item['NET WEIGHT2'][0]
+      item['NET WEIGHT2'][0] = item['NET WEIGHT2'][0] * item['Case Quantity']
+      return item['NET WEIGHT2']
+    } else {
+      return item['NET WEIGHT2']
+    }
+    // console.log(item['NET WEIGHT']);
+    // // console.log(item['Case Quantity']);
+
+    // let newArr: any = []
+    // if (item['Case Quantity'] > 1) {
+    //   const net = item['NET WEIGHT']
+    //   newArr[1] = net
+    //   newArr[0] = net * item['Case Quantity']
+    //   return newArr
+    // } else {
+    //   return item['NET WEIGHT']
+    // }
+
+  }
+  htmlNetWeightAll(data: any) {
 
     return this.packing.reduce((p: any, n: any) => {
-      return p += n['NET WEIGHT']
+      if (n['Case Quantity'] > 1) {
+        return p += Number(n['Case Quantity'] * n['NET WEIGHT'])
+      } else {
+       return p += n['NET WEIGHT']
+      }
     }, 0)
+
+    // const foo = data.reduce((p: any, n: any) => {
+    //   // const s = n['NetWeight'].reduce((p2: any, n2: any) => {
+    //   //   return p2 += n2
+    //   // })
+    //   return p += Number(n['NetWeight'][0])
+    // }, 0)
+    // return Number(foo).toFixed(2)
+    // // return this.packing.reduce((p: any, n: any) => {
+    // //   return p += n['NET WEIGHT']
+    // // }, 0)
 
   }
   htmlGrossWeight(item: any) {
@@ -299,21 +362,36 @@ export class ConfigPacking2Component implements OnInit {
     return ''
   }
   htmlGrossWeightCase(item: any) {
-    const onlyCases = this.packing.filter((a: any) => a['Start case#'] == item['Start case#'])
-    if (onlyCases && onlyCases.length > 0) {
-      const newItem = onlyCases.reduce((p: any, n: any) => {
-        return p += n['GROSS WEIGHT']
-      }, 0)
-      return newItem + ' KGS'
-    } else {
-      return ''
-    }
-  }
-  htmlGrossWeightAll() {
 
-    return this.packing.reduce((p: any, n: any) => {
-      return p += n['GROSS WEIGHT']
+    if (item['Case Quantity'] > 1) {
+      return Number(item['GROSS WEIGHT'] * item['Case Quantity']).toFixed(2) + ' KGS'
+    } else {
+      return Number(item['GROSS WEIGHT']).toFixed(2) + ' KGS'
+    }
+
+    // if (onlyCases && onlyCases.length > 0) {
+    //   const newItem = onlyCases.reduce((p: any, n: any) => {
+    //     return p += n['GROSS WEIGHT']
+    //   }, 0)
+    //   return Number(newItem).toFixed(2) + ' KGS'
+    // } else {
+    //   return ''
+    // }
+  }
+  htmlGrossWeightSub(item: any) {
+    if (item['Case Quantity'] > 1) {
+      return `(EA.${Number(item['GROSS WEIGHT']).toFixed(2)} KGS)`
+    }
+    return ''
+  }
+  htmlGrossWeightAll(data: any) {
+    const foo = data.reduce((p: any, n: any) => {
+      return p += Number(n['GrossWeightCase'].toString().replaceAll('KGS', ''))
     }, 0)
+    return Number(foo).toFixed(2)
+    // return this.packing.reduce((p: any, n: any) => {
+    //   return p += n['GROSS WEIGHT']
+    // }, 0)
 
   }
 

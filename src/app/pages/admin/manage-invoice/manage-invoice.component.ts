@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { HttpFormService } from 'src/app/https/http-form.service';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
@@ -13,7 +14,8 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 })
 export class ManageInvoiceComponent implements OnInit {
   pkta: any = null
-
+  displayedColumns: string[] = ['no', 'invoice','status','action'];
+  dataSource = new MatTableDataSource();
   constructor(
     private $pkta: HttpPktaService,
     private $alert: AlertService,
@@ -26,6 +28,7 @@ export class ManageInvoiceComponent implements OnInit {
     const uniquePkta = [...new Map(e.map((item: any) =>
       [item['invoice'], item])).values()];
     this.pkta = uniquePkta
+    this.dataSource = new MatTableDataSource(this.pkta);
   }
   handleDelete(item: any) {
     Swal.fire({

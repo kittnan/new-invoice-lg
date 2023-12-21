@@ -3,10 +3,13 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpFormService } from 'src/app/https/http-form.service';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
 
+
+
 @Component({
   selector: 'app-search-invoice',
   templateUrl: './search-invoice.component.html',
-  styleUrls: ['./search-invoice.component.scss']
+  styleUrls: ['./search-invoice.component.scss'],
+  providers: []
 })
 export class SearchInvoiceComponent implements OnInit {
 

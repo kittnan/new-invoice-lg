@@ -45,7 +45,6 @@ export class ItemCodeComponent implements OnInit {
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
 
-          console.log(this.newItems);
           const dataCreate = this.newItems.filter(
             (a: any) => a.itemCode && a.itemName
           );

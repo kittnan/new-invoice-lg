@@ -43,9 +43,7 @@ export class UserComponent implements OnInit {
 
   async createDataImport(data: any) {
     try {
-      console.log("🚀 ~ data:", data)
       const stat = await this.$user.import(data).toPromise();
-      console.log('🚀 ~ stat:', stat);
       this.$alert.success(2000, 'Data created!!', true);
     } catch (error) {
       console.log('🚀 ~ error:', error);

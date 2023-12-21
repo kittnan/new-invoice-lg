@@ -58,9 +58,7 @@ export class ViewPackingComponent implements OnInit {
     try {
       this.user = localStorage.getItem('INVLG_user')
       this.user = JSON.parse(this.user)
-      console.log("🚀 ~ this.user:", this.user)
       this.route.queryParams.subscribe(async (res) => {
-        console.log(res);
         if (res['key']) {
           if (res['mode'] == 'reprint') {
             this.reprint = true
@@ -84,13 +82,11 @@ export class ViewPackingComponent implements OnInit {
               printDate: a.printDate ? a.printDate : new Date()
             };
           });
-          console.log('🚀 ~ this.pkta:', this.pkta);
           this.page = this.calculatorPageBreak(this.pkta.length+1);
           this.pageArr = Array.from(
             { length: this.page },
             (_, index) => index + 1
           );
-          console.log('🚀 ~ this.pageArr:', this.pageArr);
         }
       });
 
@@ -124,7 +120,6 @@ export class ViewPackingComponent implements OnInit {
     this.$loader.start();
     setTimeout(() => {
       const div: any = document.querySelectorAll('#print');
-      console.log('🚀 ~ div:', div);
       const options = {
         background: 'white',
         scale: 3,
@@ -164,10 +159,8 @@ export class ViewPackingComponent implements OnInit {
             return doc;
           })
           .then(async (doc) => {
-            console.log(`${index + 1}`, doc);
             if (index + 1 === div.length) {
               doc.save(`packing_${this.invoice}.pdf`);
-              // console.log(this.pkta);
               this.handleCreateForm()
               // if (this.reprint) {
               //   await this.handleUpdateReprint(this.invoice)
@@ -264,7 +257,6 @@ export class ViewPackingComponent implements OnInit {
       },
       page: this.calculatorPageBreak(this.pkta.length+1)
     }
-    console.log("🚀 ~ packingForm:", packingForm)
 
     await this.$form.updateByInvoice({
       invoice: this.invoice,

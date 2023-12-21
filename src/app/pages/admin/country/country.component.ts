@@ -25,7 +25,6 @@ export class CountryComponent implements OnInit {
     try {
       const resData: any =await this.$country.get().toPromise();
       this.country = resData
-      console.log("🚀 ~ resData:", resData)
 
       this.dataSource = new MatTableDataSource(resData);
     } catch (error) {
@@ -44,9 +43,7 @@ export class CountryComponent implements OnInit {
 
   async createDataImport(data: any) {
     try {
-      console.log('🚀 ~ data:', data);
       const stat = await this.$country.import(data).toPromise();
-      console.log('🚀 ~ stat:', stat);
       this.$alert.success(2000, 'Data created!!', true);
     } catch (error) {
       console.log('🚀 ~ error:', error);

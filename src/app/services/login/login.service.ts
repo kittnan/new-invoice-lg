@@ -31,7 +31,6 @@ export class LoginService {
   }
   async login(data: any) {
     const resData: any = await this.http.post(`${this.URL}/users/login`, data).toPromise()
-    console.log("🚀 ~ resData :", resData)
     if (resData && resData.length > 0) {
       const userStr = JSON.stringify(resData[0])
       localStorage.setItem('INVLG_user', userStr)

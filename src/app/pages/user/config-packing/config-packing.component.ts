@@ -72,7 +72,6 @@ export class ConfigPackingComponent implements OnInit {
     this.user = localStorage.getItem('INVLG_user')
     this.user = JSON.parse(this.user)
     this.route.queryParams.subscribe(async (res) => {
-      console.log(res);
       if (res['key']) {
 
 
@@ -108,13 +107,11 @@ export class ConfigPackingComponent implements OnInit {
             printDate: a.printDate ? a.printDate : new Date()
           };
         });
-        console.log('🚀 ~ this.pkta:', this.pkta);
         this.page = this.calculatorPageBreak(this.pkta.length + 1);
         this.pageArr = Array.from(
           { length: this.page },
           (_, index) => index + 1
         );
-        console.log('🚀 ~ this.pageArr:', this.pageArr);
         const prod = this.pkta.find((a: any) => a['Customer Part#'])
         this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
         if (this.model) {
@@ -171,7 +168,6 @@ export class ConfigPackingComponent implements OnInit {
           },
           page: this.calculatorPageBreak(this.pkta.length + 1)
         }
-        console.log("🚀 ~ packingForm:", packingForm)
         this.form = {
           invoice: this.invoice,
           packingForm: packingForm,
@@ -189,7 +185,6 @@ export class ConfigPackingComponent implements OnInit {
         showCancelButton: true
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
-          console.log(this.form);
           this.form.packingForm.status = 'ready'
           await this.$form.update({
             invoice: this.invoice,
@@ -296,7 +291,6 @@ export class ConfigPackingComponent implements OnInit {
 
   // todo action
   handleChangeConsigneeCodeSelected() {
-    console.log(this.consigneeCode);
 
     this.accountee = this.accounteeOption.find((a: any) => a.code == this.consigneeCode)
     this.consignee = this.consigneeOption.find((a: any) => a.code == this.consigneeCode)

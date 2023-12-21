@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
     // })
 
     // if (formValues) {
-    //   console.log("🚀 ~ formValues:", formValues)
     //   // Swal.fire(JSON.stringify(formValues))
     //   if (formValues.username && formValues.password) {
     //     await this.$login.login(formValues)

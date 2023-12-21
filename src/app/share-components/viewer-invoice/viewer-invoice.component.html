@@ -213,7 +213,9 @@
           {{ item['itemCode'] }}
         </td>
         <td>
-          {{ item["Customer Part#"] }}
+          <span *ngIf="i===0">
+            {{ item["Customer Part#"] }}
+          </span>
         </td>
         <td></td>
         <td >
@@ -229,7 +231,9 @@
           {{ item["Cust Desc"] }}
         </td>
         <td>PIECE</td>
-        <td>THB</td>
+        <td>
+          {{ item["Cust Currency"] }}
+        </td>
         <td>
           {{ item["Cust Currency"] }}
         </td>
@@ -337,7 +341,7 @@
         <td></td>
         <td></td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td></td>
         <td>
           {{item['Prod Desc']}}
@@ -345,7 +349,7 @@
         <td></td>
         <td></td>
         <td></td>
-      </tr>
+      </tr> -->
       <tr>
         <td></td>
         <td></td>
@@ -360,7 +364,9 @@
         <td></td>
         <td>PIECE</td>
         <td></td>
-        <td>THB</td>
+        <td>
+          {{invoiceForm.data[0]['Cust Currency']}}
+        </td>
       </tr>
       <tr>
         <td class="text-end">TOTAL:</td>
@@ -382,7 +388,7 @@
         <td class="text-end">NET WEIGHT :</td>
         <td>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-            <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer.netWeight | number : "1.2"}} </span>
+            <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer.netWeightAll | number : "1.2"}} </span>
             <span fxFlex="80" style="padding-left: 10px;">  KGS </span>
           </div>
         </td>
@@ -394,7 +400,7 @@
         <td class="text-end">GROSS WEIGHT :</td>
         <td>
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-            <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer.grossWeight | number : "1.2"}} </span>
+            <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer.grossWeightAll | number : "1.2"}} </span>
             <span fxFlex="80" style="padding-left: 10px;">  KGS </span>
           </div>
         </td>
