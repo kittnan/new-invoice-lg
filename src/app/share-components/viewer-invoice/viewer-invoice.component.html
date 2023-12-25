@@ -210,10 +210,10 @@
     <ng-container *ngFor="let item of getData(p_i); let i = index">
       <tr>
         <td>
-          {{ item['itemCode'] }}
+          <!-- {{ item['itemCode'] }} -->
         </td>
         <td>
-          <span *ngIf="i===0">
+          <span >
             {{ item["Customer Part#"] }}
           </span>
         </td>
@@ -326,7 +326,7 @@
       <tr>
         <td></td>
         <td>
-          {{ item["Prod Part#"] }}
+            {{ item["Prod Part#"] }}
         </td>
         <td></td>
         <td></td>
@@ -335,7 +335,7 @@
       <tr>
         <td></td>
         <td>
-        {{item.typing1}}
+            {{item.typing1}}
         </td>
         <td></td>
         <td></td>
@@ -344,7 +344,7 @@
       <!-- <tr>
         <td></td>
         <td>
-          {{item['Prod Desc']}}
+          Prod Desc  {{item['Prod Desc']}}
         </td>
         <td></td>
         <td></td>

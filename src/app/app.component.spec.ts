@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'new-invoice-lg'`, () => {
+  it(`should have as title 'domestics-invoice-system'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('new-invoice-lg');
+    expect(app.title).toEqual('domestics-invoice-system');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('new-invoice-lg app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('domestics-invoice-system app is running!');
   });
 });

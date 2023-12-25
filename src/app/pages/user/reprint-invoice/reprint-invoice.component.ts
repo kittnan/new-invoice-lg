@@ -29,7 +29,7 @@ export class ReprintInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.user = localStorage.getItem('INVLG_user')
+      this.user = localStorage.getItem('DIS_user')
       this.user = JSON.parse(this.user)
       this.route.queryParams.subscribe(async (res) => {
         const resForm = await this.$form.get(new HttpParams().set('key', JSON.stringify(res['key']))).toPromise()

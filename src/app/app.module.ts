@@ -32,7 +32,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   gap: 5,
   logoPosition: 'center-center',
   logoSize: 200,
-  logoUrl: './assets/inv_car2.png',
+  logoUrl: './assets/invioce_new2_load.png',
   masterLoaderId: 'master',
   overlayBorderRadius: '0',
   overlayColor: 'rgba(255,255,255,0.6)',

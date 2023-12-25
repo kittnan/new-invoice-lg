@@ -16,11 +16,11 @@ export class LoginService {
     ) { }
 
   validate() {
-    if(localStorage.getItem('INVLG_user')) return true
+    if(localStorage.getItem('DIS_user')) return true
     return false
   }
   get(){
-    let user:any = localStorage.getItem('INVLG_user')
+    let user:any = localStorage.getItem('DIS_user')
     if(user){
       user = JSON.parse(user)
       return user
@@ -33,7 +33,8 @@ export class LoginService {
     const resData: any = await this.http.post(`${this.URL}/users/login`, data).toPromise()
     if (resData && resData.length > 0) {
       const userStr = JSON.stringify(resData[0])
-      localStorage.setItem('INVLG_user', userStr)
+      localStorage.setItem('DIS_user', userStr)
+      console.log("🚀 ~ userStr:", userStr)
       if (resData[0].auth_admin) {
         this.router.navigate(['user']).then(()=>location.reload())
       } else {

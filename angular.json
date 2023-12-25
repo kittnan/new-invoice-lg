@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "new-invoice-lg": {
+    "domestics-invoice-system": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/new-invoice-lg",
+            "outputPath": "dist/domestics-invoice-system",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -74,7 +74,7 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "aot": true,
-              "baseHref": "/new-invoice-lg/"
+              "baseHref": "/domestics-invoice-system/"
             },
             "development": {
               "buildOptimizer": false,
@@ -91,10 +91,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "new-invoice-lg:build:production"
+              "browserTarget": "domestics-invoice-system:build:production"
             },
             "development": {
-              "browserTarget": "new-invoice-lg:build:development"
+              "browserTarget": "domestics-invoice-system:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -102,7 +102,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "new-invoice-lg:build"
+            "browserTarget": "domestics-invoice-system:build"
           }
         },
         "test": {

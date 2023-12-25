@@ -67,7 +67,7 @@ export class ConfigPacking2Component implements OnInit {
     private $pdf: GenerateInvoicePdfService,
   ) { }
   async ngOnInit(): Promise<void> {
-    this.user = localStorage.getItem('INVLG_user')
+    this.user = localStorage.getItem('DIS_user')
     this.user = JSON.parse(this.user)
     this.route.queryParams.subscribe(async (res) => {
       if (res['key']) {
@@ -204,6 +204,7 @@ export class ConfigPacking2Component implements OnInit {
               'typing1': obj['typing1'],
             }
           }),
+          unitItem: this.unitItem,
           footer: {
             qty: this.htmlQuantity(),
             'totalQty': this.htmlTotalQty(),
@@ -310,9 +311,21 @@ export class ConfigPacking2Component implements OnInit {
     return total
   }
   htmlNetWeight(item: any) {
+
     if (item['Case Quantity'] > 1) {
-      item['NET WEIGHT2'][1] = item['NET WEIGHT2'][0]
-      item['NET WEIGHT2'][0] = item['NET WEIGHT2'][0] * item['Case Quantity']
+      // item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][0]).toFixed(2)
+      item['NET WEIGHT2'][0] = Number(item['NET WEIGHT2'][0] * item['Case Quantity']).toFixed(2)
+      return item['NET WEIGHT2']
+    } else {
+      if (item['NET WEIGHT2'][1]) {
+        item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][1]).toFixed(2)
+      }
+      return item['NET WEIGHT2']
+    }
+
+    if (item['Case Quantity'] > 1) {
+      item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][0]).toFixed(2)
+      item['NET WEIGHT2'][0] = Number(item['NET WEIGHT2'][0] * item['Case Quantity']).toFixed(2)
       return item['NET WEIGHT2']
     } else {
       return item['NET WEIGHT2']

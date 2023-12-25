@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpFormService } from 'src/app/https/http-form.service';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -33,7 +34,19 @@ export class SearchInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.date.start = new Date()
+      let d: any = localStorage.getItem('DIS_filter')
+      if (d) {
+        d = JSON.parse(d)
+        console.log("🚀 ~ d:", d)
+        this.invoice = d.invoice ? d.invoice : null
+        this.date = d.date ? d.date : {
+          start: null,
+          end: null
+        }
+        this.statusSelected = d.status ? d.status : 'available'
+      } else {
+        this.date.start = new Date()
+      }
       this.handleSearch()
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -52,12 +65,37 @@ export class SearchInvoiceComponent implements OnInit {
       }
       const resData = await this.$form.search(p).toPromise()
       this.resultFilter.emit(resData)
+      this.saveFilter()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
+  saveFilter() {
+    let d: any = {
+      invoice: this.invoice,
+      date: this.date,
+      status: this.statusSelected
+    }
+    d = JSON.stringify(d)
+    localStorage.setItem('DIS_filter', d)
+  }
   clearStartDate(key: any) {
     this.date[key] = null
+  }
+  handleClearFilter() {
+    this.invoice = null
+    this.date = {
+      start: null,
+      end: null
+    }
+    this.statusSelected = 'available'
+    localStorage.removeItem('DIS_filter')
+    Swal.fire({
+      title:'Success',
+      icon:'success',
+      showConfirmButton:false,
+      timer:1000
+    })
   }
 
 }

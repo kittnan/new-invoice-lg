@@ -70,7 +70,7 @@ export class ConfigInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.user = localStorage.getItem('INVLG_user')
+      this.user = localStorage.getItem('DIS_user')
       this.user = JSON.parse(this.user)
       this.route.queryParams.subscribe(async (res) => {
         if (res['key']) {
@@ -116,13 +116,11 @@ export class ConfigInvoiceComponent implements OnInit {
           );
           const prod = this.pkta.find((a: any) => a['Customer Part#'])
           this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
-          if (this.model) {
-            if (this.model['Packing content category (W)'] == 'O') {
-              this.unitItem = 'PALLET'
-            }
-            if (this.model['Packing content category (W)'] == '3') {
-              this.unitItem = 'CARTON'
-            }
+          if (this.packing[0]['Packing content category'] == 'O') {
+            this.unitItem = 'PALLET'
+          }
+          if (this.packing[0]['Packing content category'] == '3') {
+            this.unitItem = 'CARTON'
           }
 
           const invoiceForm = {

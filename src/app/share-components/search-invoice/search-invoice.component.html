@@ -38,12 +38,20 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button class="ms-4 bg-green-300 text-indigo-600" (click)="handleSearch()">
+  <button mat-raised-button class="ms-4 mb-2 bg-green-300 text-indigo-600" (click)="handleSearch()">
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <mat-icon class="mat-18 ms-2">
         search
       </mat-icon>
       Search
+    </div>
+  </button>
+  <button mat-raised-button class="ms-2 mb-2 bg-gray-500 text-white" (click)="handleClearFilter()">
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-icon class="mat-18 ms-2">
+        restart_alt
+      </mat-icon>
+      Clear Filter
     </div>
   </button>
 </div>
