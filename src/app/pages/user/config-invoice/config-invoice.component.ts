@@ -164,7 +164,6 @@ export class ConfigInvoiceComponent implements OnInit {
               netWeight: this.htmlNetWeight(),
               grossWeight: this.htmlGrossWeight(),
               caseQty: this.htmlCaseQuantity(),
-
               netWeightAll: this.htmlNetWeightAll(),
               grossWeightAll: this.htmlGrossWeightAll(),
             },

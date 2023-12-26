@@ -14,8 +14,6 @@ export class GenerateInvoicePdfService {
   ) { }
   generatePDF(invoice: any, name: string) {
     try {
-      console.log('ui');
-
       this.$loader.start();
       setTimeout(async () => {
         const div: any = document.querySelectorAll('#print');
@@ -23,8 +21,6 @@ export class GenerateInvoicePdfService {
           background: 'white',
           scale: 3,
         };
-        console.log(div.length);
-
         var doc: any = new jsPDF('l', 'mm', 'a4');
         for (let index = 0; index < div.length; index++) {
           console.log("🚀 ~ index:", index)
