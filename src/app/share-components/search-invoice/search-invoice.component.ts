@@ -37,7 +37,6 @@ export class SearchInvoiceComponent implements OnInit {
       let d: any = localStorage.getItem('DIS_filter')
       if (d) {
         d = JSON.parse(d)
-        console.log("🚀 ~ d:", d)
         this.invoice = d.invoice ? d.invoice : null
         this.date = d.date ? d.date : {
           start: null,

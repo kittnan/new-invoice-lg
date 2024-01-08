@@ -1,7 +1,6 @@
 <div
   fxLayout="row wrap"
   fxLayoutAlign="start start"
-  style="width: 1600px"
   *ngFor="let p of pageArr; let p_i = index"
   id="print"
   class="mb-9"
@@ -418,7 +417,7 @@
           <td class="text-end">
             {{ packingForm.footer.qty | number : "1.0-0" }} PC
           </td>
-          <td class="text-end">{{ packingForm.footer.netWeightAll }} KGS</td>
+          <td class="text-end">{{ packingForm.footer.netWeightAll | number : "1.2" }} KGS</td>
           <td class="text-end">{{ packingForm.footer.grossWeightAll }} KGS</td>
         </tr>
         <tr>

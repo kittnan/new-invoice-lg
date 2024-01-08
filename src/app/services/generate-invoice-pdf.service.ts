@@ -19,14 +19,17 @@ export class GenerateInvoicePdfService {
         const div: any = document.querySelectorAll('#print');
         const options = {
           background: 'white',
-          scale: 3,
+          scale: 1,
         };
         var doc: any = new jsPDF('l', 'mm', 'a4');
         for (let index = 0; index < div.length; index++) {
           console.log("🚀 ~ index:", index)
           const d = div[index];
+          console.log("🚀 ~ d:", d)
           const can = await html2canvas(d, options)
+          console.log("🚀 ~ can:", can)
           let img = can.toDataURL('image/PNG');
+          console.log("🚀 ~ img:", img)
           const bufferX = 5;
           const bufferY = 2;
           const imgProps = (<any>doc).getImageProperties(img);

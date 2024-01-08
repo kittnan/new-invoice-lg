@@ -16,9 +16,10 @@ import { ReprintPackingComponent } from './reprint-packing/reprint-packing.compo
 import { ConfigInvoiceComponent } from './config-invoice/config-invoice.component';
 import { ConfigPackingComponent } from './config-packing/config-packing.component';
 import { ConfigPacking2Component } from './config-packing2/config-packing2.component';
+import { ReprintAllComponent } from './reprint-all/reprint-all.component';
 
 @NgModule({
-  declarations: [GenerateInvoiceComponent, ViewInvoiceComponent, PrintInvoiceComponent, ViewPackingComponent, ReprintInvoiceComponent, ReprintPackingComponent, ConfigInvoiceComponent, ConfigPackingComponent, ConfigPacking2Component],
+  declarations: [GenerateInvoiceComponent, ViewInvoiceComponent, PrintInvoiceComponent, ViewPackingComponent, ReprintInvoiceComponent, ReprintPackingComponent, ConfigInvoiceComponent, ConfigPackingComponent, ConfigPacking2Component, ReprintAllComponent],
   imports: [
     CommonModule,
     UserRoutingModule,

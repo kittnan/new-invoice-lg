@@ -32,7 +32,7 @@ export class ReprintInvoiceComponent implements OnInit {
       this.user = localStorage.getItem('DIS_user')
       this.user = JSON.parse(this.user)
       this.route.queryParams.subscribe(async (res) => {
-        const resForm = await this.$form.get(new HttpParams().set('key', JSON.stringify(res['key']))).toPromise()
+        const resForm = await this.$form.get(new HttpParams().set('key', JSON.stringify([res['key']]))).toPromise()
         this.form = resForm[resForm.length-1]
         for (let i = 0; i < this.form.invoiceForm.page; i++) {
           this.pageArr.push(i)
