@@ -1,12 +1,6 @@
-<div fxLayout="row wrap" fxLayoutAlign="start start" >
-  <app-sub-head [name]="'Consignee'" ></app-sub-head>
-  <div
-    fxFlex="100"
-    fxLayout="row wrap"
-    fxLayoutAlign="space-around start"
-
-    class="layput-input mt-3"
-  >
+<div fxLayout="row wrap" fxLayoutAlign="start start">
+  <app-sub-head [name]="'Consignee'"></app-sub-head>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around start" class="layput-input mt-3">
     <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label class="text-rose-500">*Consignee Code</mat-label>
       <mat-select [(ngModel)]="code" (selectionChange)="handleChange()">
@@ -46,13 +40,7 @@
   <mat-divider fxFlex="100" class="mt-4 mb-4"></mat-divider>
 
   <app-sub-head fxFlex="100" [name]="'Accountee'"></app-sub-head>
-  <div
-    fxFlex="100"
-    fxLayout="row wrap"
-    fxLayoutAlign="space-around start"
-
-    class="layput-input mt-3"
-  >
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around start" class="layput-input mt-3">
     <mat-form-field fxFlex="40" class="mb-1" appearance="legacy">
       <mat-label>Accountee Line 1</mat-label>
       <input matInput [(ngModel)]="accounteeForm.line1" />

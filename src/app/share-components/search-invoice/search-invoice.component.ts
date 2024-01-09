@@ -62,6 +62,7 @@ export class SearchInvoiceComponent implements OnInit {
       if (this.statusSelected != 'all') {
         p = p.set('status', JSON.stringify([this.statusSelected]))
       }
+      p = p.set('sort',JSON.stringify(1))
       const resData = await this.$form.search(p).toPromise()
       this.resultFilter.emit(resData)
       this.saveFilter()

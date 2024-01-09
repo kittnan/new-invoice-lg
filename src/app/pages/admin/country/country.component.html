@@ -1,30 +1,17 @@
 <div fxLayout="row wrap" fxLayoutAlign="start stretch">
   <app-sub-head [name]="'Country'"></app-sub-head>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-    <div
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="start center"
-      class="bg-inherit"
-      style="background-color: inherit !important"
-    >
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="bg-inherit"
+      style="background-color: inherit !important">
       <span class="me-2"> Key </span>
-      <button
-        mat-raised-button
-        class="bg-green-300 text-indigo-600 me-2"
-        (click)="upload.click()"
-      >
+      <button mat-raised-button class="bg-green-300 text-indigo-600 me-2" (click)="upload.click()">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <mat-icon class="mat-18"> file_upload </mat-icon>
 
           Upload
         </div>
       </button>
-      <button
-        mat-raised-button
-        class="bg-sky-400 text-white"
-        (click)="handleDownload()"
-      >
+      <button mat-raised-button class="bg-sky-400 text-white" (click)="handleDownload()">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <mat-icon class="mat-18"> file_download </mat-icon>
 

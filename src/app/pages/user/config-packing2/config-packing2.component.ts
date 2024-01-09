@@ -320,28 +320,43 @@ export class ConfigPacking2Component implements OnInit {
       if (item['NET WEIGHT2'][1]) {
         item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][1]).toFixed(2)
       }
+      if (item['NET WEIGHT2'][2]) {
+        item['NET WEIGHT2'][2] = Number(item['NET WEIGHT2'][2]).toFixed(2)
+      }
+      if (item['NET WEIGHT2'][3]) {
+        item['NET WEIGHT2'][3] = Number(item['NET WEIGHT2'][3]).toFixed(2)
+      }
+      if (item['NET WEIGHT2'][4]) {
+        item['NET WEIGHT2'][4] = Number(item['NET WEIGHT2'][4]).toFixed(2)
+      }
+      if (item['NET WEIGHT2'][5]) {
+        item['NET WEIGHT2'][5] = Number(item['NET WEIGHT2'][5]).toFixed(2)
+      }
+      if (item['NET WEIGHT2'][6]) {
+        item['NET WEIGHT2'][6] = Number(item['NET WEIGHT2'][6]).toFixed(2)
+      }
       return item['NET WEIGHT2']
     }
 
-    if (item['Case Quantity'] > 1) {
-      item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][0]).toFixed(2)
-      item['NET WEIGHT2'][0] = Number(item['NET WEIGHT2'][0] * item['Case Quantity']).toFixed(2)
-      return item['NET WEIGHT2']
-    } else {
-      return item['NET WEIGHT2']
-    }
-    // console.log(item['NET WEIGHT']);
-    // // console.log(item['Case Quantity']);
-
-    // let newArr: any = []
     // if (item['Case Quantity'] > 1) {
-    //   const net = item['NET WEIGHT']
-    //   newArr[1] = net
-    //   newArr[0] = net * item['Case Quantity']
-    //   return newArr
+    //   item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][0]).toFixed(2)
+    //   item['NET WEIGHT2'][0] = Number(item['NET WEIGHT2'][0] * item['Case Quantity']).toFixed(2)
+    //   return item['NET WEIGHT2']
     // } else {
-    //   return item['NET WEIGHT']
+    //   return item['NET WEIGHT2']
     // }
+    // // console.log(item['NET WEIGHT']);
+    // // // console.log(item['Case Quantity']);
+
+    // // let newArr: any = []
+    // // if (item['Case Quantity'] > 1) {
+    // //   const net = item['NET WEIGHT']
+    // //   newArr[1] = net
+    // //   newArr[0] = net * item['Case Quantity']
+    // //   return newArr
+    // // } else {
+    // //   return item['NET WEIGHT']
+    // // }
 
   }
   htmlNetWeightAll(data: any) {

@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
@@ -21,6 +22,7 @@ export class PrintInvoiceComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   displayedColumns: string[] = ['select', 'no', 'invoice', 'createdAt', 'invoicePdf', 'packingPdf','issue'];
   dataSource = new MatTableDataSource();
+  @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private $pkta: HttpPktaService,
     private router: Router,
@@ -33,9 +35,12 @@ export class PrintInvoiceComponent implements OnInit {
   handleSearch(e: any) {
     const uniquePkta = [...new Map(e.map((item: any) =>
       [item['invoice'], item])).values()];
-    this.forms = uniquePkta
+    let sortArr = uniquePkta.sort((a:any,b:any)=> b.invoice < a.invoice ? 1 : -1 )
+    this.forms = sortArr
     this.dataSource = new MatTableDataSource(this.forms);
-
+      setTimeout(() => {
+        this.dataSource.sort = this.sort;
+      }, 300);
   }
   handleInvoiceConfig(item: any) {
     this.router.navigate(['user/config-invoice'], {

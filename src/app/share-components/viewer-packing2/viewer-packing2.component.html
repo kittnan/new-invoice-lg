@@ -293,8 +293,20 @@
               </span>
             </div>
           </td>
-          <td></td>
-          <td></td>
+          <td class="text-end">
+            {{
+              item["quantity shipped"][2]
+                ? item["quantity shipped"][2] + " PC"
+                : ("" | number : "1.0-0")
+            }}
+          </td>
+          <td class="text-end">
+            {{
+              item["NetWeight"][2]
+                ? item["NetWeight"][2] + " KGS"
+                : ("" | number : "1.2")
+            }}
+          </td>
           <td class="text-start">
             <div fxLayout="row wrap" fxLayoutAlign="space-between center">
               <span *ngIf="item['GrossWeightCase']">
@@ -318,8 +330,20 @@
               </span>
             </div>
           </td>
-          <td></td>
-          <td></td>
+          <td class="text-end">
+            {{
+              item["quantity shipped"][3]
+                ? item["quantity shipped"][3] + " PC"
+                : ("" | number : "1.0-0")
+            }}
+          </td>
+          <td class="text-end">
+            {{
+              item["NetWeight"][3]
+                ? item["NetWeight"][3] + " KGS"
+                : ("" | number : "1.2")
+            }}
+          </td>
           <td></td>
         </tr>
         <tr>
@@ -336,8 +360,20 @@
               </span>
             </div>
           </td>
-          <td></td>
-          <td></td>
+          <td class="text-end">
+            {{
+              item["quantity shipped"][4]
+                ? item["quantity shipped"][4] + " PC"
+                : ("" | number : "1.0-0")
+            }}
+          </td>
+          <td class="text-end">
+            {{
+              item["NetWeight"][4]
+                ? item["NetWeight"][4] + " KGS"
+                : ("" | number : "1.2")
+            }}
+          </td>
           <td></td>
         </tr>
         <!-- <tr>
@@ -356,8 +392,20 @@
           <td>
             {{ item["Lot#"] }}
           </td>
-          <td></td>
-          <td></td>
+          <td class="text-end">
+            {{
+              item["quantity shipped"][5]
+                ? item["quantity shipped"][5] + " PC"
+                : ("" | number : "1.0-0")
+            }}
+          </td>
+          <td class="text-end">
+            {{
+              item["NetWeight"][5]
+                ? item["NetWeight"][5] + " KGS"
+                : ("" | number : "1.2")
+            }}
+          </td>
           <td></td>
         </tr>
         <tr>
