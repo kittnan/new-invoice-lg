@@ -224,7 +224,6 @@ export class ConfigPacking2Component implements OnInit {
           invoice: this.invoice,
           packingForm: packingFormSlim,
         }
-        console.log("🚀 ~ this.form:", this.form)
       }
     });
 
