@@ -19,7 +19,7 @@ export class GenerateInvoicePdfService {
         const div: any = document.querySelectorAll('#print');
         const options = {
           background: 'white',
-          scale: 1,
+          scale: 2,
         };
         var doc: any = new jsPDF('l', 'mm', 'a4');
         for (let index = 0; index < div.length; index++) {
