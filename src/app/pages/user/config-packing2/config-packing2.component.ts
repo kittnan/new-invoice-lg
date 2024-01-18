@@ -344,8 +344,6 @@ export class ConfigPacking2Component implements OnInit {
     // } else {
     //   return item['NET WEIGHT2']
     // }
-    // // console.log(item['NET WEIGHT']);
-    // // // console.log(item['Case Quantity']);
 
     // // let newArr: any = []
     // // if (item['Case Quantity'] > 1) {

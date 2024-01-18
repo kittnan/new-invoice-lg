@@ -35,7 +35,6 @@ export class ReprintAllComponent implements OnInit {
       // this.route.queryParams.subscribe(async (params: any) => {
       //   let invoices = params['key']
       //   const resForm = await this.$form.get(new HttpParams().set('key', JSON.stringify(invoices))).toPromise()
-      //   console.log("🚀 ~ resForm:", resForm)
       //   this.form = resForm.map((item: any) => {
       //     let pa1 = []
       //     let pa2 = []
@@ -50,7 +49,6 @@ export class ReprintAllComponent implements OnInit {
       //     return item
       //   })
       //   // let foo = Math.ceil(((resForm.length + 1) * 2) / 2)
-      //   // console.log("🚀 ~ foo:", foo)
       //   // for (let i = 0; i < foo; i++) {
       //   //   this.pageArr.push(i)
       //   // }

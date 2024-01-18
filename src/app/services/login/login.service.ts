@@ -34,7 +34,6 @@ export class LoginService {
     if (resData && resData.length > 0) {
       const userStr = JSON.stringify(resData[0])
       localStorage.setItem('DIS_user', userStr)
-      console.log("🚀 ~ userStr:", userStr)
       if (resData[0].auth_admin) {
         this.router.navigate(['user']).then(()=>location.reload())
       } else {

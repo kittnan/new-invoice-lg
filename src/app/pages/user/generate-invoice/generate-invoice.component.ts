@@ -106,7 +106,6 @@ export class GenerateInvoiceComponent implements OnInit {
       no = no.map((a: any) => a['Delivery Note#'])
       let p: HttpParams = new HttpParams().set('key', JSON.stringify(no)).set('status', JSON.stringify(['available']))
       const { pkta, form } = await this.$pkta.checkDuplicate(p).toPromise()
-      console.log("🚀 ~ pkta,form:", pkta, form)
       if ((pkta && pkta.length > 0) || (form && form.length > 0)) {
         let list = [...new Map(pkta.map((item: any) =>
           [item['Delivery Note#'], item])).values()];
