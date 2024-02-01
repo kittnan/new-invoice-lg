@@ -1,40 +1,22 @@
-<div
-  fxLayout="row wrap"
-  fxLayoutAlign="start start"
-  *ngFor="let p of pageArr; let p_i = index"
-  id="print"
-  class="mb-9"
-  style="width: 1600px;"
-
->
+<div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print" class="mb-9"
+  style="width: 1600px;">
   <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
     <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
         <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 15px">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-            <span
-              style="font-size: 35px; letter-spacing: 6px; line-height: 30px"
-              fxLayoutAlign="start start"
-            >
+            <span style="font-size: 35px; letter-spacing: 6px; line-height: 30px" fxLayoutAlign="start start">
               PACKING LIST
             </span>
           </div>
         </div>
         <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 30px">
-          <img
-            src="./assets/Kyocera_logo2.png"
-            style="width: 200px; height: 50px"
-          />
+          <img src="./assets/Kyocera_logo2.png" style="width: 200px; height: 50px" />
         </div>
       </div>
 
-      <div
-        *ngIf="packingForm.accountee"
-        fxFlex="100"
-        fxLayout="row wrap"
-        fxLayoutAlign="start start"
-        style="margin-top: 30px"
-      >
+      <div *ngIf="packingForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start"
+        style="margin-top: 30px">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
             <span fxFlex="20"> Invoice No. </span>
@@ -74,12 +56,7 @@
         </div>
       </div>
 
-      <div
-        *ngIf="packingForm.consignee"
-        fxFlex="100"
-        fxLayout="row wrap"
-        fxLayoutAlign="start start"
-      >
+      <div *ngIf="packingForm.consignee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
             <span fxFlex="20"> Consignee: </span>
@@ -118,13 +95,8 @@
 
     <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-        <div
-          *ngIf="packingForm.ktcAddress"
-          fxFlex="45"
-          fxLayout="row wrap"
-          fxLayoutAlign="start start"
-          style="font-size: 14px; padding-top: 20px"
-        >
+        <div *ngIf="packingForm.ktcAddress" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="start start"
+          style="font-size: 14px; padding-top: 20px">
           <span fxFlex="100">
             {{ packingForm.ktcAddress.line1 }}
           </span>
@@ -144,13 +116,8 @@
             {{ packingForm.ktcAddress.line6 }}
           </span>
         </div>
-        <div
-          fxFlex="45"
-          fxLayout="row wrap"
-          fxLayoutAlign="start start"
-          class="font-bold"
-          style="font-size: 14px; padding-top: 20px"
-        >
+        <div fxFlex="55" fxLayout="row wrap" fxLayoutAlign="start start" class="font-bold"
+          style="font-size: 14px; padding-top: 20px">
           <span fxFlex="100" class="ms-48"> Page. {{ p_i + 1 }} </span>
           <span fxFlex="100" class="ms-48">
             Date: {{ htmlDate(packingForm["printDate"]) }}
@@ -159,12 +126,7 @@
       </div>
     </div>
 
-    <div
-      *ngIf="packingForm.accountee"
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="start start"
-    >
+    <div *ngIf="packingForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
       <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
         <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
           <div fxFlex="30">
@@ -179,13 +141,7 @@
       </div>
     </div>
 
-    <div
-      *ngIf="packingForm.accountee"
-      fxFlex="100"
-      fxLayout="row wrap"
-      fxLayoutAlign="start start"
-      class="mb-4"
-    >
+    <div *ngIf="packingForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mb-4">
       <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
         <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
           <div fxFlex="100">
@@ -231,9 +187,9 @@
           </td>
           <td class="text-end">
             {{
-              item["quantity shipped"][0]
-                ? item["quantity shipped"][0] + " PC"
-                : ("" | number : "1.0-0")
+            item["quantity shipped"][0]
+            ? item["quantity shipped"][0] + " PC"
+            : ("" | number : "1.0-0")
             }}
           </td>
           <td class="text-end">
@@ -243,9 +199,9 @@
             </span> -->
             <span>
               {{
-                item["NetWeight"][0]
-                  ? item["NetWeight"][0] + " KGS"
-                  : ("" | number : "1.2")
+              item["NetWeight"][0]
+              ? item["NetWeight"][0] + " KGS"
+              : ("" | number : "1.2")
               }}
 
               <!-- {{item['NetWeight']  | number : "1.2"}} KGS -->
@@ -269,9 +225,9 @@
           </td>
           <td class="text-end">
             {{
-              item["NetWeight"][1]
-                ? item["NetWeight"][1] + " KGS"
-                : ("" | number : "1.2")
+            item["NetWeight"][1]
+            ? item["NetWeight"][1] + " KGS"
+            : ("" | number : "1.2")
             }}
           </td>
           <td class="text-end">
@@ -295,16 +251,16 @@
           </td>
           <td class="text-end">
             {{
-              item["quantity shipped"][2]
-                ? item["quantity shipped"][2] + " PC"
-                : ("" | number : "1.0-0")
+            item["quantity shipped"][2]
+            ? item["quantity shipped"][2] + " PC"
+            : ("" | number : "1.0-0")
             }}
           </td>
           <td class="text-end">
             {{
-              item["NetWeight"][2]
-                ? item["NetWeight"][2] + " KGS"
-                : ("" | number : "1.2")
+            item["NetWeight"][2]
+            ? item["NetWeight"][2] + " KGS"
+            : ("" | number : "1.2")
             }}
           </td>
           <td class="text-start">
@@ -332,16 +288,16 @@
           </td>
           <td class="text-end">
             {{
-              item["quantity shipped"][3]
-                ? item["quantity shipped"][3] + " PC"
-                : ("" | number : "1.0-0")
+            item["quantity shipped"][3]
+            ? item["quantity shipped"][3] + " PC"
+            : ("" | number : "1.0-0")
             }}
           </td>
           <td class="text-end">
             {{
-              item["NetWeight"][3]
-                ? item["NetWeight"][3] + " KGS"
-                : ("" | number : "1.2")
+            item["NetWeight"][3]
+            ? item["NetWeight"][3] + " KGS"
+            : ("" | number : "1.2")
             }}
           </td>
           <td></td>
@@ -362,16 +318,16 @@
           </td>
           <td class="text-end">
             {{
-              item["quantity shipped"][4]
-                ? item["quantity shipped"][4] + " PC"
-                : ("" | number : "1.0-0")
+            item["quantity shipped"][4]
+            ? item["quantity shipped"][4] + " PC"
+            : ("" | number : "1.0-0")
             }}
           </td>
           <td class="text-end">
             {{
-              item["NetWeight"][4]
-                ? item["NetWeight"][4] + " KGS"
-                : ("" | number : "1.2")
+            item["NetWeight"][4]
+            ? item["NetWeight"][4] + " KGS"
+            : ("" | number : "1.2")
             }}
           </td>
           <td></td>
@@ -394,16 +350,16 @@
           </td>
           <td class="text-end">
             {{
-              item["quantity shipped"][5]
-                ? item["quantity shipped"][5] + " PC"
-                : ("" | number : "1.0-0")
+            item["quantity shipped"][5]
+            ? item["quantity shipped"][5] + " PC"
+            : ("" | number : "1.0-0")
             }}
           </td>
           <td class="text-end">
             {{
-              item["NetWeight"][5]
-                ? item["NetWeight"][5] + " KGS"
-                : ("" | number : "1.2")
+            item["NetWeight"][5]
+            ? item["NetWeight"][5] + " KGS"
+            : ("" | number : "1.2")
             }}
           </td>
           <td></td>
