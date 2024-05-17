@@ -49,6 +49,9 @@ export class ConfigPacking2Component implements OnInit {
   model: any
 
   form: any = null
+
+  errorConsigneePacking: boolean = false
+  errorConsigneeMaster: boolean = false
   constructor(
     private route: ActivatedRoute,
     private $pkta: HttpPktaService,
@@ -224,6 +227,16 @@ export class ConfigPacking2Component implements OnInit {
           invoice: this.invoice,
           packingForm: packingFormSlim,
         }
+
+        let consigneeCodeFix = this.packing.find((item: any) => item['(KGSS) Consignee CD'])
+        consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
+        if (consigneeCodeFix) {
+          this.consigneeCode = consigneeCodeFix
+          this.handleChangeConsigneeCodeSelected()
+          this.errorConsigneePacking = false
+        } else {
+          this.errorConsigneePacking = true
+        }
       }
     });
 
@@ -312,7 +325,6 @@ export class ConfigPacking2Component implements OnInit {
   htmlNetWeight(item: any) {
 
     if (item['Case Quantity'] > 1) {
-      // item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][0]).toFixed(2)
       item['NET WEIGHT2'][0] = Number(item['NET WEIGHT2'][0] * item['Case Quantity']).toFixed(2)
       return item['NET WEIGHT2']
     } else {
@@ -337,23 +349,6 @@ export class ConfigPacking2Component implements OnInit {
       return item['NET WEIGHT2']
     }
 
-    // if (item['Case Quantity'] > 1) {
-    //   item['NET WEIGHT2'][1] = Number(item['NET WEIGHT2'][0]).toFixed(2)
-    //   item['NET WEIGHT2'][0] = Number(item['NET WEIGHT2'][0] * item['Case Quantity']).toFixed(2)
-    //   return item['NET WEIGHT2']
-    // } else {
-    //   return item['NET WEIGHT2']
-    // }
-
-    // // let newArr: any = []
-    // // if (item['Case Quantity'] > 1) {
-    // //   const net = item['NET WEIGHT']
-    // //   newArr[1] = net
-    // //   newArr[0] = net * item['Case Quantity']
-    // //   return newArr
-    // // } else {
-    // //   return item['NET WEIGHT']
-    // // }
 
   }
   htmlNetWeightAll(data: any) {
@@ -362,20 +357,11 @@ export class ConfigPacking2Component implements OnInit {
       if (n['Case Quantity'] > 1) {
         return p += Number(n['Case Quantity'] * n['NET WEIGHT'])
       } else {
-       return p += n['NET WEIGHT']
+        return p += n['NET WEIGHT']
       }
     }, 0)
 
-    // const foo = data.reduce((p: any, n: any) => {
-    //   // const s = n['NetWeight'].reduce((p2: any, n2: any) => {
-    //   //   return p2 += n2
-    //   // })
-    //   return p += Number(n['NetWeight'][0])
-    // }, 0)
-    // return Number(foo).toFixed(2)
-    // // return this.packing.reduce((p: any, n: any) => {
-    // //   return p += n['NET WEIGHT']
-    // // }, 0)
+
 
   }
   htmlGrossWeight(item: any) {
@@ -394,14 +380,6 @@ export class ConfigPacking2Component implements OnInit {
       return Number(item['GROSS WEIGHT']).toFixed(2) + ' KGS'
     }
 
-    // if (onlyCases && onlyCases.length > 0) {
-    //   const newItem = onlyCases.reduce((p: any, n: any) => {
-    //     return p += n['GROSS WEIGHT']
-    //   }, 0)
-    //   return Number(newItem).toFixed(2) + ' KGS'
-    // } else {
-    //   return ''
-    // }
   }
   htmlGrossWeightSub(item: any) {
     if (item['Case Quantity'] > 1) {
@@ -414,9 +392,6 @@ export class ConfigPacking2Component implements OnInit {
       return p += Number(n['GrossWeightCase'].toString().replaceAll('KGS', ''))
     }, 0)
     return Number(foo).toFixed(2)
-    // return this.packing.reduce((p: any, n: any) => {
-    //   return p += n['GROSS WEIGHT']
-    // }, 0)
 
   }
 
@@ -426,13 +401,15 @@ export class ConfigPacking2Component implements OnInit {
     this.consignee = this.consigneeOption.find((a: any) => a.code == this.consigneeCode)
     this.form.packingForm.accountee = this.accountee
     this.form.packingForm.consignee = this.consignee
+    if (!this.accountee || !this.consignee) {
+      this.errorConsigneeMaster = true
+    } else {
+      this.errorConsigneeMaster = false
+    }
   }
   handleChangeSaleDate() {
     this.form.packingForm['Sales DT'] = this.saleDate
   }
-  // generatePDF() {
-  //   this.$pdf.generatePDF(this.form.packingForm.invoice, 'packing')
-  // }
 
 
 }

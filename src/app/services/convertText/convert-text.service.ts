@@ -17,7 +17,7 @@ export class ConvertTextService {
     }, []);
   }
 
-  readFileContent(file: File): Promise<string> {
+  private readFileContent(file: File): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       if (!file) {
         reject('no file');
@@ -47,7 +47,7 @@ export class ConvertTextService {
       reader.readAsText(file);
     });
   }
-  loopObj(header: any[], body: any[]) {
+ private loopObj(header: any[], body: any[]) {
     const newArr = header.map((h: any, i: number) => {
       const key = h;
       const obj: any = {};

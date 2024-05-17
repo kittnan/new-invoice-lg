@@ -1,5 +1,5 @@
-<ng-container >
-  <button  mat-raised-button class="me-3 bg-green-300 text-indigo-600" (click)="handleSave()">
+<ng-container *ngIf="consigneeCode">
+  <button mat-raised-button class="me-3 bg-green-300 text-indigo-600" (click)="handleSave()">
     <mat-icon class="mat-18 ">
       save
     </mat-icon>
@@ -7,21 +7,23 @@
   </button>
 </ng-container>
 
-<ng-container >
-  <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4 mb-4 " >
+<ng-container *ngIf="consigneeCode">
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4 mb-4 ">
 
     <mat-form-field class="me-5" appearance="legacy">
       <mat-label>Consignee Code</mat-label>
-      <mat-select [(ngModel)]="consigneeCode" (ngModelChange)="handleChangeConsigneeCodeSelected()" class="bg-green-500">
+      <mat-select [disabled]="true" [(ngModel)]="consigneeCode" (ngModelChange)="handleChangeConsigneeCodeSelected()"
+        class="bg-green-500">
         <mat-option *ngFor="let item of consigneeCodeOption" [value]="item['CONSIGNEE-CODE']">
           {{item['CONSIGNEE-CODE']}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-     <mat-form-field appearance="legacy" class="me-5 ">
+    <mat-form-field appearance="legacy" class="me-5 ">
       <mat-label>Sale Date</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="saleDate" [min]="minSaleDate" style="background: rgb(34 197 94)" (ngModelChange)="handleChangeSaleDate()">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="saleDate" [min]="minSaleDate"
+        style="background: rgb(34 197 94)" (ngModelChange)="handleChangeSaleDate()">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
@@ -31,24 +33,33 @@
       <mat-label>
         Typing : {{item['SO#']}}
       </mat-label>
-      <input matInput [(ngModel)]="item.typing1" style="background: rgb(34 197 94)" >
+      <input matInput [(ngModel)]="item.typing1" style="background: rgb(34 197 94)">
     </mat-form-field>
-    <mat-form-field  class="me-5" appearance="legacy">
+    <mat-form-field class="me-5" appearance="legacy">
       <mat-label>
         No. Sale
       </mat-label>
-      <input matInput [(ngModel)]="form?.packingForm?.footer.typing1" style="background: rgb(34 197 94)" >
+      <input matInput [(ngModel)]="form?.packingForm?.footer.typing1" style="background: rgb(34 197 94)">
     </mat-form-field>
-    <mat-form-field  class="me-5" appearance="legacy">
+    <mat-form-field class="me-5" appearance="legacy">
       <mat-label>
         Remark
       </mat-label>
-      <input matInput [(ngModel)]="form?.packingForm?.footer.typing2" style="background: rgb(34 197 94)" >
+      <input matInput [(ngModel)]="form?.packingForm?.footer.typing2" style="background: rgb(34 197 94)">
     </mat-form-field>
 
 
-</div>
+  </div>
 
 </ng-container>
 
-<app-viewer-packing2  *ngIf="form?.packingForm" [packingForm]="form.packingForm" [pageArr]="pageArr" [page]="page" [unitItem]="unitItem"></app-viewer-packing2>
+<ng-container *ngIf="consigneeCode">
+  <app-viewer-packing2 *ngIf="form?.packingForm" [packingForm]="form.packingForm" [pageArr]="pageArr" [page]="page"
+    [unitItem]="unitItem"></app-viewer-packing2>
+</ng-container>
+<ng-container *ngIf="errorConsigneePacking">
+  <h3 class="text-red-400">Not found "ConsigneeCode In Packing data!!!"</h3>
+</ng-container>
+<ng-container *ngIf="errorConsigneeMaster">
+  <h3 class="text-red-400">Not found "ConsigneeCode In Master!!"</h3>
+</ng-container>

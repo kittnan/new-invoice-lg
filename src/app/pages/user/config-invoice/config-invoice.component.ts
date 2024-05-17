@@ -50,6 +50,9 @@ export class ConfigInvoiceComponent implements OnInit {
   model: any
 
   form: any = null
+
+  errorConsigneePacking: boolean = false
+  errorConsigneeMaster: boolean = false
   constructor(
     private route: ActivatedRoute,
     private $pkta: HttpPktaService,
@@ -93,6 +96,8 @@ export class ConfigInvoiceComponent implements OnInit {
           this.packing = await this.$packing
             .getKey(new HttpParams().set('key', JSON.stringify(res['key'])).set('status', JSON.stringify(['available'])))
             .toPromise();
+
+
           this.invoice = res['key'];
           let resPkta = await this.$pkta
             .getKey(new HttpParams().set('key', JSON.stringify(res['key'])).set('status', JSON.stringify(['available'])))
@@ -175,6 +180,17 @@ export class ConfigInvoiceComponent implements OnInit {
             invoice: this.invoice,
             invoiceForm: invoiceForm,
           }
+
+          let consigneeCodeFix = this.packing.find((item: any) => item['(KGSS) Consignee CD'])
+          consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
+          if (consigneeCodeFix) {
+            this.consigneeCode = consigneeCodeFix
+            this.handleChangeConsigneeCodeSelected()
+            this.errorConsigneePacking = false
+          } else {
+            this.errorConsigneePacking = true
+          }
+
         }
       })
     } catch (error) {
@@ -289,6 +305,11 @@ export class ConfigInvoiceComponent implements OnInit {
     this.consignee = this.consigneeOption.find((a: any) => a.code == this.consigneeCode)
     this.form.invoiceForm.accountee = this.accountee
     this.form.invoiceForm.consignee = this.consignee
+    if (!this.accountee || !this.consignee) {
+      this.errorConsigneeMaster = true
+    } else {
+      this.errorConsigneeMaster = false
+    }
   }
   handleChangeSaleDate() {
     this.form.invoiceForm['Sales DT'] = this.saleDate
