@@ -10,8 +10,8 @@
             </span>
           </div>
         </div>
-        <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 30px">
-          <img src="./assets/Kyocera_logo2.png" style="width: 200px; height: 50px" />
+        <div fxFlex="50" fxLayoutAlign="end start" style="padding-top: 30px">
+          <img src="./assets/Kyocera_logo2.png" style="width: 300px; height: 60px" />
         </div>
       </div>
 
@@ -167,7 +167,6 @@
       <ng-container *ngFor="let item of getData(p_i); let i = index">
         <tr>
           <td>
-            <!-- {{ item['itemCode'] }} -->
           </td>
           <td>
             <span>
@@ -283,7 +282,6 @@
         <tr>
           <td></td>
           <td>
-            <!-- {{ item["Prod Part#"] }} -->
             {{ item["Case Mark Information 2"] }}
 
           </td>
@@ -300,15 +298,6 @@
           <td></td>
           <td></td>
         </tr>
-        <!-- <tr>
-        <td></td>
-        <td>
-          Prod Desc  {{item['Prod Desc']}}
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr> -->
         <tr>
           <td></td>
           <td></td>
@@ -372,7 +361,20 @@
           <td></td>
           <td></td>
           <td></td>
-          <td></td>
+          <td [rowSpan]="4">
+            <p>
+              KYOCERA (Thailand) Co., Ltd.
+            </p>
+            <p style="margin: 0;">
+              Rojjana Sukkasem
+            </p>
+            <p style="margin: 0;">
+              Department Head
+            </p>
+            <p style="margin: 0;">
+              Logistics Department
+            </p>
+          </td>
           <td></td>
         </tr>
         <tr>
@@ -386,7 +388,8 @@
             </div>
           </td>
           <td></td>
-          <td></td>
+          <td>
+          </td>
           <td></td>
         </tr>
         <tr>
@@ -400,7 +403,8 @@
             </div>
           </td>
           <td></td>
-          <td></td>
+          <td>
+          </td>
           <td></td>
         </tr>
         <tr>
@@ -415,7 +419,8 @@
           </td>
 
           <td></td>
-          <td></td>
+          <td>
+          </td>
           <td></td>
         </tr>
         <tr>
