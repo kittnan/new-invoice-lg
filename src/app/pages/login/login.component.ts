@@ -22,38 +22,43 @@ export class LoginComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-
-    Swal.fire<LoginFormResult>({
-      title: 'Login With SSO',
-      html: `
-        <input type="text" id="username" class="swal2-input" placeholder="Username">
-        <input type="password" id="password" class="swal2-input" placeholder="Password">
-      `,
-      confirmButtonText: 'Sign in',
-      focusConfirm: false,
-      allowOutsideClick:false,
-      allowEscapeKey:false,
-      didOpen: () => {
-        const popup = Swal.getPopup()!
-        this.usernameInput = popup.querySelector('#username') as HTMLInputElement
-        this.passwordInput = popup.querySelector('#password') as HTMLInputElement
-        this.usernameInput.onkeyup = (event) => event.key === 'Enter' && Swal.clickConfirm()
-        this.passwordInput.onkeyup = (event) => event.key === 'Enter' && Swal.clickConfirm()
-      },
-      preConfirm: async () => {
-        const username = this.usernameInput.value
-        const password = this.passwordInput.value
-        if (username && password) {
-          await this.$login.login({
-            username:username,
-            password:password
-          })
+    try {
+      Swal.fire<LoginFormResult>({
+        title: 'Login With SSO',
+        html: `
+          <input type="text" id="username" class="swal2-input" placeholder="Username">
+          <input type="password" id="password" class="swal2-input" placeholder="Password">
+        `,
+        confirmButtonText: 'Sign in',
+        focusConfirm: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          const popup = Swal.getPopup()!
+          this.usernameInput = popup.querySelector('#username') as HTMLInputElement
+          this.passwordInput = popup.querySelector('#password') as HTMLInputElement
+          this.usernameInput.onkeyup = (event) => event.key === 'Enter' && Swal.clickConfirm()
+          this.passwordInput.onkeyup = (event) => event.key === 'Enter' && Swal.clickConfirm()
+        },
+        preConfirm: async () => {
+          const username = this.usernameInput.value
+          const password = this.passwordInput.value
+          if (username && password) {
+            await this.$login.login({
+              username: username,
+              password: password
+            })
+          }
+        },
+        preDeny: () => {
+          return false
         }
-      },
-      preDeny:()=>{
-        return false
-      }
-    })
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+      Swal.fire('Login fail','','error')
+    }
+
 
     // const { value: formValues } = await Swal.fire({
     //   title: 'Login With SSO',

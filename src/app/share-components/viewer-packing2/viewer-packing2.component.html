@@ -165,18 +165,9 @@
         <th width="16%">Net Weight</th>
         <th width="25%">Gross Weight/M'ment</th>
       </tr>
-      <!-- <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td class="text-end">(NET WEIGHT)</td>
-      <td></td>
-    </tr> -->
       <ng-container *ngFor="let item of getData(p_i); let i = index">
         <tr>
           <td>
-            <!-- {{ item['itemCode'] }} -->
             {{ item["Case Mark Information 1"] }}
           </td>
           <td class="text-end">
@@ -193,20 +184,13 @@
             }}
           </td>
           <td class="text-end">
-            <!-- <div fxLayout="row wrap" fxLayoutAlign="space-between center"> -->
-            <!-- <span>
-              {{item['Lot#']}}
-            </span> -->
             <span>
               {{
               item["NetWeight"][0]
               ? item["NetWeight"][0] + " KGS"
               : ("" | number : "1.2")
               }}
-
-              <!-- {{item['NetWeight']  | number : "1.2"}} KGS -->
             </span>
-            <!-- </div> -->
           </td>
           <td class="text-end">
             {{ item["GrossWeightCase"] }}
@@ -242,7 +226,7 @@
           </td>
           <td></td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="25"> SO# </span>
               <span fxFlex="75">
                 {{ item["SO#"] }}
@@ -279,7 +263,7 @@
           </td>
           <td></td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="25"> PO# </span>
               <span fxFlex="75">
                 {{ item["Customer PO#"] }}
@@ -307,9 +291,8 @@
             {{ item["Case Mark Information 5"] }}
           </td>
           <td></td>
-
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="25"> CUST SO # </span>
               <span fxFlex="75">
                 {{ item["Customer SO#"] }}
@@ -332,16 +315,7 @@
           </td>
           <td></td>
         </tr>
-        <!-- <tr>
-        <td>
-        </td>
-        <td></td>
-        <td>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr> -->
+
         <tr>
           <td></td>
           <td></td>
@@ -376,7 +350,6 @@
           <td></td>
           <td></td>
           <td>
-            <!-- {{ item["Prod Part#"] }} -->
             {{ item["Case Mark Information 2"] }}
 
           </td>
@@ -417,7 +390,7 @@
           <td></td>
 
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="10"> ( {{ packingForm.footer.totalQty }} ) </span>
               <span fxFlex="90"> {{ unitItem }}S</span>
             </div>
@@ -454,13 +427,13 @@
               KYOCERA (Thailand) Co., Ltd.
             </p>
             <p style="margin: 0;">
-              Rojjana Sukkasem
+              {{packingForm.footer.verifyName}}
             </p>
             <p style="margin: 0;">
-              Department Head
+              {{packingForm.footer.verifyPosition}}
             </p>
             <p style="margin: 0;">
-              Logistics Department
+              {{packingForm.footer.verifyDepartment}}
             </p>
           </td>
           <td></td>
@@ -473,7 +446,7 @@
           </td>
           <td></td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="60" fxLayoutAlign="end start">
                 Shipping Marks :
               </span>
@@ -492,7 +465,7 @@
           </td>
           <td></td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="60"> </span>
               <span fxFlex="40"> INVOICE NO. {{ packingForm.invoice }} </span>
             </div>
@@ -507,8 +480,8 @@
           <td></td>
           <td></td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-              <span fxFlex="60"> </span>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex=" 60"> </span>
               <span fxFlex="40">
                 {{ unitItem }} NO. {{ packingForm.footer.typing1 }}
               </span>

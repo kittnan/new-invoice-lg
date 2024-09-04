@@ -221,7 +221,7 @@
             {{ item["Case Mark Information 2"] }}
           </td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="15"> PO# </span>
               <span fxFlex="85">
                 {{ item["Customer PO#"] }}
@@ -237,7 +237,7 @@
             {{ item["Case Mark Information 3"] }}
           </td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="15"> CUST SO # </span>
               <span fxFlex="85">
                 {{ item["Customer SO#"] }}
@@ -319,7 +319,7 @@
         <tr>
           <td class="text-end">TOTAL:</td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="10"> ( {{invoiceForm.footer.totalQty}} ) </span>
               <span fxFlex="90"> {{unitItem}}S </span>
             </div>
@@ -335,7 +335,7 @@
         <tr>
           <td class="text-end">NET WEIGHT :</td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer.netWeightAll | number : "1.2"}} </span>
               <span fxFlex="80" style="padding-left: 10px;"> KGS </span>
             </div>
@@ -347,7 +347,7 @@
         <tr>
           <td class="text-end">GROSS WEIGHT :</td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer.grossWeightAll | number : "1.2"}}
               </span>
               <span fxFlex="80" style="padding-left: 10px;"> KGS </span>
@@ -366,13 +366,13 @@
               KYOCERA (Thailand) Co., Ltd.
             </p>
             <p style="margin: 0;">
-              Rojjana Sukkasem
+              {{invoiceForm.footer.verifyName}}
             </p>
             <p style="margin: 0;">
-              Department Head
+              {{invoiceForm.footer.verifyPosition}}
             </p>
             <p style="margin: 0;">
-              Logistics Department
+              {{invoiceForm.footer.verifyDepartment}}
             </p>
           </td>
           <td></td>
@@ -380,7 +380,7 @@
         <tr>
           <td *ngIf="invoiceForm.accountee">FREIGHT : {{ invoiceForm.accountee.freight }}</td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="60" fxLayoutAlign="end start">
                 Shipping Marks :
               </span>
@@ -397,7 +397,7 @@
             {{invoiceForm.footer.typing2}}
           </td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="60"> </span>
               <span fxFlex="40"> INVOICE NO. {{ invoiceForm.invoice }} </span>
             </div>
@@ -410,7 +410,7 @@
         <tr>
           <td></td>
           <td>
-            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
               <span fxFlex="60"> </span>
               <span fxFlex="40">
                 {{unitItem}} NO. {{invoiceForm.footer.typing1}}

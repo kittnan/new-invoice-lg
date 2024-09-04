@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { lastValueFrom } from 'rxjs';
 import { HttpAccounteeService } from 'src/app/https/http-accountee.service';
 import { HttpConsigneeCodeService } from 'src/app/https/http-consignee-code.service';
 import { HttpConsigneeService } from 'src/app/https/http-consignee.service';
@@ -14,6 +15,7 @@ import { HttpModelService } from 'src/app/https/http-model.service';
 import { HttpPackingService } from 'src/app/https/http-packing.service';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
 import { HttpReprintService } from 'src/app/https/http-reprint.service';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 import { GenerateInvoicePdfService } from 'src/app/services/generate-invoice-pdf.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -50,6 +52,7 @@ export class ConfigPackingComponent implements OnInit {
 
   form: any = null
 
+  userOption: any = []
   constructor(
     private route: ActivatedRoute,
     private $pkta: HttpPktaService,
@@ -66,11 +69,14 @@ export class ConfigPackingComponent implements OnInit {
     private $consigneeCode: HttpConsigneeCodeService,
     private $form: HttpFormService,
     private $pdf: GenerateInvoicePdfService,
+    private $user: HttpUsersService
   ) { }
 
   async ngOnInit(): Promise<void> {
     this.user = localStorage.getItem('DIS_user')
     this.user = JSON.parse(this.user)
+    let resUser: any = await lastValueFrom(this.$user.get())
+    this.userOption = resUser
     this.route.queryParams.subscribe(async (res) => {
       if (res['key']) {
 
@@ -171,6 +177,7 @@ export class ConfigPackingComponent implements OnInit {
         this.form = {
           invoice: this.invoice,
           packingForm: packingForm,
+          verifyName: 'Rojjana Sukkasem'
         }
       }
     });

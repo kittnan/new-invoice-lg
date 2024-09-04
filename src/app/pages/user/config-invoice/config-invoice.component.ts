@@ -16,6 +16,8 @@ import { HttpConsigneeCodeService } from 'src/app/https/http-consignee-code.serv
 import { HttpFormService } from 'src/app/https/http-form.service';
 import { GenerateInvoicePdfService } from 'src/app/services/generate-invoice-pdf.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { HttpUsersService } from 'src/app/https/http-users.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-config-invoice',
@@ -53,6 +55,8 @@ export class ConfigInvoiceComponent implements OnInit {
 
   errorConsigneePacking: boolean = false
   errorConsigneeMaster: boolean = false
+
+  userOption: any = []
   constructor(
     private route: ActivatedRoute,
     private $pkta: HttpPktaService,
@@ -64,17 +68,21 @@ export class ConfigInvoiceComponent implements OnInit {
     private $itemCode: HttpItemCodeService,
     private $country: HttpCountryService,
     private $model: HttpModelService,
-    private $reprint: HttpReprintService,
     private router: Router,
     private $consigneeCode: HttpConsigneeCodeService,
     private $form: HttpFormService,
     private $pdf: GenerateInvoicePdfService,
+    private $user: HttpUsersService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     try {
       this.user = localStorage.getItem('DIS_user')
       this.user = JSON.parse(this.user)
+
+      let resUser: any = await lastValueFrom(this.$user.get())
+      this.userOption = resUser
+
       this.route.queryParams.subscribe(async (res) => {
         if (res['key']) {
 
@@ -171,6 +179,9 @@ export class ConfigInvoiceComponent implements OnInit {
               caseQty: this.htmlCaseQuantity(),
               netWeightAll: this.htmlNetWeightAll(),
               grossWeightAll: this.htmlGrossWeightAll(),
+              verifyName: 'Rojjana Sukkasem',
+              verifyPosition: 'Department Head',
+              verifyDepartment: 'Logistics Department',
             },
             page: this.calculatorPageBreak(this.pkta.length + 1),
             status: 'notReady',

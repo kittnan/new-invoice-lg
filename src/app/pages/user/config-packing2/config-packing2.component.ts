@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { pack } from 'html2canvas/dist/types/css/types/color';
 import * as moment from 'moment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { lastValueFrom } from 'rxjs';
 import { HttpAccounteeService } from 'src/app/https/http-accountee.service';
 import { HttpConsigneeCodeService } from 'src/app/https/http-consignee-code.service';
 import { HttpConsigneeService } from 'src/app/https/http-consignee.service';
@@ -15,6 +16,7 @@ import { HttpModelService } from 'src/app/https/http-model.service';
 import { HttpPackingService } from 'src/app/https/http-packing.service';
 import { HttpPktaService } from 'src/app/https/http-pkta.service';
 import { HttpReprintService } from 'src/app/https/http-reprint.service';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 import { GenerateInvoicePdfService } from 'src/app/services/generate-invoice-pdf.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 @Component({
@@ -52,6 +54,7 @@ export class ConfigPacking2Component implements OnInit {
 
   errorConsigneePacking: boolean = false
   errorConsigneeMaster: boolean = false
+  userOption: any = []
   constructor(
     private route: ActivatedRoute,
     private $pkta: HttpPktaService,
@@ -63,15 +66,16 @@ export class ConfigPacking2Component implements OnInit {
     private $itemCode: HttpItemCodeService,
     private $country: HttpCountryService,
     private $model: HttpModelService,
-    private $reprint: HttpReprintService,
     private router: Router,
     private $consigneeCode: HttpConsigneeCodeService,
     private $form: HttpFormService,
-    private $pdf: GenerateInvoicePdfService,
+    private $user: HttpUsersService
   ) { }
   async ngOnInit(): Promise<void> {
     this.user = localStorage.getItem('DIS_user')
     this.user = JSON.parse(this.user)
+    let resUser: any = await lastValueFrom(this.$user.get())
+    this.userOption = resUser
     this.route.queryParams.subscribe(async (res) => {
       if (res['key']) {
 
@@ -156,7 +160,6 @@ export class ConfigPacking2Component implements OnInit {
               'GrossWeight': this.htmlGrossWeight(pk),
               'GrossWeightCase': grossWeightCase,
               'GrossWeightCaseSub': this.htmlGrossWeightSub(a),
-              // 'GrossWeightCase': a['GROSS WEIGHT'],
               'CntOf Origin2': this.htmlCountry(pk["CntOf Origin"]),
               'Case No': this.htmlCaseNo(a),
               'quantity shipped': this.htmlQuantityShip(a),
@@ -170,7 +173,9 @@ export class ConfigPacking2Component implements OnInit {
           }),
 
         }
-
+        let p0: HttpParams = new HttpParams()
+        p0 = p0.set('key', JSON.stringify([res['key']]))
+        let resForm: any = await lastValueFrom(this.$form.get(p0))
         const packingFormSlim: any = {
           invoice: this.invoice,
           consignee: this.consignee,
@@ -185,8 +190,6 @@ export class ConfigPacking2Component implements OnInit {
               'Customer Part#': obj['Customer Part#'],
 
               'quantity shipped': obj['quantity shipped'],
-              // 'QuantityShip':obj['QuantityShip'],
-
               'Case Mark Information 2': obj['Case Mark Information 2'],
               'Cust Desc': obj['Cust Desc'],
               'Lot#': obj['Lot#'],
@@ -213,7 +216,10 @@ export class ConfigPacking2Component implements OnInit {
             'totalQty': this.htmlTotalQty(),
             netWeightAll: this.htmlNetWeightAll(packingForm.data),
             grossWeightAll: this.htmlGrossWeightAll(packingForm.data),
-            typing1: null
+            typing1: null,
+            verifyName: resForm.length != 0 && resForm[0].invoiceForm?.footer?.verifyName ? resForm[0].invoiceForm?.footer?.verifyName : 'Rojjana Sukkasem',
+            verifyPosition: resForm.length != 0 && resForm[0].invoiceForm?.footer?.verifyPosition ? resForm[0].invoiceForm?.footer?.verifyPosition : 'Department Head',
+            verifyDepartment: resForm.length != 0 && resForm[0].invoiceForm?.footer?.verifyDepartment ? resForm[0].invoiceForm?.footer?.verifyDepartment : 'Logistics Department',
           },
         }
 
@@ -223,6 +229,8 @@ export class ConfigPacking2Component implements OnInit {
           { length: this.page },
           (_, index) => index + 1
         );
+
+
         this.form = {
           invoice: this.invoice,
           packingForm: packingFormSlim,
@@ -254,6 +262,7 @@ export class ConfigPacking2Component implements OnInit {
           await this.$form.update({
             invoice: this.invoice,
             packingForm: this.form.packingForm,
+            verifyName: this.form.verifyName,
             status: 'available'
           }).toPromise()
           Swal.fire({
