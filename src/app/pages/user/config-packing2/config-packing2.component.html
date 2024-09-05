@@ -52,7 +52,8 @@
       <mat-label>
         Verify Name
       </mat-label>
-      <mat-select [(ngModel)]="form?.packingForm?.footer.verifyName" class="bg-green-500">
+      <mat-select [(ngModel)]="form?.packingForm?.footer.verifyName" (ngModelChange)="changeVerifyName()"
+        class="bg-green-500">
         <mat-option *ngFor="let item of userOption" [value]="item.name">
           {{item.name}}
         </mat-option>

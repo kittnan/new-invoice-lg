@@ -74,7 +74,9 @@ export class ConfigPacking2Component implements OnInit {
   async ngOnInit(): Promise<void> {
     this.user = localStorage.getItem('DIS_user')
     this.user = JSON.parse(this.user)
-    let resUser: any = await lastValueFrom(this.$user.get())
+    let resUser: any = await lastValueFrom(this.$user.get(
+      new HttpParams().set('verify', 'y')
+    ))
     this.userOption = resUser
     this.route.queryParams.subscribe(async (res) => {
       if (res['key']) {
@@ -419,6 +421,12 @@ export class ConfigPacking2Component implements OnInit {
   handleChangeSaleDate() {
     this.form.packingForm['Sales DT'] = this.saleDate
   }
-
+  changeVerifyName() {
+    const user: any = this.userOption.find((user: any) => user.name == this.form.invoiceForm.footer.verifyName)
+    if (user) {
+      this.form.invoiceForm.footer.verifyDepartment = user.department
+      this.form.invoiceForm.footer.verifyPosition = user.position
+    }
+  }
 
 }

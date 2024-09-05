@@ -12,13 +12,13 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UserComponent implements OnInit {
 
-  users:any = null
-  displayedColumns: string[] = ['no', 'employee_code','name','auth_admin','auth_user'];
+  users: any = null
+  displayedColumns: string[] = ['no', 'employee_code', 'name', 'auth_admin', 'auth_user', 'department', 'position', 'verify'];
   dataSource = new MatTableDataSource();
   constructor(
     private $alert: AlertService,
     private $convertXLSX: ConvertXLSXService,
-    private $user:HttpUsersService
+    private $user: HttpUsersService
   ) { }
 
 
@@ -52,12 +52,15 @@ export class UserComponent implements OnInit {
   handleDownload() {
     try {
       if (this.users) {
-        const dataExport = this.users.map((a:any)=>{
+        const dataExport = this.users.map((a: any) => {
           return {
             employee_code: a.employee_code,
             name: a.name,
             auth_admin: a.auth_admin,
             auth_user: a.auth_user,
+            department: a.department,
+            position: a.position,
+            verify: a.verify
           }
         })
         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataExport);
@@ -66,7 +69,7 @@ export class UserComponent implements OnInit {
 
         const wb_out = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
         const blob = new Blob([wb_out], { type: 'application/vnd.ms-excel' });
-        fs.saveAs(blob,'users.xlsx')
+        fs.saveAs(blob, 'users.xlsx')
 
       }
     } catch (error) {

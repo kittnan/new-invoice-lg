@@ -80,7 +80,9 @@ export class ConfigInvoiceComponent implements OnInit {
       this.user = localStorage.getItem('DIS_user')
       this.user = JSON.parse(this.user)
 
-      let resUser: any = await lastValueFrom(this.$user.get())
+      let resUser: any = await lastValueFrom(this.$user.get(
+        new HttpParams().set('verify', 'y')
+      ))
       this.userOption = resUser
 
       this.route.queryParams.subscribe(async (res) => {
@@ -356,7 +358,13 @@ export class ConfigInvoiceComponent implements OnInit {
   generatePDF() {
     this.$pdf.generatePDF(this.form.invoiceForm.invoice, 'invoice')
   }
-
+  changeVerifyName() {
+    const user: any = this.userOption.find((user: any) => user.name == this.form.invoiceForm.footer.verifyName)
+    if (user) {
+      this.form.invoiceForm.footer.verifyDepartment = user.department
+      this.form.invoiceForm.footer.verifyPosition = user.position
+    }
+  }
 
 
 }

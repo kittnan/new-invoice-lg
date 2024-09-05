@@ -8,10 +8,18 @@ import { environment } from 'src/environments/environment';
 })
 export class HttpUsersService {
   private URL = environment.API;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  get(): Observable<any> {
-    return this.http.get(`${this.URL}/users`);
+  get(p0: HttpParams | undefined | null = null): Observable<any> {
+    if (p0) {
+      return this.http.get(`${this.URL}/users`,
+        {
+          params: p0
+        }
+      );
+    } else {
+      return this.http.get(`${this.URL}/users`)
+    }
   }
   import(data: any): Observable<any> {
     return this.http.post(`${this.URL}/users/import`, data);
