@@ -20,7 +20,7 @@ export class PrintInvoiceComponent implements OnInit {
   }
 
   selection = new SelectionModel<any>(true, []);
-  displayedColumns: string[] = ['select', 'no', 'invoice', 'createdAt', 'invoicePdf', 'packingPdf','issue'];
+  displayedColumns: string[] = ['select', 'no', 'invoice', 'createdAt', 'invoicePdf', 'packingPdf', 'issue'];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -35,12 +35,12 @@ export class PrintInvoiceComponent implements OnInit {
   handleSearch(e: any) {
     const uniquePkta = [...new Map(e.map((item: any) =>
       [item['invoice'], item])).values()];
-    let sortArr = uniquePkta.sort((a:any,b:any)=> b.invoice < a.invoice ? 1 : -1 )
+    let sortArr = uniquePkta.sort((a: any, b: any) => a.invoice.localeCompare(b.invoice))
     this.forms = sortArr
     this.dataSource = new MatTableDataSource(this.forms);
-      setTimeout(() => {
-        this.dataSource.sort = this.sort;
-      }, 300);
+    setTimeout(() => {
+      this.dataSource.sort = this.sort;
+    }, 300);
   }
   handleInvoiceConfig(item: any) {
     this.router.navigate(['user/config-invoice'], {
