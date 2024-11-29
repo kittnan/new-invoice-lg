@@ -159,9 +159,9 @@ export class ConfigInvoiceComponent implements OnInit {
                 'Case Mark Information 5': a.packing[0]["Case Mark Information 5"],
                 'SO#': a['SO#'],
                 'Sales QTY': a['Sales QTY'],
-                'U/P': a['U/P'],
+                'U/P': a['Related Comp U/P'],
                 'UPM': a['UPM'],
-                'Sales AMT': a['Sales AMT'],
+                'Sales AMT': a['Related Comp AMT'],
                 'Customer PO#': a['Customer PO#'],
                 'Customer SO#': a['Customer SO#'],
                 'Lot#': a['Lot#'],
@@ -229,7 +229,7 @@ export class ConfigInvoiceComponent implements OnInit {
   }
   htmlAmount() {
     return this.pkta.reduce((p: any, n: any) => {
-      if (n['Sales AMT']) return p + Number(n['Sales AMT']);
+      if (n['Related Comp AMT']) return p + Number(n['Related Comp AMT']);
       return p;
     }, 0);
   }
