@@ -1,9 +1,4 @@
-<div
-  *ngIf="validateLogin()"
-  fxFlex="100"
-  fxLayout="row wrap"
-  fxLayoutAlign="start start"
->
+<div *ngIf="validateLogin()" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <mat-toolbar>
       <mat-toolbar-row style="background-color: #9999ff">
@@ -12,26 +7,20 @@
         <span class="text-gray-900 fs-6 font-bold">
           {{ showUserLogin() }}
         </span>
-        <button
-          mat-icon-button
-          class="example-icon text-gray-900"
-          aria-label="Example icon-button with menu icon"
-          (click)="handleLogout()"
-        >
+        <button mat-icon-button class="example-icon text-gray-900" aria-label="Example icon-button with menu icon"
+          (click)="handleLogout()">
           <mat-icon> logout </mat-icon>
         </button>
       </mat-toolbar-row>
 
-      <mat-toolbar-row
-        style="height: 30px; font-size: small; background-color: #e6ecff"
-      >
-          <button (click)="drawer.toggle()">
-            <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-toolbar-row style="height: 30px; font-size: small; background-color: #e6ecff">
+        <button (click)="drawer.toggle()">
+          <div fxLayout="row wrap" fxLayoutAlign="center center">
 
-              <mat-icon *ngIf="drawer._animationState==='void' " class="mat-18"> menu </mat-icon>
-              <mat-icon *ngIf="drawer._animationState!=='void' " class="mat-18"> menu_open </mat-icon>
-            </div>
-          </button>
+            <mat-icon *ngIf="drawer._animationState==='void' " class="mat-18"> menu </mat-icon>
+            <mat-icon *ngIf="drawer._animationState!=='void' " class="mat-18"> menu_open </mat-icon>
+          </div>
+        </button>
 
         <span class="ps-4 uppercase">
           {{ pageActive }}
@@ -41,41 +30,21 @@
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-  <div
-    fxFlex="100"
-    fxLayout="row wrap"
-    fxLayoutAlign="start start"
-    style="height: 90vh"
-  >
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" style="height: 90vh">
     <mat-drawer-container fxFlex="100" class="example-container m-2" autosize>
-      <mat-drawer
-        #drawer
-        class="example-sidenav w-full"
-        opened="true"
-        mode="side"
-        style="width: 300px"
-      >
+      <mat-drawer #drawer class="example-sidenav w-full" opened="true" mode="side" style="width: 300px">
         <ng-container *ngFor="let side of sideBarsItems; let i = index">
           <ul class="m-1 p-3 font-bold uppercase mt-3">
-            <div
-              fxLayout="row wrap"
-              fxLayoutAlign="start center"
-              class="p-2 rounded-md"
-              style="background-color: #ccd9ff"
-            >
+            <div fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md"
+              style="background-color: #ccd9ff">
               <mat-icon class="mat-18 me-2">
                 {{ side.icon }}
               </mat-icon>
               {{ side.title }}
             </div>
 
-            <li
-              *ngFor="let sub of side.sub; let i = index"
-              [ngClass]="{ active: sub.active }"
-              class="p-2 m-2 rounded-md uppercase"
-              style="background-color: #e6ecff"
-              (click)="link(sub)"
-            >
+            <li *ngFor="let sub of side.sub; let i = index" [ngClass]="{ active: sub.active }"
+              class="p-2 m-2 rounded-md uppercase" style="background-color: #e6ecff" (click)="link(sub)">
               <div fxLayout="row wrap" fxLayoutAlign="start center">
                 <mat-icon class="mat-18 me-2">
                   {{ sub.icon }}

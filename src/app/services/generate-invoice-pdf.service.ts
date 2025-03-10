@@ -9,10 +9,10 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 export class GenerateInvoicePdfService {
   constructor(
     private $loader: NgxUiLoaderService,
-    private router:Router
+    private router: Router
 
   ) { }
-  generatePDF(invoice: any, name: string) {
+  generatePDF(invoice: any, name: string, url: string = 'user/print') {
     try {
       this.$loader.start();
       setTimeout(async () => {
@@ -32,7 +32,7 @@ export class GenerateInvoicePdfService {
           const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
           const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-          if(div.length ===1){
+          if (div.length === 1) {
             doc = await doc.addImage(
               img,
               'PNG',
@@ -44,9 +44,9 @@ export class GenerateInvoicePdfService {
               'FAST'
             );
             await doc.save(`${name}_${invoice}.pdf`);
-            this.router.navigate(['user/print'])
+            this.router.navigate([url])
             this.$loader.stop()
-          }else{
+          } else {
             if (index === 0) {
               doc = await doc.addImage(
                 img,
@@ -72,7 +72,7 @@ export class GenerateInvoicePdfService {
               );
               if (index + 1 === div.length) {
                 await doc.save(`${name}_${invoice}.pdf`);
-                this.router.navigate(['user/print'])
+                this.router.navigate([url])
                 this.$loader.stop()
               }
             }

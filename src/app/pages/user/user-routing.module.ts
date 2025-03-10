@@ -10,6 +10,7 @@ import { ConfigInvoiceComponent } from './config-invoice/config-invoice.componen
 import { ConfigPackingComponent } from './config-packing/config-packing.component';
 import { ConfigPacking2Component } from './config-packing2/config-packing2.component';
 import { ReprintAllComponent } from './reprint-all/reprint-all.component';
+import { SapModule } from './sap/sap.module';
 
 const routes: Routes = [
   {
@@ -53,10 +54,14 @@ const routes: Routes = [
     path: 'reprint-all',
     component: ReprintAllComponent,
   },
+  {
+    path: "sap",
+    loadChildren: () => SapModule
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UserRoutingModule {}
+export class UserRoutingModule { }

@@ -32,6 +32,25 @@ export class AuthUserService {
           },
         ],
       },
+      {
+        title: 'SAP user',
+        visible: false,
+        icon:'person',
+        sub: [
+          {
+            name: 'generate invoice',
+            path: 'user/sap/generate-invoice',
+            active: false,
+            icon:'post_add'
+          },
+          {
+            name: 'print',
+            path: 'user/sap/print',
+            active: false,
+            icon:'print'
+          },
+        ],
+      },
     ];
   }
 }

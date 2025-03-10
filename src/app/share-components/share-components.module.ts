@@ -11,6 +11,7 @@ import { ViewerPackingComponent } from './viewer-packing/viewer-packing.componen
 import { ViewerPacking2Component } from './viewer-packing2/viewer-packing2.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { SapSearchInvoiceComponent } from './sap-search-invoice/sap-search-invoice.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -24,9 +25,9 @@ export const MY_FORMATS = {
   },
 };
 @NgModule({
-  declarations: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component],
+  declarations: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component, SapSearchInvoiceComponent],
   imports: [CommonModule, MaterialModule, FlexLayoutModule, FormsModule, ReactiveFormsModule],
-  exports: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component],
+  exports: [SubHeadComponent, Currency2Pipe, SearchInvoiceComponent, ViewerInvoiceComponent, ViewerPackingComponent, ViewerPacking2Component, SapSearchInvoiceComponent],
   providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
   { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }]
 })

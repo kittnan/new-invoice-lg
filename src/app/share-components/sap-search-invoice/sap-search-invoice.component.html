@@ -1,0 +1,54 @@
+<div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20">
+  <mat-form-field appearance="legacy">
+    <mat-label>Invoice</mat-label>
+    <input matInput [(ngModel)]="invoice">
+  </mat-form-field>
+  <mat-form-field appearance="legacy" class="me-4">
+    <mat-label>Start Date</mat-label>
+    <input matInput [readonly]="true" [matDatepicker]="picker" [(ngModel)]="date.start" (click)="picker.open()"
+      [max]="date.end">
+    <mat-hint>DD-MMM-YY</mat-hint>
+    <mat-datepicker-toggle matSuffix (click)="clearStartDate('start')">
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="legacy">
+    <mat-label>End Date</mat-label>
+    <input matInput [readonly]="true" [matDatepicker]="picker2" [(ngModel)]="date.end" (click)="picker2.open()"
+      [min]="date.start">
+    <mat-hint>DD-MMM-YY</mat-hint>
+    <mat-datepicker-toggle matSuffix (click)="clearStartDate('end')">
+      <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="legacy">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="statusSelected" class="capitalize">
+      <mat-option *ngFor="let status of statusOption" [value]="status">
+        <span class="capitalize">
+          {{status}}
+        </span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button class="ms-4 mb-2 bg-green-300 text-indigo-600" (click)="handleSearch()">
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-icon class="mat-18 ms-2">
+        search
+      </mat-icon>
+      Search
+    </div>
+  </button>
+  <button mat-raised-button class="ms-2 mb-2 bg-gray-500 text-white" (click)="handleClearFilter()">
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-icon class="mat-18 ms-2">
+        restart_alt
+      </mat-icon>
+      Clear Filter
+    </div>
+  </button>
+</div>
