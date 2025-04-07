@@ -101,8 +101,9 @@ export class SapConfigPackingComponent implements OnInit {
         this.models = resModel
 
         this.packing = await this.$packing
-          .getKey(new HttpParams().set('invoice', JSON.stringify([res['key']])).set('status', JSON.stringify(['available'])))
-          .toPromise();
+        .getKey(new HttpParams().set('invoice', JSON.stringify([res['key']])).set('status', JSON.stringify(['available'])))
+        .toPromise();
+        console.log("🚀 ~ this.packing:", this.packing)
         this.invoice = res['key'];
         const resSapData = await this.$sapData
           .getKey(new HttpParams().set('key', JSON.stringify(res['key'])).set('status', JSON.stringify(['available'])))
@@ -162,7 +163,8 @@ export class SapConfigPackingComponent implements OnInit {
               grossWeightCase = this.htmlGrossWeightCase(a)
               markFirstCase = a['Start case#']
             }
-            const pk = this.sapData.find((p: any) => p['Sales document'] == a['Sales document'])
+            const pk = this.sapData.find((p: any) => p['(KGSS) Customer PO'] == a['Sales document'])
+            console.log("🚀 ~ pk:", pk)
 
             const newItem = {
               'itemCode': this.htmlItemCode(pk["Header Note 1"]),
@@ -245,8 +247,8 @@ export class SapConfigPackingComponent implements OnInit {
           invoice: this.invoice,
           packingForm: packingFormSlim,
         }
-        let consigneeCodeFix = this.packing.find((item: any) => item['Ship-to party(External)'])
-        consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['Ship-to party(External)'] : null
+        let consigneeCodeFix = this.packing.find((item: any) => item['(KGSS) Consignee CD'])
+        consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
         if (consigneeCodeFix) {
           this.consigneeCode = consigneeCodeFix
           this.handleChangeConsigneeCodeSelected()

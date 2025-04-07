@@ -67,7 +67,7 @@
           <td>
             {{item['External Delivery ID']}}
           </td>
-          <td>
+          <td [ngClass]="{'text-blue': item.packing?.length > 0}">
             {{item.packing?.length}}
           </td>
         </tr>

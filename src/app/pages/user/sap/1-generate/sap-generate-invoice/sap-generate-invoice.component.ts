@@ -65,7 +65,7 @@ export class SapGenerateInvoiceComponent implements OnInit {
   async uploadPacking(e: any) {
     if (e.target.files && e.target.files.length !== 0) {
       const data: any = await this.$convertXLSX.readExcel(e.target.files[0]);
-      const dataFilter = data.filter((a: any) => a['External Delivery ID']);
+      const dataFilter = data.filter((a: any) => a['(KGSS) Customer PO']);
       const dataMap = dataFilter.map((a: any) => {
         const newItem: any = {};
         for (const key in a) {
@@ -79,7 +79,7 @@ export class SapGenerateInvoiceComponent implements OnInit {
       this.packing = dataMap;
       console.log("🚀 ~ this.packing:", this.packing)
       this.sapData = this.sapData.map((data: any) => {
-        const items = this.packing.filter((pk: any) => pk["Sales document"] == data['Sales document'])
+        const items = this.packing.filter((pk: any) => pk["(KGSS) Customer PO"] == data['Sales document'])
         data.packing = items
         return data
       })

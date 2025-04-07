@@ -117,14 +117,12 @@ export class SapConfigInvoiceComponent implements OnInit {
             .toPromise();
 
 
-
-          resSapData = resSapData.sort((a: any, b: any) => a['Sales document'].localeCompare(b['Sales document']));
+          resSapData = resSapData.sort((a: any, b: any) => a['Sales document'] - b['Sales document']);
 
           this.sapData = resSapData.map((a: any) => {
             const item = this.packing.filter(
-              (b: any) => b['Sales document'] == a['Sales document']
+              (b: any) => b['(KGSS) Customer PO'] == a['Sales document']
             );
-            console.log("🚀 ~ item:", item)
             return {
               ...a,
               packing: item,
@@ -156,6 +154,7 @@ export class SapConfigInvoiceComponent implements OnInit {
             printDate: new Date(),
             "Sales DT": new Date(),
             data: this.sapData.map((sapD: any, i: number) => {
+              console.log(sapD);
 
               return {
                 'itemCode': this.htmlItemCode(sapD["Customer Part#"]),
@@ -207,8 +206,8 @@ export class SapConfigInvoiceComponent implements OnInit {
             invoiceForm: invoiceForm,
           }
 
-          let consigneeCodeFix = this.packing.find((item: any) => item['Ship-to party(External)'])
-          consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['Ship-to party(External)'] : null
+          let consigneeCodeFix = this.packing.find((item: any) => item['(KGSS) Consignee CD'])
+          consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
           if (consigneeCodeFix) {
             this.consigneeCode = consigneeCodeFix
             this.handleChangeConsigneeCodeSelected()
