@@ -139,12 +139,16 @@ export class SapConfigInvoiceComponent implements OnInit {
           if (prod) {
             this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
           }
-          if (this.packing[0]['Packing content category'] == 'O') {
+
+          const packingUse = this.packing.filter((a: any) => a['Invoice No'] == this.invoice)
+
+          if (packingUse[0]['Packing content category'] == 'O') {
             this.unitItem = 'PALLET'
           }
-          if (this.packing[0]['Packing content category'] == '3') {
+          if (packingUse[0]['Packing content category'] == '3') {
             this.unitItem = 'CARTON'
           }
+
 
           const invoiceForm = {
             invoice: this.invoice,
@@ -185,14 +189,14 @@ export class SapConfigInvoiceComponent implements OnInit {
               }
             }),
             footer: {
-              'totalQty': this.htmlTotalQty(),
+              'totalQty': this.htmlTotalQty(this.invoice),
               qty: this.htmlQuantity(),
               amount: this.htmlAmount(),
               netWeight: this.htmlNetWeight(),
               grossWeight: this.htmlGrossWeight(),
               caseQty: this.htmlCaseQuantity(),
-              netWeightAll: this.htmlNetWeightAll(),
-              grossWeightAll: this.htmlGrossWeightAll(),
+              netWeightAll: this.htmlNetWeightAll(this.invoice),
+              grossWeightAll: this.htmlGrossWeightAll(this.invoice),
               verifyName: 'Rojjana Sukkasem',
               verifyPosition: 'Department Head',
               verifyDepartment: 'Logistics Department',
@@ -206,7 +210,7 @@ export class SapConfigInvoiceComponent implements OnInit {
             invoiceForm: invoiceForm,
           }
 
-          let consigneeCodeFix = this.packing.find((item: any) => item['(KGSS) Consignee CD'])
+          let consigneeCodeFix = this.packing.find((item: any) => item["Invoice No"] == this.invoice && item['(KGSS) Consignee CD'])
           consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
           if (consigneeCodeFix) {
             this.consigneeCode = consigneeCodeFix
@@ -252,8 +256,9 @@ export class SapConfigInvoiceComponent implements OnInit {
     }
     return ''
   }
-  htmlTotalQty() {
-    const arrayUniqueByKey = [...new Map(this.packing.map((item: any) =>
+  htmlTotalQty(invoice: any) {
+    const packingUse = this.packing.filter((a: any) => a['Invoice No'] == invoice)
+    const arrayUniqueByKey = [...new Map(packingUse.map((item: any) =>
       [item['Start case#'], item])).values()];
     const total = arrayUniqueByKey.reduce((p: any, n: any) => {
       return p += n['Case Quantity']
@@ -282,9 +287,9 @@ export class SapConfigInvoiceComponent implements OnInit {
     }
     return ''
   }
-  htmlNetWeightAll() {
-
-    return this.packing.reduce((p: any, n: any) => {
+  htmlNetWeightAll(invoice: any) {
+    const packingUse = this.packing.filter((a: any) => a['Invoice No'] == invoice)
+    return packingUse.reduce((p: any, n: any) => {
       if (n['Case Quantity'] > 1) {
         return p += Number((n['NET WEIGHT'] * n['Case Quantity']))
       } else {
@@ -306,9 +311,10 @@ export class SapConfigInvoiceComponent implements OnInit {
     }
     return ''
   }
-  htmlGrossWeightAll() {
+  htmlGrossWeightAll(invoice: any) {
     let markFirstCase = ''
-    return this.packing.reduce((p: any, n: any) => {
+    const packingUse = this.packing.filter((a: any) => a['Invoice No'] == invoice)
+    return packingUse.reduce((p: any, n: any) => {
       let grossWeightCase: any = ''
       if (markFirstCase != n['Start case#']) {
         if (n['Case Quantity'] > 1) {
@@ -325,7 +331,6 @@ export class SapConfigInvoiceComponent implements OnInit {
 
   // todo action
   handleChangeConsigneeCodeSelected() {
-
     this.accountee = this.accounteeOption.find((a: any) => a.code == this.consigneeCode)
     this.consignee = this.consigneeOption.find((a: any) => a.code == this.consigneeCode)
     this.form.invoiceForm.accountee = this.accountee

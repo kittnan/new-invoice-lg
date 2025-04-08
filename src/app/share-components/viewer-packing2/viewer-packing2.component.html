@@ -177,11 +177,7 @@
             {{ item["Customer Part#"] }}
           </td>
           <td class="text-end">
-            {{
-            item["quantity shipped"][0]
-            ? item["quantity shipped"][0] + " PC"
-            : ("" | number : "1.0-0")
-            }}
+            {{htmlQTY2(item["quantity shipped"][0])}}
           </td>
           <td class="text-end">
             <span>
@@ -463,8 +459,8 @@
           <td></td>
           <td>
             <div fxLayout="row wrap" fxLayoutAlign="start stretch">
-              <span fxFlex="60"> </span>
-              <span fxFlex="40"> INVOICE NO. {{ packingForm.invoice }} </span>
+              <span fxFlex="30"> </span>
+              <span fxFlex="70" style="text-align: right; padding-right: 5px;"> INVOICE NO. {{ packingForm.invoice }} </span>
             </div>
           </td>
           <td></td>
@@ -475,8 +471,8 @@
           <td></td>
           <td>
             <div fxLayout="row wrap" fxLayoutAlign="start stretch">
-              <span fxFlex=" 60"> </span>
-              <span fxFlex="40">
+              <span fxFlex=" 30"> </span>
+              <span fxFlex="70" style="text-align: right; padding-right: 5px;">
                 {{ unitItem }} NO. {{ packingForm.footer.typing1 }}
               </span>
             </div>

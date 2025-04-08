@@ -157,33 +157,36 @@ export class SapConfigPackingComponent implements OnInit {
           ktcAddress: this.ktcAddress,
           printDate: this.htmlDate(this.sapData[0]["printDate"]),
           "Sales DT": this.htmlDate(this.sapData[0]["Sales DT"]),
-          data: newPacking.map((a: any, i: number) => {
+          data: newPacking.map((packingData: any, i: number) => {
             let grossWeightCase = ''
-            if (markFirstCase != a['Start case#']) {
-              grossWeightCase = this.htmlGrossWeightCase(a)
-              markFirstCase = a['Start case#']
+            if (markFirstCase != packingData['Start case#']) {
+              grossWeightCase = this.htmlGrossWeightCase(packingData)
+              markFirstCase = packingData['Start case#']
             }
-            const pk = this.sapData.find((p: any) => p['(KGSS) Customer PO'] == a['Sales document'])
-            console.log("🚀 ~ pk:", pk)
+
+            const pk = this.sapData.find((sap: any) => sap['Sales document'] == packingData['(KGSS) Customer PO'])
 
             const newItem = {
               'itemCode': this.htmlItemCode(pk["Header Note 1"]),
               'GrossWeight': this.htmlGrossWeight(pk),
               'GrossWeightCase': grossWeightCase,
-              'GrossWeightCaseSub': this.htmlGrossWeightSub(a),
+              'GrossWeightCaseSub': this.htmlGrossWeightSub(packingData),
               'CntOf Origin2': this.htmlCountry(pk["CntOf Origin"]),
-              'Case No': this.htmlCaseNo(a),
-              'quantity shipped': this.htmlQuantityShip(a),
-              'NetWeight': this.htmlNetWeight(a)
+              'Case No': this.htmlCaseNo(packingData),
+              'quantity shipped': this.htmlQuantityShip(packingData),
+              'NetWeight': this.htmlNetWeight(packingData)
             }
             return {
               ...pk,
               ...newItem,
-              ...a
+              ...packingData
             }
           }),
 
         }
+
+        console.log(packingForm);
+
         let p0: HttpParams = new HttpParams()
         p0 = p0.set('key', JSON.stringify([res['key']]))
         let resForm: any = await lastValueFrom(this.$form.get(p0))
@@ -247,7 +250,7 @@ export class SapConfigPackingComponent implements OnInit {
           invoice: this.invoice,
           packingForm: packingFormSlim,
         }
-        let consigneeCodeFix = this.packing.find((item: any) => item['(KGSS) Consignee CD'])
+        let consigneeCodeFix = this.packing.find((item: any) => item["Invoice No"] == this.invoice && item['(KGSS) Consignee CD'])
         consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
         if (consigneeCodeFix) {
           this.consigneeCode = consigneeCodeFix

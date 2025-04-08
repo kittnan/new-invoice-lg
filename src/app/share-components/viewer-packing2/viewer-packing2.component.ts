@@ -15,7 +15,7 @@ export class ViewerPacking2Component implements OnInit {
   ngOnInit(): void {
 
   }
-  getData(page: number) {
+  getData(page: number) :any{
     if (page !== 0) {
       return this.packingForm.data.slice(page * 2, (page * 2) + 2);
     }
@@ -23,6 +23,12 @@ export class ViewerPacking2Component implements OnInit {
   }
   htmlDate(d: any) {
     return moment(d).format('MMM . , DD,YYYY');
+  }
+  htmlQTY2(d: any) {
+    if(d){
+      return d.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' PC'
+    }
+    return ''
   }
 
 }
