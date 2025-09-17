@@ -18,6 +18,8 @@ export class ViewerInvoiceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.invoiceForm);
+
   }
 
   // todo html control
@@ -29,6 +31,19 @@ export class ViewerInvoiceComponent implements OnInit {
   }
   htmlDate(d: any) {
     return moment(d).format('MMM . , DD,YYYY');
+  }
+
+  convertUP(text:any){
+    if(text ==1){
+      return 'A'
+    }
+    if(text ==100){
+      return 'H'
+    }
+    if(text ==1000){
+      return 'K'
+    }
+    return ''
   }
 
 

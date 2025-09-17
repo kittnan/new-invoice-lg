@@ -170,7 +170,8 @@
           </td>
           <td>
             <span>
-              {{ item["Customer Part#"] }}
+              {{ item["Header Note 2"] }}
+              <!-- {{ item["Customer Part#"] }} -->
             </span>
           </td>
           <td></td>
@@ -184,7 +185,8 @@
         <tr>
           <td></td>
           <td>
-            {{ item["Cust Desc"] }}
+            <!-- {{ item["Cust Desc"] }} -->
+            {{ item["Header Note 3"]}}
           </td>
           <td>PIECE</td>
           <td>
@@ -210,7 +212,7 @@
             {{ item["Sales QTY"] | number : "1.0-0" }}
           </td>
           <td class="text-end">
-            {{ item["U/P"] | number : "1.5" }} /{{ item["UPM"] }}
+            {{ item["U/P"] | number : "1.5" }} / {{ convertUP(item["UPM"]) }}
           </td>
           <td class="text-end">
             {{ item["Sales AMT"] | number : "1.2" }}
@@ -253,7 +255,8 @@
             {{ item["Case Mark Information 4"] }}
           </td>
           <td>
-            {{ item["Lot#"] }}
+            <!-- {{ item["Lot#"] }} -->
+            {{ item["Batch"] }}
           </td>
           <td></td>
           <td></td>

@@ -101,8 +101,8 @@ export class SapConfigPackingComponent implements OnInit {
         this.models = resModel
 
         this.packing = await this.$packing
-        .getKey(new HttpParams().set('invoice', JSON.stringify([res['key']])).set('status', JSON.stringify(['available'])))
-        .toPromise();
+          .getKey(new HttpParams().set('invoice', JSON.stringify([res['key']])).set('status', JSON.stringify(['available'])))
+          .toPromise();
         console.log("🚀 ~ this.packing:", this.packing)
         this.invoice = res['key'];
         const resSapData = await this.$sapData
@@ -148,6 +148,9 @@ export class SapConfigPackingComponent implements OnInit {
           return p
         }, [])
 
+        console.log(`⚡ ~ :151 ~ SapConfigPackingComponent ~ newPacking:`, newPacking);
+
+
 
         let markFirstCase = ''
         const packingForm = {
@@ -164,28 +167,44 @@ export class SapConfigPackingComponent implements OnInit {
               markFirstCase = packingData['Start case#']
             }
 
-            const pk = this.sapData.find((sap: any) => sap['Sales document'] == packingData['(KGSS) Customer PO'])
+            const pk = this.sapData.filter((sap: any) => sap['Sales document'] == packingData['(KGSS) Customer PO'])
+
+            console.log(`⚡ ~ :169 ~ SapConfigPackingComponent ~ pk:`, pk);
+
+            const pkOne = pk.find((a: any) => a['Sales document'] == packingData['(KGSS) Customer PO'])
+
+            console.log(`⚡ ~ :173 ~ SapConfigPackingComponent ~ pkOne:`, pkOne);
+
 
             const newItem = {
-              'itemCode': this.htmlItemCode(pk["Header Note 1"]),
-              'GrossWeight': this.htmlGrossWeight(pk),
+              'itemCode': this.htmlItemCode(pkOne["Header Note 1"]),
+              'GrossWeight': this.htmlGrossWeight(pkOne),
               'GrossWeightCase': grossWeightCase,
               'GrossWeightCaseSub': this.htmlGrossWeightSub(packingData),
-              'CntOf Origin2': this.htmlCountry(pk["CntOf Origin"]),
+              'CntOf Origin2': this.htmlCountry(pkOne),
               'Case No': this.htmlCaseNo(packingData),
               'quantity shipped': this.htmlQuantityShip(packingData),
-              'NetWeight': this.htmlNetWeight(packingData)
+              'NetWeight': this.htmlNetWeight(packingData),
             }
+
+            
+            console.clear()
+            console.log(`⚡ ~ :190 ~ SapConfigPackingComponent ~ newItem:`, newItem);
+            console.log('packingData',packingData);
+            console.log('pkOne',pkOne);
+
             return {
-              ...pk,
               ...newItem,
-              ...packingData
+              ...packingData,
+              ...pkOne,
             }
           }),
 
         }
 
-        console.log(packingForm);
+
+        console.log(`⚡ ~ :191 ~ SapConfigPackingComponent ~ packingForm:`, packingForm);
+
 
         let p0: HttpParams = new HttpParams()
         p0 = p0.set('key', JSON.stringify([res['key']]))
@@ -217,12 +236,15 @@ export class SapConfigPackingComponent implements OnInit {
               'Measurement (horizontal)': obj['Measurement (horizontal)'],
               'Measurement (High)': obj['Measurement (High)'],
               'Case Mark Information 4': obj['Case Mark Information 4'],
-              'Customer PO#': obj['Customer PO#'],
+              'Customer PO#': obj['Customer PO#'] || obj['(KGSS) Customer PO'],
               'Case Mark Information 5': obj['Case Mark Information 5'],
-              'Customer SO#': obj['Customer SO#'],
+              'Customer SO#': obj['Customer SO#'] ,
               'CntOf Origin2': obj['CntOf Origin2'],
               'Prod Part#': obj['Prod Part#'],
               'typing1': obj['typing1'],
+              'Header Note 2': obj['Header Note 2'],
+              'Header Note 3': obj['Header Note 3'],
+              'Batch': obj['Batch'],
             }
           }),
           unitItem: this.unitItem,
@@ -250,6 +272,9 @@ export class SapConfigPackingComponent implements OnInit {
           invoice: this.invoice,
           packingForm: packingFormSlim,
         }
+
+        console.log(`⚡ ~ :258 ~ SapConfigPackingComponent ~ this.form:`, this.form);
+
         let consigneeCodeFix = this.packing.find((item: any) => item["Invoice No"] == this.invoice && item['(KGSS) Consignee CD'])
         consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
         if (consigneeCodeFix) {
@@ -297,10 +322,17 @@ export class SapConfigPackingComponent implements OnInit {
   calculatorPageBreak(pktaLen: number) {
     return Math.ceil(pktaLen / 2)
   }
-  htmlCountry(value: any) {
+  htmlCountry(sapData: any) {
     if (this.country && this.country.length > 0) {
-      const item = this.country.find((a: any) => a.key == value)
+      let value = ''
+      value = sapData['Address Note']
+      const item = this.country.find((a: any) => a.code == String(value).trim())
       if (item) return 'MADE IN ' + item.name
+      if (!value) {
+        value = sapData["(KGSS) Country Of Origin CD"]
+        const item = this.country.find((a: any) => a.key == String(value).trim())
+        if (item) return 'MADE IN ' + item.name
+      }
     }
     return ''
   }

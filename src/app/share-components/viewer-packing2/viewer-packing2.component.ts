@@ -13,6 +13,7 @@ export class ViewerPacking2Component implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.packingForm.data);
 
   }
   getData(page: number) :any{

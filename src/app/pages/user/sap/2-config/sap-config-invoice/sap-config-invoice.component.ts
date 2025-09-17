@@ -1,26 +1,22 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpPackingService } from 'src/app/https/http-packing.service';
-import { HttpPktaService } from 'src/app/https/http-pkta.service';
-import { HttpConsigneeService } from 'src/app/https/http-consignee.service';
-import { HttpKtcAddressService } from 'src/app/https/http-ktc-address.service';
-import { HttpAccounteeService } from 'src/app/https/http-accountee.service';
 import * as moment from 'moment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { HttpItemCodeService } from 'src/app/https/http-item-code.service';
-import { HttpCountryService } from 'src/app/https/http-country.service';
-import { HttpModelService } from 'src/app/https/http-model.service';
-import { HttpReprintService } from 'src/app/https/http-reprint.service';
+import { lastValueFrom } from 'rxjs';
+import { HttpAccounteeService } from 'src/app/https/http-accountee.service';
 import { HttpConsigneeCodeService } from 'src/app/https/http-consignee-code.service';
-import { HttpFormService } from 'src/app/https/http-form.service';
+import { HttpConsigneeService } from 'src/app/https/http-consignee.service';
+import { HttpCountryService } from 'src/app/https/http-country.service';
+import { HttpItemCodeService } from 'src/app/https/http-item-code.service';
+import { HttpKtcAddressService } from 'src/app/https/http-ktc-address.service';
+import { HttpModelService } from 'src/app/https/http-model.service';
+import { HttpUsersService } from 'src/app/https/http-users.service';
+import { HttpSapDataService } from 'src/app/https/SAP/http-sap-data.service';
+import { HttpSapFormService } from 'src/app/https/SAP/http-sap-form.service';
+import { HttpSapPackingService } from 'src/app/https/SAP/http-sap-packing.service';
 import { GenerateInvoicePdfService } from 'src/app/services/generate-invoice-pdf.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-import { HttpUsersService } from 'src/app/https/http-users.service';
-import { lastValueFrom } from 'rxjs';
-import { HttpSapPackingService } from 'src/app/https/SAP/http-sap-packing.service';
-import { HttpSapFormService } from 'src/app/https/SAP/http-sap-form.service';
-import { HttpSapDataService } from 'src/app/https/SAP/http-sap-data.service';
 
 @Component({
   selector: 'app-sap-config-invoice',
@@ -118,11 +114,18 @@ export class SapConfigInvoiceComponent implements OnInit {
 
 
           resSapData = resSapData.sort((a: any, b: any) => a['Sales document'] - b['Sales document']);
+          console.log('this.packing', this.packing);
 
           this.sapData = resSapData.map((a: any) => {
+            console.log(a['Sales document']);
+
             const item = this.packing.filter(
-              (b: any) => b['(KGSS) Customer PO'] == a['Sales document']
+              (b: any) => b['(KGSS) Customer PO'] == a['Sales document'] &&
+              a['External Delivery ID'] == b['Invoice No']
             );
+
+            console.log(`⚡ ~ :126 ~ SapConfigInvoiceComponent ~ item:`, item);
+
             return {
               ...a,
               packing: item,
@@ -139,7 +142,6 @@ export class SapConfigInvoiceComponent implements OnInit {
           if (prod) {
             this.model = this.models.find((a: any) => a['Customer Part#'] == prod['Customer Part#'])
           }
-
           const packingUse = this.packing.filter((a: any) => a['Invoice No'] == this.invoice)
 
           if (packingUse[0]['Packing content category'] == 'O') {
@@ -149,6 +151,7 @@ export class SapConfigInvoiceComponent implements OnInit {
             this.unitItem = 'CARTON'
           }
 
+          console.log(this.sapData);
 
           const invoiceForm = {
             invoice: this.invoice,
@@ -158,30 +161,39 @@ export class SapConfigInvoiceComponent implements OnInit {
             printDate: new Date(),
             "Sales DT": new Date(),
             data: this.sapData.map((sapD: any, i: number) => {
-              console.log(sapD);
+              console.log(i);
 
+              console.log('sapD', sapD.packing[i]);
+              console.log(sapD.packing[0]["Case Mark Information 1"]);
+              let sapDPacking = sapD.packing[i]
+              if (!sapDPacking) {
+                sapDPacking = sapD.packing[0]
+              }
               return {
                 'itemCode': this.htmlItemCode(sapD["Customer Part#"]),
                 'Customer Part#': sapD['Customer Part#'],
+                'Header Note 2': sapD['Header Note 2'],
+                'Header Note 3': sapD['Header Note 3'],
                 'Cust Desc': sapD['Cust Desc'],
                 'Cust Currency': sapD['Product Type'],
-                'Case Mark Information 1': sapD.packing[0]["Case Mark Information 1"],
-                'Case Mark Information 2': sapD.packing[0]["Case Mark Information 2"],
-                'Case Mark Information 3': sapD.packing[0]["Case Mark Information 3"],
-                'Case Mark Information 4': sapD.packing[0]["Case Mark Information 4"],
-                'Case Mark Information 5': sapD.packing[0]["Case Mark Information 5"],
+                'Case Mark Information 1': sapDPacking["Case Mark Information 1"],
+                'Case Mark Information 2': sapDPacking["Case Mark Information 2"],
+                'Case Mark Information 3': sapDPacking["Case Mark Information 3"],
+                'Case Mark Information 4': sapDPacking["Case Mark Information 4"],
+                'Case Mark Information 5': sapDPacking["Case Mark Information 5"],
                 'SO#': sapD['Sales document'],
                 'Sales QTY': sapD['Delivery Quantity'],
 
                 'U/P': sapD['Net Price'],
                 'UPM': sapD['Condition Pricing Unit'],
-                'Sales AMT': sapD['Net Value'],
+                'Sales AMT': Number(sapD['Net Price']) * Number(sapD['Delivery Quantity']),
+                'Batch': sapD['Batch'],
 
                 'Customer PO#': sapD['Customer PO#'],
                 'Customer SO#': sapD['Customer SO#'],
                 // 'Customer SO#': sapD['Customer SO#'],
                 'Lot#': sapD['Batch'],
-                'CntOf Origin': this.htmlCountry(sapD["Address Note"]),
+                'CntOf Origin': this.htmlCountry(sapD),
                 'Prod Part#': sapD['Material code'],
                 'Prod Desc': sapD['Material text'],
                 'typing1': this.model && this.model['Prod Part'] ? this.model['Prod Part'] : '',
@@ -209,6 +221,7 @@ export class SapConfigInvoiceComponent implements OnInit {
             invoice: this.invoice,
             invoiceForm: invoiceForm,
           }
+          console.log(this.form);
 
           let consigneeCodeFix = this.packing.find((item: any) => item["Invoice No"] == this.invoice && item['(KGSS) Consignee CD'])
           consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
@@ -244,15 +257,28 @@ export class SapConfigInvoiceComponent implements OnInit {
     }, 0);
   }
   htmlAmount() {
+    console.log('asdasd');
+
     return this.sapData.reduce((p: any, n: any) => {
-      if (n['Net Value']) return p + Number(n['Net Value']);
+      console.log(Number(n['Net Price']) * Number(n['Delivery Quantity']));
+      if (n['Net Value'] && n['Delivery Quantity']) {
+
+        return p += (Number(n['Net Price']) * Number(n['Delivery Quantity']))
+      }
       return p;
     }, 0);
   }
-  htmlCountry(value: any) {
+  htmlCountry(sapData: any) {
     if (this.country && this.country.length > 0) {
-      const item = this.country.find((a: any) => a.key == value)
+      let value = ''
+      value = sapData['Address Note']
+      const item = this.country.find((a: any) => a.code == String(value).trim())
       if (item) return 'MADE IN ' + item.name
+      if (!value) {
+        value = sapData["(KGSS) Country Of Origin CD"]
+        const item = this.country.find((a: any) => a.key == String(value).trim())
+        if (item) return 'MADE IN ' + item.name
+      }
     }
     return ''
   }

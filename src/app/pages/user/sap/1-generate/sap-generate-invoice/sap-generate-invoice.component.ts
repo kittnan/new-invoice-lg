@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
+import { HttpCountryService } from 'src/app/https/http-country.service';
 import { HttpSapDataService } from 'src/app/https/SAP/http-sap-data.service';
 import { HttpSapFormService } from 'src/app/https/SAP/http-sap-form.service';
 import { HttpSapPackingService } from 'src/app/https/SAP/http-sap-packing.service';
@@ -19,13 +20,15 @@ export class SapGenerateInvoiceComponent implements OnInit {
 
   sapData: any = []
   packing: any = []
+
   constructor(
     private $convertXLSX: ConvertXLSXService,
     private $sapData: HttpSapDataService,
     private $alert: AlertService,
     private $sapPacking: HttpSapPackingService,
     private $sapForm: HttpSapFormService,
-    private router: Router
+    private router: Router,
+    private $country: HttpCountryService
   ) {
     this.user = localStorage.getItem('DIS_user')
     this.user = JSON.parse(this.user)
@@ -37,7 +40,6 @@ export class SapGenerateInvoiceComponent implements OnInit {
   async uploadSAPData(e: any) {
     if (e.target.files && e.target.files.length !== 0) {
       const convertedData: any = await this.$convertXLSX.readExcel(e.target.files[0])
-      console.log("🚀 ~ convertedData:", convertedData)
       const mappingData = convertedData.map((cData: any) => {
         const newItem: any = {};
         for (const key in cData) {
@@ -53,9 +55,10 @@ export class SapGenerateInvoiceComponent implements OnInit {
         cData["Prod Part#"] = cData["Prod Part#"]?.toString()
         cData["Seal No"] = cData["Seal No"]?.toString()
         cData['status'] = 'available'
+        cData["(KGSS) Country Of Origin CD"] = cData["(KGSS) Country Of Origin CD"]?.toString()
+        cData['Address Note'] = cData['Address Note'] ? cData['Address Note'] : cData["(KGSS) Country Of Origin CD"]?.toString()
         return cData
       })
-      console.log("🚀 ~ mappingData:", mappingData)
       this.sapData = mappingData
     } else {
       this.sapData = [];
@@ -97,10 +100,6 @@ export class SapGenerateInvoiceComponent implements OnInit {
     return resultDate;
   }
 
-
-  handleValidateSubmit() {
-
-  }
 
   async handleSubmit() {
     try {

@@ -174,7 +174,8 @@
             {{ item["Case No"] }}
           </td>
           <td>
-            {{ item["Customer Part#"] }}
+            {{ item["Header Note 2"] }} <br>
+            <!-- {{ item["Customer Part#"] }} -->
           </td>
           <td class="text-end">
             {{htmlQTY2(item["quantity shipped"][0])}}
@@ -198,7 +199,9 @@
           </td>
           <td></td>
           <td>
-            {{ item["Cust Desc"] }}
+            {{ item["Header Note 3"] }}
+
+            <!-- {{ item["Cust Desc"] }} -->
           </td>
           <td class="text-end">
             {{ item["quantity shipped"][1] ? item["quantity shipped"][1] : "" }}
@@ -314,9 +317,10 @@
 
         <tr>
           <td></td>
-          <td></td>
           <td>
-            {{ item["Lot#"] }}
+          </td>
+          <td>
+            {{ item["Batch"] }}
           </td>
           <td class="text-end">
             {{
