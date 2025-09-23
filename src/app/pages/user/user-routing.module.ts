@@ -11,6 +11,7 @@ import { ConfigPackingComponent } from './config-packing/config-packing.componen
 import { ConfigPacking2Component } from './config-packing2/config-packing2.component';
 import { ReprintAllComponent } from './reprint-all/reprint-all.component';
 import { SapModule } from './sap/sap.module';
+import { CommonInvoiceModule } from './common/common.module';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: "sap",
     loadChildren: () => SapModule
+  },
+  {
+    path: "common",
+    loadChildren: () => CommonInvoiceModule
   }
 ];
 

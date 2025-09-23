@@ -1,0 +1,58 @@
+<div fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <pre>
+    --------------No Common Invoice
+  </pre>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+        <label for="uploadPKTA" class="me-2"> DATA (.xlsx) </label>
+        <input type="file" #uploadPKTA name="uploadPKTA" (change)="uploadData($event)" accept=".xlsx" />
+        <span class="font-bold text-blue-500 uppercase">
+          total:
+          {{ noCommonData.length }}
+        </span>
+      </div>
+
+    </div>
+    <!-- <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+        <label for="uploadXLSX" class="me-2"> XLSX (.xlsx) </label>
+        <input [disabled]="!sapData || sapData.length===0" type="file" #uploadXLSX name="uploadXLSX"
+          (change)="uploadPacking($event)" accept=".xlsx" />
+        <span class="font-bold text-blue-500 uppercase">
+          total:
+          {{ packing.length }}
+        </span>
+      </div>
+    </div> -->
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+      <button  mat-raised-button
+        class="w-1/4 m-5 text-indigo-600 uppercase bg-green-300" (click)="handleSubmit()">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-icon class="mat-18">save</mat-icon>
+          Submit
+        </div>
+      </button>
+    </div>
+    <div *ngIf="noCommonData.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <table class="table-normal">
+        <tr>
+          <th>
+            No
+          </th>
+          <th>
+            Invoice
+          </th>
+        </tr>
+        <tr *ngFor="let item of noCommonData; let i=index">
+          <td>
+            {{i+1}}
+          </td>
+          <td>
+            {{item['Invoice no']}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
