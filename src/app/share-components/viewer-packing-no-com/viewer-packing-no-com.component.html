@@ -1,0 +1,454 @@
+<div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print" class="mb-9"
+    style="width: 1600px;">
+    <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+        <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+                <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 15px">
+                    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+                        <span style="font-size: 35px; letter-spacing: 6px; line-height: 30px"
+                            fxLayoutAlign="start start">
+                            PACKING LIST
+                        </span>
+                    </div>
+                </div>
+                <div fxFlex="50" fxLayoutAlign="end start" style="padding-top: 30px">
+                    <img src="./assets/Kyocera_logo2.png" style="width: 300px; height: 60px" />
+                </div>
+            </div>
+
+            <div *ngIf="packingForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start"
+                style="margin-top: 30px">
+                <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                    <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+                        <span fxFlex="20"> Invoice No. </span>
+                        <span fxFlex="80"> {{ packingForm.invoice }} </span>
+                    </div>
+                    <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+                        <span fxFlex="20"> Accountee: </span>
+                        <span fxFlex="80">
+                            {{ packingForm.accountee.line1 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.accountee.line2 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.accountee.line3 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.accountee.line4 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.accountee.line5 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.accountee.line6 }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="packingForm.consignee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+                <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+                    <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+                        <span fxFlex="20"> Consignee: </span>
+                        <span fxFlex="80">
+                            {{ packingForm.consignee.line1 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.consignee.line2 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.consignee.line3 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.consignee.line4 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.consignee.line5 }}
+                        </span>
+
+                        <span fxFlex="20"></span>
+                        <span fxFlex="80">
+                            {{ packingForm.consignee.line6 }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+                <div *ngIf="packingForm.ktcAddress" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="start start"
+                    style="font-size: 14px; padding-top: 20px">
+                    <span fxFlex="100">
+                        {{ packingForm.ktcAddress.line1 }}
+                    </span>
+                    <span fxFlex="100">
+                        {{ packingForm.ktcAddress.line2 }}
+                    </span>
+                    <span fxFlex="100">
+                        {{ packingForm.ktcAddress.line3 }}
+                    </span>
+                    <span fxFlex="100">
+                        {{ packingForm.ktcAddress.line4 }}
+                    </span>
+                    <span fxFlex="100">
+                        {{ packingForm.ktcAddress.line5 }}
+                    </span>
+                    <span fxFlex="100">
+                        {{ packingForm.ktcAddress.line6 }}
+                    </span>
+                </div>
+                <div fxFlex="55" fxLayout="row wrap" fxLayoutAlign="start start" class="font-bold"
+                    style="font-size: 14px; padding-top: 20px">
+                    <span fxFlex="100" class="ms-48"> Page. {{ p_i + 1 }} </span>
+                    <span fxFlex="100" class="ms-48">
+                        Date: {{ htmlDate(packingForm["printDate"]) }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="packingForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
+                <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+                    <div fxFlex="30">
+                        Shipped from {{ packingForm.accountee.shippedFrom }}
+                    </div>
+                    <div fxFlex="30">To {{ packingForm.accountee.to }}</div>
+                    <div fxFlex="30">Per {{ packingForm.accountee.per }}</div>
+                </div>
+            </div>
+            <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start start">
+                <span> No. {{ packingForm.invoice }} </span>
+            </div>
+        </div>
+
+        <div *ngIf="packingForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mb-4">
+            <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
+                <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+                    <div fxFlex="100">
+                        L/C No.& Issusing date {{ packingForm.accountee.paymentItem }}
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start start">
+                <span> On or about {{ htmlDate(packingForm["Sales DT"]) }} </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+        <table fxFlex="100" class="mt-3">
+            <tr class="table-head">
+                <th width="15%">Marks & No. s</th>
+                <th width="5%">Case No.</th>
+                <th width="30%">Description</th>
+                <th width="16%">Quantity</th>
+                <th width="16%">Net Weight</th>
+                <th width="25%">Gross Weight/M'ment</th>
+            </tr>
+            <ng-container *ngFor="let item of getData(p_i); let i = index">
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        {{showField(item,"Marks & Nos")}}
+                    </td>
+                    <td class="text-end">
+                        {{showField(item,"Start case#")}}
+                    </td>
+                    <td>
+                        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+                            <span fxFlex="30"> ITEM CODE </span>
+                            <span fxFlex="auto">
+                                {{showField(item,"Item code")}}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        {{ showField(item,"quantity shipped") | number : "1.0-0" }}
+                        <span style="margin-left: 1rem;">
+                            PC
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        {{ showField(item,"NET WEIGHT") | number : "1.2" }}
+                        <span style="margin-left: 1rem;">
+                            KGS
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        {{ showField(item,"GROSS WEIGHT2") | number : "1.2" }}
+                        <span *ngIf="showField(item,'GROSS WEIGHT2')" style="margin-left: 1rem;">
+                            KGS
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+                            <span fxFlex="30"> ITEM NAME </span>
+                            <span fxFlex="auto">
+                                {{showField(item,"Item name")}}
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td [ngStyle]=" config ? {'background': 'rgb(255, 101, 101)'} : {}">
+                        <div fxLayout=" row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="30"> </span>
+                            <span fxFlex="auto">
+                                {{showField(item,"value1")}}
+                            </span>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="30"> INVOICE NO </span>
+                            <span fxFlex="auto">
+                                {{showField(item,"Invoice import")}}
+                            </span>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {{showField(item,"measurement")}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="30"> </span>
+                            <span fxFlex="auto">
+                                {{showField(item,"Additional data")}}
+                            </span>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td [ngStyle]=" config ? {'background': 'rgb(124, 170, 255)'} : {}">
+                        <div fxLayout=" row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="30"> </span>
+                            <span fxFlex="auto">
+                                {{showField(item,"value2")}}
+                            </span>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </ng-container>
+            <ng-container *ngIf="p_i + 1 === page">
+                <tr style="border-top: 1px solid">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-end">TOTAL:</td>
+                    <td></td>
+
+                    <td>
+                        <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="10"> ( {{ packingForm.footer.totalQty }} ) </span>
+                            <span fxFlex="90"> {{ packingForm.footer.unitItem }}S</span>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        {{ packingForm.footer.qty | number : "1.0-0" }} PC
+                    </td>
+                    <td class="text-end">{{ packingForm.footer.netWeightAll | number : "1.2" }} KGS</td>
+                    <td class="text-end">{{ packingForm.footer.grossWeightAll }} KGS</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td [rowSpan]="4">
+                        <p>
+                            KYOCERA (Thailand) Co., Ltd.
+                        </p>
+                        <p style="margin: 0;">
+                            {{packingForm.footer.verifyName}}
+                        </p>
+                        <p style="margin: 0;">
+                            {{packingForm.footer.verifyPosition}}
+                        </p>
+                        <p style="margin: 0;">
+                            {{packingForm.footer.verifyDepartment}}
+                        </p>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span *ngIf="packingForm.accountee">
+                            FREIGHT : {{ packingForm.accountee.freight }}
+                        </span>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="60" fxLayoutAlign="end start">
+                                Shipping Marks :
+                            </span>
+                            <span fxFlex="40"> KYOCERA </span>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td [ngStyle]=" config ? {'background': 'rgb(103, 65, 124)'} : {}">
+                        {{packingForm.footer.typing2}}
+                    </td>
+                    <td></td>
+                    <td>
+                        <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex="30"> </span>
+                            <span fxFlex="70" style="text-align: right; padding-right: 5px;"> INVOICE NO. {{
+                                packingForm.invoice }} </span>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td [ngStyle]=" config ? {'background': 'rgb(137, 34, 197)'} : {}">
+                        <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+                            <span fxFlex=" 30"> </span>
+                            <span fxFlex="70" style="text-align: right; padding-right: 5px;">
+                                {{ packingForm.footer.unitItem }} NO. {{ packingForm.footer.typing1 }}
+                            </span>
+                        </div>
+                    </td>
+
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="p_i + 1 !== pageArr.length">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>TO BE CONTINUED PAGE {{ p_i + 2 }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+</div>

@@ -35,7 +35,7 @@ export class GenerateInvoiceComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user = localStorage.getItem('DIS_user')
+    this.user = localStorage.getItem('INV_ISSUE_user')
     this.user = JSON.parse(this.user)
   }
 

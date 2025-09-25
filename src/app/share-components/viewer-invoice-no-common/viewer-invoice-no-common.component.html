@@ -1,0 +1,445 @@
+<div fxLayout="row wrap" fxLayoutAlign="start start" *ngFor="let p of pageArr; let p_i = index" id="print" name="print"
+  class="mb-9" style="width: 1600px;">
+  <div id="head" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="45" fxLayoutAlign="start start" style="padding-top: 15px">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span style="font-size: 35px; letter-spacing: 6px; line-height: 30px" fxLayoutAlign="start start">
+              INVOICE
+            </span>
+          </div>
+        </div>
+        <div fxFlex="50" fxLayoutAlign="end start" style="padding-top: 30px">
+          <img src="./assets/Kyocera_logo2.png" style="width: 300px; height: 60px" />
+        </div>
+      </div>
+
+      <div *ngIf="invoiceForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start"
+        style="margin-top: 30px">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span fxFlex="20"> Invoice No. </span>
+            <span fxFlex="80"> {{ invoiceForm.invoice }} </span>
+          </div>
+          <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span fxFlex="20"> Accountee: </span>
+            <span fxFlex="80">
+              {{ invoiceForm.accountee.line1 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.accountee.line2 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.accountee.line3 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.accountee.line4 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.accountee.line5 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.accountee.line6 }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="invoiceForm.consignee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+            <span fxFlex="20"> Consignee: </span>
+            <span fxFlex="80">
+              {{ invoiceForm.consignee.line1 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.consignee.line2 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.consignee.line3 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.consignee.line4 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.consignee.line5 }}
+            </span>
+
+            <span fxFlex="20"></span>
+            <span fxFlex="80">
+              {{ invoiceForm.consignee.line6 }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div *ngIf="invoiceForm.ktcAddress" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="start start"
+          style="font-size: 14px; padding-top: 20px">
+          <span fxFlex="100">
+            {{ invoiceForm.ktcAddress.line1 }}
+          </span>
+          <span fxFlex="100">
+            {{ invoiceForm.ktcAddress.line2 }}
+          </span>
+          <span fxFlex="100">
+            {{ invoiceForm.ktcAddress.line3 }}
+          </span>
+          <span fxFlex="100">
+            {{ invoiceForm.ktcAddress.line4 }}
+          </span>
+          <span fxFlex="100">
+            {{ invoiceForm.ktcAddress.line5 }}
+          </span>
+          <span fxFlex="100">
+            {{ invoiceForm.ktcAddress.line6 }}
+          </span>
+        </div>
+        <div fxFlex="55" fxLayout="row wrap" fxLayoutAlign="start start" class="font-bold"
+          style="font-size: 14px; padding-top: 20px">
+          <span fxFlex="100" class="ms-48"> Page. {{ p_i + 1 }} </span>
+          <span fxFlex="100" class="ms-48">
+            Date: {{ htmlDate(invoiceForm['printDate']) }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="invoiceForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="65" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+          <div fxFlex="30">Shipped from {{ invoiceForm.accountee.shippedFrom }}</div>
+          <div fxFlex="30">To {{ invoiceForm.accountee.to }}</div>
+          <div fxFlex="30">Per {{ invoiceForm.accountee.per }}</div>
+        </div>
+      </div>
+      <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="center start">
+        <span> On or about {{ htmlDate(invoiceForm['Sales DT']) }} </span>
+      </div>
+    </div>
+
+    <div *ngIf="invoiceForm.accountee" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div fxFlex="90" fxLayout="row wrap" fxLayoutAlign="start start">
+          <div fxFlex="100">
+            L/C No.& Issusing date {{ invoiceForm.accountee.paymentItem }}
+          </div>
+        </div>
+      </div>
+      <div fxFlex="20" fxLayout="row wrap" fxLayoutAlign="end start">
+        <span>( A:1 H:100 K:1000 )</span>
+      </div>
+    </div>
+    <div fxFlex="100" style="margin-bottom: 10px"></div>
+  </div>
+
+
+  <div id="body" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <table fxFlex="100" class="mt-4">
+      <tr class="table-head">
+        <th width="20%">Marks & No. s</th>
+        <th width="40%">Description</th>
+        <th width="16%">Quantity</th>
+        <th width="16%">Unit Price</th>
+        <th width="16%">Amount</th>
+      </tr>
+      <ng-container *ngFor="let item of getData(p_i); let i = index">
+
+        <tr>
+          <td>
+          </td>
+          <td>
+            <span>
+              {{showField(item,"Description")}}
+            </span>
+          </td>
+          <td></td>
+          <td>
+            <span *ngIf="invoiceForm.accountee">
+              {{ invoiceForm.accountee["contractTerm"] }}
+            </span>
+          </td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>
+            {{showField(item,"Marks & Nos")}}
+          </td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="20"> ITEM CODE </span>
+              <span fxFlex="80">
+                {{showField(item,"Item code")}}
+              </span>
+            </div>
+          </td>
+          <td>
+            PIECE
+          </td>
+          <td>
+            THB
+          </td>
+          <td>
+            THB
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+              <span fxFlex="20"> ITEM NAME </span>
+              <span fxFlex="80">
+                {{showField(item,"Item name")}}
+              </span>
+            </div>
+          </td>
+          <td class="text-end">
+            {{ showField(item,"quantity shipped") | number : "1.0-0" }}
+          </td>
+          <td class="text-end">
+            {{ showField(item,"Unit price") | number : "1.5" }} / {{ convertUP(item["UPM"]) }}
+          </td>
+          <td class="text-end">
+            {{ item["Sales AMT"] | number : "1.2" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td [ngStyle]=" config ? {'background': 'rgb(255, 101, 101)'} : {}">
+            <div fxLayout=" row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="20"> </span>
+              <span fxFlex="80">
+                {{showField(item,"value1")}}
+              </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="20"> INVOICE NO </span>
+              <span fxFlex="80">
+                {{showField(item,"Invoice import")}}
+              </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="20"> </span>
+              <span fxFlex="80">
+                {{showField(item,"Additional data")}}
+              </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>
+          </td>
+          <td [ngStyle]=" config ? {'background': 'rgb(124, 170, 255)'} : {}">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="20"> </span>
+              <span fxFlex="80">
+                {{showField(item,"value2")}}
+              </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+        <!-- <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr> -->
+      </ng-container>
+      <ng-container *ngIf="p_i + 1 === page">
+
+        <tr style="border-top: 1px solid">
+          <td></td>
+          <td></td>
+          <td>PIECE</td>
+          <td></td>
+          <td>
+            THB
+          </td>
+        </tr>
+
+        <tr>
+          <td class="text-end">TOTAL:</td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="10"> ( {{invoiceForm.footer?.totalQty}} ) </span>
+              <span fxFlex="90"> {{invoiceForm.footer?.unitItem}}S </span>
+            </div>
+          </td>
+          <td class="text-end">
+            {{ invoiceForm.footer?.qty | number : "1.0-0" }}
+          </td>
+          <td></td>
+          <td class="text-end">
+            {{ invoiceForm.footer?.amount | number : "1.2" }}
+          </td>
+        </tr>
+
+        <tr>
+          <td class="text-end">NET WEIGHT :</td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer?.netWeightAll | number : "1.2"}}
+              </span>
+              <span fxFlex="80" style="padding-left: 10px;"> KGS </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text-end">GROSS WEIGHT :</td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="20" fxLayoutAlign="end center"> {{invoiceForm.footer?.grossWeightAll | number : "1.2"}}
+              </span>
+              <span fxFlex="80" style="padding-left: 10px;"> KGS </span>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td [rowSpan]="4">
+            <p>
+              KYOCERA (Thailand) Co., Ltd.
+            </p>
+            <p style="margin: 0;">
+              {{invoiceForm.footer?.verifyName}}
+            </p>
+            <p style="margin: 0;">
+              {{invoiceForm.footer?.verifyPosition}}
+            </p>
+            <p style="margin: 0;">
+              {{invoiceForm.footer?.verifyDepartment}}
+            </p>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td *ngIf="invoiceForm.accountee">FREIGHT : {{ invoiceForm.accountee.freight }}</td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="60" fxLayoutAlign="end start">
+                Shipping Marks :
+              </span>
+              <span fxFlex="40"> KYOCERA </span>
+            </div>
+          </td>
+          <td></td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td [ngStyle]=" config ? {'background': 'rgb(103, 65, 124)'} : {}">
+            {{invoiceForm.footer?.typing2}}
+          </td>
+          <td>
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="60"> </span>
+              <span fxFlex="40"> INVOICE NO. {{ invoiceForm.invoice }} </span>
+            </div>
+          </td>
+          <td></td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td [ngStyle]=" config ? {'background': 'rgb(137, 34, 197)'} : {}">
+            <div fxLayout="row wrap" fxLayoutAlign="start stretch">
+              <span fxFlex="60"> </span>
+              <span fxFlex="40">
+                {{invoiceForm.footer?.unitItem}} NO. {{invoiceForm.footer?.typing1}}
+              </span>
+            </div>
+          </td>
+
+          <td></td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="p_i + 1 !== pageArr.length">
+        <tr>
+          <td></td>
+          <td></td>
+          <td>TO BE CONTINUED PAGE {{ p_i + 2 }}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+
+</div>

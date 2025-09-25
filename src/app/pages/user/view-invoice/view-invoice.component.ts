@@ -68,7 +68,7 @@ export class ViewInvoiceComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.user = localStorage.getItem('DIS_user')
+      this.user = localStorage.getItem('INV_ISSUE_user')
       this.user = JSON.parse(this.user)
       this.route.queryParams.subscribe(async (res) => {
         if (res['key']) {

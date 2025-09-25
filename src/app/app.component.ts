@@ -52,7 +52,7 @@ export class AppComponent {
     });
   }
   handleView() {
-    if (localStorage.getItem('domestics-invoice-system-view') == 'true') return true;
+    if (localStorage.getItem('INV_ISSUE_view') == 'true') return true;
     return false;
   }
   ngAfterContentChecked(): void {
@@ -72,7 +72,7 @@ export class AppComponent {
   }
   logout(){
     try {
-      localStorage.removeItem('DIS_user')
+      localStorage.removeItem('INV_ISSUE_user')
         this.router.navigate(['login']).then(()=>location.reload())
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -88,7 +88,7 @@ export class AppComponent {
     return ''
   }
   ngOnDestroy(): void {
-    localStorage.removeItem('DIS_user')
+    localStorage.removeItem('INV_ISSUE_user')
 
   }
 }

@@ -73,7 +73,7 @@ export class ConfigPackingComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.user = localStorage.getItem('DIS_user')
+    this.user = localStorage.getItem('INV_ISSUE_user')
     this.user = JSON.parse(this.user)
     let resUser: any = await lastValueFrom(this.$user.get())
     this.userOption = resUser

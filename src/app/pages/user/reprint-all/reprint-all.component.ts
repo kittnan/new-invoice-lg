@@ -23,10 +23,10 @@ export class ReprintAllComponent implements OnInit {
     private $reprint: HttpReprintService
 
   ) {
-    this.items = localStorage.getItem('DIS_printItems')
+    this.items = localStorage.getItem('INV_ISSUE_printItems')
     this.items = JSON.parse(this.items)
-    localStorage.removeItem('DIS_printItems')
-    this.user = localStorage.getItem('DIS_user')
+    localStorage.removeItem('INV_ISSUE_printItems')
+    this.user = localStorage.getItem('INV_ISSUE_user')
     this.user = JSON.parse(this.user)
   }
 

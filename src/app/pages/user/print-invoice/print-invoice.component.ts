@@ -125,10 +125,10 @@ export class PrintInvoiceComponent implements OnInit {
     arr = arr.map((a: any) => a['invoice'])
 
 
-    localStorage.setItem('DIS_printItems', JSON.stringify(arr))
+    localStorage.setItem('INV_ISSUE_printItems', JSON.stringify(arr))
     setTimeout(() => {
       // todo new tab
-      window.open(`/domestics-invoice-system/user/reprint-all`, '_blank')
+      window.open(`/invoice-issuing/user/reprint-all`, '_blank')
       // todo route normal
       // this.router.navigate(['user/reprint-all'])
     }, 300);

@@ -30,7 +30,7 @@ export class SapGenerateInvoiceComponent implements OnInit {
     private router: Router,
     private $country: HttpCountryService
   ) {
-    this.user = localStorage.getItem('DIS_user')
+    this.user = localStorage.getItem('INV_ISSUE_user')
     this.user = JSON.parse(this.user)
   }
 

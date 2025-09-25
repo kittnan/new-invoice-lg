@@ -1,0 +1,10 @@
+<ng-container *ngIf="form?.invoiceForm">
+    <button mat-raised-button (click)="generatePDF()" class="text-white bg-blue-500">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+            <mat-icon class="mat-18">print</mat-icon>
+            PDF
+        </div>
+    </button>
+</ng-container>
+<app-viewer-packing-no-com *ngIf="form?.packingForm" [packingForm]="form.packingForm" [pageArr]="pageArr" [page]="form.packingForm.page"
+    [config]="false"></app-viewer-packing-no-com>

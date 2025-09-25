@@ -129,7 +129,7 @@ export class SapTablePrintComponent implements OnInit {
     arr = arr.map((a: any) => a['invoice'])
 
 
-    localStorage.setItem('DIS_printItems', JSON.stringify(arr))
+    localStorage.setItem('INV_ISSUE_printItems', JSON.stringify(arr))
     setTimeout(() => {
       // todo new tab
       window.open(`/invoice-issuing/user/sap/reprint-all`, '_blank')

@@ -33,19 +33,19 @@ export class AuthUserService {
         ],
       },
       {
-        title: 'common invoice',
+        title: 'no com invoice',
         visible: false,
         icon: 'person',
         sub: [
           {
             name: 'generate invoice',
-            path: 'user/common/generate-invoice',
+            path: 'user/no-common/generate-invoice',
             active: false,
             icon: 'post_add'
           },
           {
             name: 'print',
-            path: 'user/common/print',
+            path: 'user/no-common/print',
             active: false,
             icon: 'print'
           },

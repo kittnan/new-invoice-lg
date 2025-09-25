@@ -13,7 +13,18 @@ export class HttpNoCommonDataService {
   private SUB = 'no_common/no_common_data';
   constructor(private http: HttpClient) { }
 
-  import(data: any): Observable<any> {
-    return this.http.post(`${this.URL}/${this.SUB}/import`, data);
+  create(data: any): Observable<any> {
+    return this.http.post(`${this.URL}/${this.SUB}/create`, data);
+  }
+  checkDuplicate(p: HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/checkDuplicate`, {
+      params: p
+    });
+  }
+
+  get(p: HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}`, {
+      params: p
+    });
   }
 }

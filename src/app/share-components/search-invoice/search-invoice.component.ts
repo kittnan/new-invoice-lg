@@ -34,7 +34,7 @@ export class SearchInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      let d: any = localStorage.getItem('DIS_filter')
+      let d: any = localStorage.getItem('INV_ISSUE_filter')
       if (d) {
         d = JSON.parse(d)
         this.invoice = d.invoice ? d.invoice : null
@@ -77,7 +77,7 @@ export class SearchInvoiceComponent implements OnInit {
       status: this.statusSelected
     }
     d = JSON.stringify(d)
-    localStorage.setItem('DIS_filter', d)
+    localStorage.setItem('INV_ISSUE_filter', d)
   }
   clearStartDate(key: any) {
     this.date[key] = null
@@ -89,7 +89,7 @@ export class SearchInvoiceComponent implements OnInit {
       end: null
     }
     this.statusSelected = 'available'
-    localStorage.removeItem('DIS_filter')
+    localStorage.removeItem('INV_ISSUE_filter')
     Swal.fire({
       title:'Success',
       icon:'success',
