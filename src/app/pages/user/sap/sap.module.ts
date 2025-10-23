@@ -13,6 +13,7 @@ import { SapConfigInvoiceComponent } from './2-config/sap-config-invoice/sap-con
 import { SapConfigPackingComponent } from './2-config/sap-config-packing/sap-config-packing.component';
 import { SapPrintInvoiceComponent } from './3-print/sap-print-invoice/sap-print-invoice.component';
 import { SapPrintPackingComponent } from './3-print/sap-print-packing/sap-print-packing.component';
+import { SapPrintAllComponent } from './3-print/sap-print-all/sap-print-all.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SapPrintPackingComponent } from './3-print/sap-print-packing/sap-print-
     SapConfigPackingComponent,
     SapPrintInvoiceComponent,
     SapPrintPackingComponent,
+    SapPrintAllComponent,
   ],
   imports: [
     CommonModule,
