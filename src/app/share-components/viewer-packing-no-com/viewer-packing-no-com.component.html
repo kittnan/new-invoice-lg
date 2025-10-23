@@ -183,6 +183,14 @@
                     </td>
                     <td class="text-end">
                         {{showField(item,"Start case#")}}
+
+                        <ng-container
+                            *ngIf="showField(item,'Start case#') && showField(item,'End case#') && showField(item,'Start case#') != showField(item,'End case#')">
+                            -
+                            {{showField(item,"End case#")}}
+
+                        </ng-container>
+
                     </td>
                     <td>
                         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
@@ -199,7 +207,7 @@
                         </span>
                     </td>
                     <td class="text-end">
-                        {{ showField(item,"NET WEIGHT") | number : "1.2" }}
+                        {{ showField(item,"NET WEIGHT2") | number : "1.2" }}
                         <span style="margin-left: 1rem;">
                             KGS
                         </span>

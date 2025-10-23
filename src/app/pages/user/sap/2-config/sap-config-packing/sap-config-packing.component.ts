@@ -188,15 +188,17 @@ export class SapConfigPackingComponent implements OnInit {
             }
 
             
-            console.clear()
             console.log(`⚡ ~ :190 ~ SapConfigPackingComponent ~ newItem:`, newItem);
             console.log('packingData',packingData);
             console.log('pkOne',pkOne);
+
+            let newBatch = packingData['Lot No']
 
             return {
               ...newItem,
               ...packingData,
               ...pkOne,
+              'Batch': newBatch
             }
           }),
 
@@ -275,6 +277,7 @@ export class SapConfigPackingComponent implements OnInit {
 
         console.log(`⚡ ~ :258 ~ SapConfigPackingComponent ~ this.form:`, this.form);
 
+        console.clear()
         let consigneeCodeFix = this.packing.find((item: any) => item["Invoice No"] == this.invoice && item['(KGSS) Consignee CD'])
         consigneeCodeFix = consigneeCodeFix ? consigneeCodeFix['(KGSS) Consignee CD'] : null
         if (consigneeCodeFix) {

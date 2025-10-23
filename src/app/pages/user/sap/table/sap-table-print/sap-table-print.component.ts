@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
@@ -135,11 +136,23 @@ export class SapTablePrintComponent implements OnInit {
       window.open(`/invoice-issuing/user/sap/reprint-all`, '_blank')
       // todo route normal
       // this.router.navigate(['user/sap/reprint-all'])
-  }, 300);
+    }, 300);
 
 
 
   }
 
+
+
+  handleShowConfigInvoiceForm(element: any) {
+    if (moment().diff(moment(element.createdAt), 'days') < 7) return true
+    if (!element.invoiceForm) return true
+    return false
+  }
+  handleShowPackingForm(element: any) {
+    if (moment().diff(moment(element.createdAt), 'days') < 7) return true
+    if (!element.packingForm) return true
+    return false
+  }
 
 }

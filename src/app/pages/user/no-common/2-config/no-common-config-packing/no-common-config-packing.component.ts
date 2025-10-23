@@ -158,6 +158,9 @@ export class NoCommonConfigPackingComponent implements OnInit {
         page: this.page,
         "Sales DT": new Date(),
         data: this.form.no_common_datas.map((d: any, i: number) => {
+          d["quantity shipped"] = this.calQuantity(d)
+
+          d["NET WEIGHT2"] = this.calNetWeight(d)
 
           if (startMark != d["Marks & Nos"]) {
             startMark = d["Marks & Nos"];
@@ -165,17 +168,20 @@ export class NoCommonConfigPackingComponent implements OnInit {
             d["Marks & Nos"] = ""
           }
 
+          d["End case#"] = this.calEndCase(d)
+
           if (measureMark != d["Start case#"]) {
             measureMark = d["Start case#"];
             d.measurement = this.showField(d, "Measurement (vertical)") + ' X ' + this.showField(d, "Measurement (horizontal)") + ' X ' + this.showField(d, "Measurement (High)") + ' CM'
             this.showField(d, "Measurement (High)") + ' CM'
-            d["GROSS WEIGHT2"] = Number(d["GROSS WEIGHT"]).toFixed(2)
+            d["GROSS WEIGHT2"] = this.calGrossWeight(d).toFixed(2)
           } else {
             d["Start case#"] = ""
             d.measurement = ""
             d["GROSS WEIGHT2"] = ""
           }
 
+          console.log(d["NET WEIGHT2"]);
 
           return d
         }).sort((a: any, b: any) => a.rowNum - b.rowNum),
@@ -220,6 +226,33 @@ export class NoCommonConfigPackingComponent implements OnInit {
   calculatorPageBreak(pktaLen: number) {
     return Math.ceil(pktaLen / 2)
   }
+  calQuantity(data: any) {
+    if (data["Case Quantity"] == 1) return data["quantity shipped"]
+    let total = data["Case Quantity"]
+    return Number(data["quantity shipped"]) * Number(total)
+  }
+  calNetWeight(data: any) {
+    console.log(data["NET WEIGHT"]);
+    
+    if (data["Case Quantity"] == 1) return data["NET WEIGHT"]
+    let total = data["Case Quantity"]
+    console.log(Number(data["NET WEIGHT"]), Number(total));
+
+    return Number(data["NET WEIGHT"]) * Number(total)
+  }
+  calGrossWeight(data: any) {
+    if (data["Case Quantity"] == 1) return data["GROSS WEIGHT"]
+    let total = data["Case Quantity"]
+    return Number(data["GROSS WEIGHT"]) * Number(total)
+  }
+  calEndCase(data: any) {
+    if (data["Case Quantity"] == 1) return data["Start case#"]
+    let end = 0
+    for (let i = 0; i <= data["Case Quantity"]; i++) {
+      end = i
+    }
+    return end
+  }
   htmlItemCode(value: any) {
     const newItem = this.itemCodes.find((a: any) => a.itemCode == value);
     return newItem ? newItem.itemName : '';
@@ -242,7 +275,7 @@ export class NoCommonConfigPackingComponent implements OnInit {
   htmlTotalQty(items: any) {
     const packingUse = items
     const total = packingUse.reduce((p: any, n: any) => {
-      if(n['Marks & Nos']){
+      if (n['Marks & Nos']) {
         return p += n['Case Quantity']
       }
       return p

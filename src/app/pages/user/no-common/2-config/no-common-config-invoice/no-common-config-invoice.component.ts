@@ -153,7 +153,9 @@ export class NoCommonConfigInvoiceComponent implements OnInit {
         page: this.page,
         "Sales DT": new Date(),
         data: this.form.no_common_datas.map((d: any, i: number) => {
-          d["Sales AMT"] = Number(d["quantity shipped"] * d["Unit price"]).toFixed(2)
+          
+          d["Sales AMT"] = this.calUnitPrice(d).toFixed(2)
+          d["quantity shipped"] = this.calQuantity(d)
 
           if (startMark != d["Marks & Nos"]) {
             startMark = d["Marks & Nos"];
@@ -201,6 +203,19 @@ export class NoCommonConfigInvoiceComponent implements OnInit {
   }
   calculatorPageBreak(pktaLen: number) {
     return Math.ceil(pktaLen / 2)
+  }
+
+  calQuantity(data: any) {
+    if (data["Case Quantity"] == 1) return data["quantity shipped"]
+    let total = data["Case Quantity"]
+    return parseInt(data["quantity shipped"]) * parseInt(total)
+  }
+  calUnitPrice(data: any) {
+    console.log(data["Unit price"]);
+
+    let total = data["Case Quantity"]
+    return data["quantity shipped"] * total * Number(data["Unit price"])
+    return Number(data["NET WEIGHT"]) * parseInt(total) * Number(data["GROSS WEIGHT"]) * data["quantity shipped"]
   }
   htmlItemCode(value: any) {
     const newItem = this.itemCodes.find((a: any) => a.itemCode == value);
