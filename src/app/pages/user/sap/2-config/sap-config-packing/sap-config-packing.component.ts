@@ -331,7 +331,7 @@ export class SapConfigPackingComponent implements OnInit {
       value = sapData['Address Note']
       const item = this.country.find((a: any) => a.code == String(value).trim())
       if (item) return 'MADE IN ' + item.name
-      if (!value) {
+      if (!item) {
         value = sapData["(KGSS) Country Of Origin CD"]
         const item = this.country.find((a: any) => a.key == String(value).trim())
         if (item) return 'MADE IN ' + item.name

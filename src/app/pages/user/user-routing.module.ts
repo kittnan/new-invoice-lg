@@ -16,7 +16,7 @@ import { NoCommonInvoiceModule } from './no-common/no-common.module';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'print',
+    redirectTo: 'sap',
     pathMatch: 'full',
   },
   {

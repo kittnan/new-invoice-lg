@@ -121,7 +121,7 @@ export class SapConfigInvoiceComponent implements OnInit {
 
             const item = this.packing.filter(
               (b: any) => b['(KGSS) Customer PO'] == a['Sales document'] &&
-              a['External Delivery ID'] == b['Invoice No']
+                a['External Delivery ID'] == b['Invoice No']
             );
 
             console.log(`⚡ ~ :126 ~ SapConfigInvoiceComponent ~ item:`, item);
@@ -169,6 +169,9 @@ export class SapConfigInvoiceComponent implements OnInit {
               if (!sapDPacking) {
                 sapDPacking = sapD.packing[0]
               }
+
+              console.log(this.htmlCountry(sapD));
+
               return {
                 'itemCode': this.htmlItemCode(sapD["Customer Part#"]),
                 'Customer Part#': sapD['Customer Part#'],
@@ -270,12 +273,14 @@ export class SapConfigInvoiceComponent implements OnInit {
   }
   htmlCountry(sapData: any) {
     if (this.country && this.country.length > 0) {
+      console.log(sapData['Address Note']);
+      console.log(this.country);
+
       let value = ''
       value = sapData['Address Note']
       const item = this.country.find((a: any) => a.code == String(value).trim())
       if (item) return 'MADE IN ' + item.name
-      if (!value) {
-        value = sapData["(KGSS) Country Of Origin CD"]
+      if (!item) {
         const item = this.country.find((a: any) => a.key == String(value).trim())
         if (item) return 'MADE IN ' + item.name
       }
